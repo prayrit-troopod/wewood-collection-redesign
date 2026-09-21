@@ -222,7 +222,11 @@
   /* ---------- mobile filter/sort bar ---------- */
   .mobile-fs-bar{display:none}
   @media (max-width:639px){
-    .toolbar .wrap{position:absolute;width:0;height:0;padding:0;margin:0;border:0;overflow:hidden;opacity:0;pointer-events:none}
+    /* no opacity here: opacity on an ancestor composites its whole subtree as
+       transparent, including position:fixed descendants (.filter-panel/.filter-overlay)
+       which can't escape it the way they escape overflow/width/height - zero size +
+       overflow:hidden already fully hides .wrap's own (empty) box */
+    .toolbar .wrap{position:absolute;width:0;height:0;padding:0;margin:0;border:0;overflow:hidden;pointer-events:none}
     .mobile-fs-bar{display:flex;align-items:center;justify-content:space-between;padding:12px var(--pad-x)}
     .mfs-btn{display:flex;align-items:center;gap:8px;background:none;border:0;padding:0;font-family:var(--font-button);font-size:13px;font-weight:600;color:var(--text)}
     .mfs-btn i{font-size:15px;color:var(--text-2)}
