@@ -296,6 +296,14 @@
   .card .save{font-family:var(--font-button);font-size:10.5px;font-weight:600;color:var(--green)}
   .card .add{margin-top:9px;font-family:var(--font-button);font-size:11.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;background:var(--dark);color:#fff;border:0;border-radius:var(--pill);padding:10px;transition:background .2s,color .2s}
   .card .add:hover{background:var(--yellow);color:var(--dark)}
+
+  /* brand creative slotted into the grid at the same size as a product card */
+  .card-creative{padding:0}
+  .card-creative a{display:block;width:100%;height:100%}
+  .card-creative img{display:block;width:100%;height:100%;aspect-ratio:4/5;object-fit:cover;transition:transform .5s ease}
+  .card-creative:hover img{transform:scale(1.03)}
+  @media (max-width:639px){.grid.is-compact .card-creative img{aspect-ratio:1/1}}
+
   @media (max-width:639px){
     .grid.is-compact .card .info{padding:9px 9px 11px;gap:4px}
     .grid.is-compact .card .name{font-size:11.5px;min-height:2.6em}
@@ -733,6 +741,10 @@
         </div>
       </article>
 
+      <article class="card card-creative">
+        <a href="#"><img src="assets/brand-creative-crafted-beauty.jpg" alt="Crafted for the beauty your home deserves - Wewood" loading="lazy"></a>
+      </article>
+
       <article class="card">
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/cheese-board-platter.jpg" alt="Cheese Board Cum Platter with Handle, Acacia Wood with Translucent Grey Resin Finish" loading="lazy"></a>
@@ -802,6 +814,10 @@
           <span class="save">You save ₹25,501</span>
           <button class="add">Add to Cart</button>
         </div>
+      </article>
+
+      <article class="card card-creative">
+        <a href="#"><img src="assets/brand-creative-proudly-made.jpg" alt="Proudly Made - Wewood craftsmanship" loading="lazy"></a>
       </article>
 
       <article class="card">
@@ -877,6 +893,10 @@
           <span class="save">You save ₹626</span>
           <button class="add">Add to Cart</button>
         </div>
+      </article>
+
+      <article class="card card-creative">
+        <a href="#"><img src="assets/brand-creative-every-grain.webp" alt="Every grain carries a story - the art of Indian handcrafted living" loading="lazy"></a>
       </article>
 
       <article class="card">
