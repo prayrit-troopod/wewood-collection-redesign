@@ -1088,16 +1088,32 @@
     const closeBtn = document.getElementById('filterCloseBtn');
     const countEl = btn.querySelector('.count');
     const boxes = () => [...panel.querySelectorAll('input[type="checkbox"]')];
+    const isMobileDrawer = () => window.matchMedia('(max-width:639px)').matches;
+    let lockedScrollY = 0;
 
+    function lockScroll(){
+      lockedScrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${lockedScrollY}px`;
+      document.body.style.width = '100%';
+    }
+    function unlockScroll(){
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, lockedScrollY);
+    }
     function close(){
       panel.classList.remove('is-open');
       overlay.classList.remove('is-open');
       btn.setAttribute('aria-expanded','false');
+      if(document.body.style.position === 'fixed') unlockScroll();
     }
     function open(){
       panel.classList.add('is-open');
       overlay.classList.add('is-open');
       btn.setAttribute('aria-expanded','true');
+      if(isMobileDrawer()) lockScroll();
     }
     btn.addEventListener('click',(e)=>{
       e.stopPropagation();
