@@ -151,6 +151,8 @@
   .usp-trust{padding:16px var(--pad-x);display:grid;grid-template-columns:repeat(2,1fr);gap:16px 12px;flex:1}
   @media (min-width:600px){.usp-trust{grid-template-columns:repeat(3,1fr)}}
   @media (min-width:940px){.usp-trust{grid-template-columns:repeat(6,1fr);align-items:center;gap:10px}}
+  .grid-usp-break{grid-column:1/-1;background:var(--dark);border-radius:var(--radius);overflow:hidden}
+  .grid-usp-break .usp-trust{padding:20px var(--pad-x)}
   .trust-item{display:flex;align-items:center;gap:10px}
   @media (min-width:940px){.trust-item{flex-direction:column;text-align:center;gap:8px}}
   .trust-item .ic{flex:0 0 auto;width:52px;height:52px;border-radius:var(--pill);background:var(--bg-secondary);color:var(--dark);display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .2s ease}
@@ -588,6 +590,17 @@
           <button class="add">Add to Cart</button>
         </div>
       </article>
+
+      <div class="grid-usp-break">
+        <div class="usp-trust" aria-label="Wewood guarantees">
+          <span class="trust-item"><span class="ic"><i class="ti ti-hammer"></i></span><span>Handmade</span></span>
+          <span class="trust-item"><span class="ic"><i class="ti ti-tree"></i></span><span>20 Years in Timber</span></span>
+          <span class="trust-item"><span class="ic"><i class="ti ti-award"></i></span><span>Patented &amp; Exhibited</span></span>
+          <span class="trust-item"><span class="ic"><i class="ti ti-truck-delivery"></i></span><span>Free Shipping</span></span>
+          <span class="trust-item"><span class="ic"><i class="ti ti-cash"></i></span><span>COD Available</span></span>
+          <span class="trust-item"><span class="ic"><i class="ti ti-refresh"></i></span><span>7-Day Exchange</span></span>
+        </div>
+      </div>
 
       <article class="card">
         <span class="badge">Save 11%</span>
