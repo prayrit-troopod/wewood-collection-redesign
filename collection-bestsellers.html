@@ -121,7 +121,10 @@
   .rail-sec{padding:34px 0 40px}
   .rail-sec h2{font-size:clamp(22px,3vw,28px);margin:0 0 20px;padding:0 var(--pad-x)}
   .rail-sec h2 em{font-style:italic;color:var(--text-2)}
-  .rail{display:flex;gap:16px;overflow-x:auto;padding:0 var(--pad-x) 6px;scroll-snap-type:x proximity;scrollbar-width:none}
+  /* scroll-padding matches the rail's own side padding - without it, proximity
+     snapping treats the first card's start edge as the snap target and jumps
+     scrollLeft past the leading gutter on load, eating the left padding */
+  .rail{display:flex;gap:16px;overflow-x:auto;padding:0 var(--pad-x) 6px;scroll-snap-type:x proximity;scroll-padding-left:var(--pad-x);scroll-padding-right:var(--pad-x);scrollbar-width:none}
   .rail::-webkit-scrollbar{display:none}
   .rail a{position:relative;flex:0 0 224px;aspect-ratio:3/4;scroll-snap-align:start;border-radius:var(--radius);overflow:hidden;background:var(--bg-secondary);display:block}
   @media (min-width:640px){.rail a{flex-basis:268px}}
