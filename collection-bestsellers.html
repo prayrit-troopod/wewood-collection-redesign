@@ -236,6 +236,9 @@
   .filter-overlay{position:fixed;inset:0;background:rgba(22,30,19,.4);z-index:39;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s}
   @media (max-width:639px){.filter-overlay.is-open{opacity:1;visibility:visible}}
   @media (max-width:639px){
+    /* .filter-panel/.filter-overlay sit inside .toolbar .wrap, which is pointer-events:none
+       on mobile (it's the hidden desktop row) - pointer-events inherits, so re-enable it here */
+    .filter-overlay,.filter-panel{pointer-events:auto}
     .filter-panel{position:fixed;top:0;left:0;bottom:0;right:auto;z-index:40;width:86vw;max-width:340px;height:100dvh;border-radius:0;box-shadow:0 0 40px rgba(0,0,0,.2);transform:translateX(-100%);opacity:1;visibility:visible;overflow-y:auto;transition:transform .28s cubic-bezier(.2,.8,.2,1)}
     .filter-panel.is-open{transform:translateX(0)}
     .filter-panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
