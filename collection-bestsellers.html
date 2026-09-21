@@ -161,6 +161,24 @@
   .trust-item:hover .ic{background:var(--yellow);color:var(--dark);transform:scale(1.08)}
   .trust-item:hover span:last-child{color:var(--yellow)}
 
+  /* ---------- shop by material (in-grid break) ---------- */
+  .mat-shop-break{grid-column:1/-1;background:var(--dark);border-radius:var(--radius);overflow:hidden;padding:28px var(--pad-x) 24px}
+  .mat-shop-break h3{font-family:var(--font-heading);font-weight:400;font-size:23px;color:#fff;margin:0 0 20px;text-align:center}
+  .mat-swatches{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-bottom:26px}
+  .mat-swatch{background:none;border:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer}
+  .mat-swatch .ring{width:58px;height:58px;border-radius:var(--pill);padding:3px;border:2px solid transparent;display:flex;transition:border-color .2s ease}
+  .mat-swatch.on .ring{border-color:var(--yellow)}
+  .mat-swatch .ring img{width:100%;height:100%;border-radius:var(--pill);object-fit:cover;border:2px solid rgba(255,255,255,.35)}
+  .mat-swatch .lab{font-family:var(--font-button);font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#9aa393;transition:color .2s ease}
+  .mat-swatch.on .lab{color:var(--yellow)}
+  .mat-swatch:hover .lab{color:#cfd3c9}
+  .mat-preview{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;margin:0 calc(var(--pad-x) * -1);padding-left:var(--pad-x);padding-right:var(--pad-x)}
+  .mat-preview::-webkit-scrollbar{display:none}
+  .mat-preview .card{flex:0 0 152px}
+  @media (min-width:640px){.mat-preview .card{flex-basis:190px}}
+  .mat-preview .card .name{font-size:12.5px;min-height:2.5em}
+  .mat-preview .card .now{font-size:15px}
+
   /* ---------- toolbar ---------- */
   .toolbar{position:sticky;top:105px;z-index:20;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:28px}
   @media (min-width:520px){.toolbar{top:116px}}
@@ -286,6 +304,7 @@
   @media (min-width:640px){.grid{grid-template-columns:repeat(3,1fr);gap:22px 18px}}
   @media (min-width:980px){.grid{grid-template-columns:repeat(4,1fr)}}
   .card{background:var(--white);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);display:flex;flex-direction:column;position:relative}
+  .card.is-filtered-out{display:none}
   .card .badge{position:absolute;top:10px;left:10px;background:var(--sale);color:#fff;font-family:var(--font-button);font-size:10.5px;font-weight:600;padding:4px 9px;border-radius:var(--pill);z-index:2}
   .card .wish{position:absolute;top:8px;right:8px;z-index:2;background:rgba(255,255,255,.92);width:30px;height:30px;border-radius:var(--pill);border:0;display:flex;align-items:center;justify-content:center;color:var(--text-2)}
   .card .wish:hover{color:var(--sale)}
@@ -561,13 +580,14 @@
 
   <div class="wrap">
     <div class="filter-group">
-      <span class="filter-lab"><i class="ti ti-adjustments-horizontal"></i>Material</span>
-      <div class="filters">
-        <button class="chip on">All materials</button>
-        <button class="chip">Teak</button>
-        <button class="chip">Acacia</button>
-        <button class="chip">Sheesham</button>
-        <button class="chip">Under ₹5,000</button>
+      <span class="filter-lab"><i class="ti ti-adjustments-horizontal"></i>Category</span>
+      <div class="filters" id="quickCategoryFilters">
+        <button class="chip on" data-category="all">All categories</button>
+        <button class="chip" data-category="nesting-table">Nesting Table</button>
+        <button class="chip" data-category="wall-decor">Wall Décor</button>
+        <button class="chip" data-category="furniture">Furniture</button>
+        <button class="chip" data-category="tableware">Tableware</button>
+        <button class="chip" data-category="table-accents">Table Accents</button>
       </div>
       <div class="filter-more">
         <button class="filter-toggle chip" id="filterToggleBtn" aria-expanded="false" aria-controls="filterPanel">
@@ -661,7 +681,7 @@
   <div class="wrap">
     <div class="grid">
 
-      <article class="card">
+      <article class="card" data-material="teak" data-category="nesting-table">
         <span class="badge">Save 47%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/nesting-table-set-of-3-teak.jpg" alt="Nesting Table Set of 3, Teak Wood with Transparent Resin Finish" loading="lazy"></a>
@@ -676,7 +696,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="teak" data-category="furniture">
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/side-table-set-of-1-teak.jpg" alt="Side Table Set of 1, Teak Wood with Transparent Resin Finish" loading="lazy"></a>
         <div class="info">
@@ -689,7 +709,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="sheesham" data-category="wall-decor">
         <span class="badge">Save 11%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/elegant-resin-wall-clock.jpg" alt="Elegant Resin Wall Clock, Sheesham Wood and Black Resin" loading="lazy"></a>
@@ -704,7 +724,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="teak" data-category="table-accents">
         <span class="badge">Save 10%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/c-shaped-table-teak.jpg" alt="C-Shaped Table, Teak Stained Wood Finish" loading="lazy"></a>
@@ -730,7 +750,63 @@
         </div>
       </div>
 
-      <article class="card">
+      <div class="mat-shop-break">
+        <h3>Shop by Material</h3>
+        <div class="mat-swatches" id="matSwatches">
+          <button type="button" class="mat-swatch on" data-material="all">
+            <span class="ring"><img src="assets/nesting-table-set-of-3-teak.jpg" alt=""></span>
+            <span class="lab">All</span>
+          </button>
+          <button type="button" class="mat-swatch" data-material="teak">
+            <span class="ring"><img src="assets/side-table-set-of-1-teak.jpg" alt=""></span>
+            <span class="lab">Teak</span>
+          </button>
+          <button type="button" class="mat-swatch" data-material="acacia">
+            <span class="ring"><img src="assets/nesting-table-acacia.png" alt=""></span>
+            <span class="lab">Acacia</span>
+          </button>
+          <button type="button" class="mat-swatch" data-material="sheesham">
+            <span class="ring"><img src="assets/nesting-table-sheesham.png" alt=""></span>
+            <span class="lab">Sheesham</span>
+          </button>
+        </div>
+        <div class="mat-preview">
+          <article class="card">
+            <a href="#" class="thumb"><img src="assets/nesting-table-set-of-3-teak.jpg" alt="Nesting Table Set of 3, Teak Wood" loading="lazy"></a>
+            <div class="info">
+              <span class="mat">Teak wood · resin</span>
+              <a href="#" class="name">Nesting Table Set of 3, Teak Wood</a>
+              <div class="price-row"><span class="now">₹13,890</span></div>
+            </div>
+          </article>
+          <article class="card">
+            <a href="#" class="thumb"><img src="assets/nesting-table-acacia.png" alt="Nesting Table Set of 2, Acacia Wood" loading="lazy"></a>
+            <div class="info">
+              <span class="mat">Acacia wood · resin</span>
+              <a href="#" class="name">Nesting Table Set of 2, Acacia Wood</a>
+              <div class="price-row"><span class="now">₹20,000</span></div>
+            </div>
+          </article>
+          <article class="card">
+            <a href="#" class="thumb"><img src="assets/elegant-resin-wall-clock.jpg" alt="Elegant Resin Wall Clock, Sheesham Wood" loading="lazy"></a>
+            <div class="info">
+              <span class="mat">Sheesham wood · resin</span>
+              <a href="#" class="name">Elegant Resin Wall Clock, Sheesham</a>
+              <div class="price-row"><span class="now">₹5,900</span></div>
+            </div>
+          </article>
+          <article class="card">
+            <a href="#" class="thumb"><img src="assets/cheese-board-platter.jpg" alt="Cheese Board Cum Platter, Acacia Wood" loading="lazy"></a>
+            <div class="info">
+              <span class="mat">Acacia wood · resin</span>
+              <a href="#" class="name">Cheese Board Cum Platter, Acacia Wood</a>
+              <div class="price-row"><span class="now">₹1,999</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <article class="card" data-material="teak" data-category="wall-decor">
         <span class="badge">Save 11%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/stylish-resin-wall-clock.png" alt="Stylish Resin Wall Clock, Teak Wood and Black Resin Elegance" loading="lazy"></a>
@@ -749,7 +825,7 @@
         <a href="#"><img src="assets/brand-creative-crafted-beauty.jpg" alt="Crafted for the beauty your home deserves - Wewood" loading="lazy"></a>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="acacia" data-category="tableware">
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/cheese-board-platter.jpg" alt="Cheese Board Cum Platter with Handle, Acacia Wood with Translucent Grey Resin Finish" loading="lazy"></a>
         <div class="info">
@@ -762,7 +838,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="teak" data-category="furniture">
         <span class="badge">Save 25%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/premium-side-table-teak.png" alt="Premium Side Table, Teak Wood with Brown Resin Finish" loading="lazy"></a>
@@ -777,7 +853,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="teak" data-category="furniture">
         <span class="badge">Save 20%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/coffee-table-blue-resin.png" alt="Round Coffee Table, Teak Wood with Special Blue Resin Finish" loading="lazy"></a>
@@ -792,7 +868,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="acacia" data-category="nesting-table">
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/nesting-table-acacia.png" alt="Nesting Table Set of 2, Acacia Wood with Transparent Resin Finish" loading="lazy"></a>
         <div class="info">
@@ -805,7 +881,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="live-edge" data-category="furniture">
         <span class="badge">Save 39%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/live-edge-blue-epoxy-table.jpg" alt="Modern Live-Edge Wood and Blue Epoxy Resin Table" loading="lazy"></a>
@@ -824,7 +900,7 @@
         <a href="#"><img src="assets/brand-creative-proudly-made.jpg" alt="Proudly Made - Wewood craftsmanship" loading="lazy"></a>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="teak" data-category="nesting-table">
         <span class="badge">Save 20%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/nesting-table-pearl-green.png" alt="Nesting Table Set of 2, Teak Wood with Pearl Green Resin Finish" loading="lazy"></a>
@@ -839,7 +915,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="sheesham" data-category="nesting-table">
         <span class="badge">Save 20%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/nesting-table-sheesham.png" alt="Nesting Table Set of 2, Sheesham Wood with Transparent Resin Finish" loading="lazy"></a>
@@ -854,7 +930,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="teak" data-category="nesting-table">
         <span class="badge">Save 46%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/nesting-table-tinted-grey.png" alt="Nesting Table Set of 3, Teak Wood with Tinted Grey Resin Finish" loading="lazy"></a>
@@ -869,7 +945,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="oak" data-category="wall-decor">
         <span class="badge">Save 20%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/wall-clock-pearl-green-oak.png" alt="Pearl Green Resin Wall Clock, Wood Oak Elegance" loading="lazy"></a>
@@ -884,7 +960,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="acacia" data-category="wall-decor">
         <span class="badge">Save 16%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/wall-clock-elegant-wooden.png" alt="Elegant Wooden Wall Clock, Natural Acacia Wood" loading="lazy"></a>
@@ -903,7 +979,7 @@
         <a href="#"><img src="assets/brand-creative-every-grain.jpg" alt="Every grain carries a story - the art of Indian handcrafted living" loading="lazy"></a>
       </article>
 
-      <article class="card">
+      <article class="card" data-material="acacia" data-category="wall-decor">
         <span class="badge">Save 16%</span>
         <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/wall-clock-stylish-wooden.png" alt="Stylish Wooden Wall Clock, Acacia Wood" loading="lazy"></a>
@@ -1098,12 +1174,40 @@
 </a>
 
 <script>
-  document.querySelectorAll('.filters .chip').forEach(c=>{
-    c.addEventListener('click',()=>{
-      document.querySelectorAll('.filters .chip').forEach(x=>x.classList.remove('on'));
-      c.classList.add('on');
+  (function(){
+    const grid = document.querySelector('.grid-sec .grid');
+    const products = () => [...grid.querySelectorAll('.card[data-material]')];
+    const categoryChips = [...document.querySelectorAll('#quickCategoryFilters .chip')];
+    const matSwatches = [...document.querySelectorAll('#matSwatches .mat-swatch')];
+    const state = { material: 'all', category: 'all' };
+
+    function applyFilters(){
+      products().forEach(card=>{
+        const matchMaterial = state.material === 'all' || card.dataset.material === state.material;
+        const matchCategory = state.category === 'all' || card.dataset.category === state.category;
+        card.classList.toggle('is-filtered-out', !(matchMaterial && matchCategory));
+      });
+    }
+
+    matSwatches.forEach(sw=>{
+      sw.addEventListener('click', ()=>{
+        state.material = sw.dataset.material;
+        matSwatches.forEach(x=>x.classList.remove('on'));
+        sw.classList.add('on');
+        applyFilters();
+        grid.scrollIntoView({behavior:'smooth', block:'start'});
+      });
     });
-  });
+
+    categoryChips.forEach(chip=>{
+      chip.addEventListener('click', ()=>{
+        state.category = chip.dataset.category;
+        categoryChips.forEach(x=>x.classList.remove('on'));
+        chip.classList.add('on');
+        applyFilters();
+      });
+    });
+  })();
   (function(){
     const btn = document.getElementById('filterToggleBtn');
     const mBtn = document.getElementById('mFilterBtn');
