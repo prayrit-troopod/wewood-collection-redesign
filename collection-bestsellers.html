@@ -1129,6 +1129,7 @@
       if(document.body.style.position === 'fixed') unlockScroll();
     }
     function open(){
+      panel.scrollTop = 0;
       panel.classList.add('is-open');
       overlay.classList.add('is-open');
       btn.setAttribute('aria-expanded','true');
