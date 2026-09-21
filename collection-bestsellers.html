@@ -353,10 +353,11 @@
   .reviews .head{padding:0 var(--pad-x);margin-bottom:24px}
   .reviews h2{font-size:clamp(28px,3.2vw,34px);letter-spacing:-.01em;margin:0}
   .reviews h2 em{font-style:italic;color:var(--text-2)}
-  /* matches .wrap's content-box math exactly (same width/centering as .head
-     above it) instead of the stray "wrap" class this used to carry, which
-     left it capped narrower than the heading on wide screens */
-  .rev-summary{width:100%;max-width:var(--w);margin:0 auto 24px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  /* the visible card should line up with where the heading TEXT sits (inset
+     by the page gutter), not with .head's own invisible outer div edge -
+     matching that outer edge instead left this card flush against the
+     screen with no side gutter at all on mobile */
+  .rev-summary{width:calc(100% - var(--pad-x) * 2);max-width:calc(var(--w) - var(--pad-x) * 2);margin:0 auto 24px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
   @media (min-width:980px){.rev-summary{padding:24px 30px;gap:28px}}
   .rev-summary .score{flex:0 0 auto;display:flex;flex-direction:column;gap:2px}
   .rev-summary .score .num{display:flex;align-items:flex-end;gap:3px;line-height:1}
