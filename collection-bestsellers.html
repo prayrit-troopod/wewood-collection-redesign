@@ -351,15 +351,17 @@
   /* ---------- reviews ---------- */
   .reviews{background:var(--white);border-top:1px solid var(--border);padding:var(--inner) 0}
   .reviews .head{padding:0 var(--pad-x);margin-bottom:24px}
-  .reviews h2{font-size:clamp(24px,3.4vw,30px);letter-spacing:-.01em;margin:0}
+  .reviews h2{font-size:clamp(28px,3.2vw,34px);letter-spacing:-.01em;margin:0}
   .reviews h2 em{font-style:italic;color:var(--text-2)}
   /* matches .wrap's content-box math exactly (same width/centering as .head
      above it) instead of the stray "wrap" class this used to carry, which
      left it capped narrower than the heading on wide screens */
-  .rev-summary{width:100%;max-width:var(--w);margin:0 auto 24px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .rev-summary{width:100%;max-width:var(--w);margin:0 auto 24px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  @media (min-width:980px){.rev-summary{padding:24px 30px;gap:28px}}
   .rev-summary .score{flex:0 0 auto;display:flex;flex-direction:column;gap:2px}
   .rev-summary .score .num{display:flex;align-items:flex-end;gap:3px;line-height:1}
-  .rev-summary .score .num strong{font-family:var(--font-heading);font-size:42px;font-weight:400;letter-spacing:-.02em;color:var(--dark)}
+  .rev-summary .score .num strong{font-family:var(--font-heading);font-size:42px;font-weight:400;letter-spacing:-.03em;color:var(--dark)}
+  @media (min-width:980px){.rev-summary .score .num strong{font-size:52px}}
   .rev-summary .score .num span{font-size:18px;color:var(--text-3);padding-bottom:3px}
   .rev-summary .score .stars{margin-top:3px}
   .rev-summary .score .count{margin-top:5px;font-family:var(--font-button);font-size:10.5px;color:var(--text-3)}
@@ -376,16 +378,17 @@
   /* no padding here - the marquee bleeds to the full section edges so cards
      scroll off past the viewport on both sides, matching the reference's
      edge-to-edge infinite conveyor look instead of a padded, boxed-in strip */
-  .rev-marquee{overflow:hidden}
+  .rev-marquee{overflow:hidden;margin-top:20px}
+  @media (min-width:980px){.rev-marquee{margin-top:22px}}
   .rev-track{display:flex;gap:10px;width:max-content;animation:revScroll 40s linear infinite}
   @media (min-width:980px){.rev-track{gap:14px}}
   .rev-marquee:hover .rev-track{animation-play-state:paused}
   @keyframes revScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   .rev-track .is-dupe{display:contents}
-  .rev-card{flex:0 0 268px;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;display:flex;flex-direction:column}
+  .rev-card{flex:0 0 268px;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px;display:flex;flex-direction:column}
   @media (min-width:980px){.rev-card{flex-basis:320px}}
-  .stars{color:var(--yellow);font-size:13px;letter-spacing:2px}
-  .rev-card .tag{display:inline-flex;align-self:flex-start;margin-top:10px;padding:5px 9px;border-radius:99px;background:var(--bg-secondary);border:1px solid var(--border);color:var(--dark);font-family:var(--font-button);font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+  .stars{color:var(--yellow);font-size:12.5px;letter-spacing:.24em}
+  .rev-card .tag{display:inline-flex;align-self:flex-start;margin-top:10px;padding:5px 9px;border-radius:99px;background:var(--bg-secondary);border:1px solid var(--border);color:var(--dark);font-family:var(--font-button);font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
   .rev-card p{font-size:13px;line-height:1.5;color:var(--text-2);margin:9px 0 0}
   .rev-card .attrib{margin-top:auto;padding-top:12px;font-size:13px;color:var(--text-3)}
   .rev-card .attrib b{color:var(--text);font-weight:700}
