@@ -357,7 +357,10 @@
      by the page gutter), not with .head's own invisible outer div edge -
      matching that outer edge instead left this card flush against the
      screen with no side gutter at all on mobile */
-  .rev-summary{width:calc(100% - var(--pad-x) * 2);max-width:calc(var(--w) - var(--pad-x) * 2);margin:0 auto 24px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  /* nowrap on purpose - score/divider/bars stay side by side at every width,
+     matching the reference; .bars shrinks via min-width:0 instead of the
+     row wrapping the bars underneath the score column */
+  .rev-summary{width:calc(100% - var(--pad-x) * 2);max-width:calc(var(--w) - var(--pad-x) * 2);margin:0 auto 24px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;align-items:center;gap:16px;flex-wrap:nowrap}
   @media (min-width:980px){.rev-summary{padding:24px 30px;gap:28px}}
   .rev-summary .score{flex:0 0 auto;display:flex;flex-direction:column;gap:2px}
   .rev-summary .score .num{display:flex;align-items:flex-end;gap:3px;line-height:1}
@@ -369,13 +372,12 @@
   .rev-summary .div{width:1px;align-self:stretch;background:var(--border)}
   .rev-summary .highlights{flex:1 1 240px;min-width:0;display:flex;flex-wrap:wrap;gap:8px}
   .rev-summary .highlights span{font-family:var(--font-button);font-size:11.5px;font-weight:600;color:var(--text-2);background:var(--white);border:1px solid var(--border);border-radius:99px;padding:6px 12px}
-  .rev-summary .bars{flex:1 1 260px;min-width:0;display:grid;gap:10px}
-  .rev-summary .bar-row{display:grid;grid-template-columns:112px minmax(0,1fr) 28px;gap:8px;align-items:center}
+  .rev-summary .bars{flex:1 1 auto;min-width:0;display:grid;gap:10px}
+  .rev-summary .bar-row{display:grid;grid-template-columns:92px minmax(0,1fr) 26px;gap:8px;align-items:center}
   .rev-summary .bar-row span{font-family:var(--font-button);font-size:11px;color:var(--text-2)}
   .rev-summary .bar-row .track{height:6px;background:var(--border);border-radius:99px;overflow:hidden}
   .rev-summary .bar-row .fill{display:block;height:100%;background:var(--dark);border-radius:99px}
   .rev-summary .bar-row b{font-family:var(--font-button);font-size:11px;color:var(--dark);text-align:right}
-  @media (max-width:520px){.rev-summary .div{display:none}}
   /* no padding here - the marquee bleeds to the full section edges so cards
      scroll off past the viewport on both sides, matching the reference's
      edge-to-edge infinite conveyor look instead of a padded, boxed-in strip */
