@@ -191,14 +191,9 @@
   @media (max-width:639px){.toolbar .wrap{flex-direction:column;align-items:stretch}}
 
   .filter-group{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0}
-  .filter-lab{flex:0 0 auto;display:flex;align-items:center;gap:6px;font-family:var(--font-button);font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--text-3)}
-  .filter-lab i{font-size:14px;line-height:1}
-  .filters{display:flex;gap:8px;flex-wrap:wrap;overflow-x:auto;scrollbar-width:none}
-  .filters::-webkit-scrollbar{display:none}
   .chip{flex:0 0 auto;font-family:var(--font-button);font-size:12px;font-weight:600;color:var(--text-2);background:var(--white);border:1px solid var(--border);border-radius:var(--pill);padding:8px 14px;display:flex;align-items:center;gap:6px;white-space:nowrap}
   .chip:hover{border-color:var(--dark);color:var(--dark)}
   .chip.on{background:var(--dark);border-color:var(--dark);color:#fff}
-  .chip svg{width:10px;height:10px}
 
   /* more-filters dropdown */
   .filter-more{position:relative;flex:0 0 auto}
@@ -239,22 +234,19 @@
   .price-range .field input:focus{outline:none}
   .price-range .sep{color:var(--text-3);font-size:13px}
 
-  /* ---------- mobile filter/sort bar ---------- */
-  .mobile-fs-bar{display:none}
-  @media (max-width:639px){
-    /* no opacity here: opacity on an ancestor composites its whole subtree as
-       transparent, including position:fixed descendants (.filter-panel/.filter-overlay)
-       which can't escape it the way they escape overflow/width/height - zero size +
-       overflow:hidden already fully hides .wrap's own (empty) box */
-    .toolbar .wrap{position:absolute;width:0;height:0;padding:0;margin:0;border:0;overflow:hidden;pointer-events:none}
-    .mobile-fs-bar{display:flex;align-items:center;justify-content:space-between;padding:12px var(--pad-x)}
-    .mfs-btn{display:flex;align-items:center;gap:8px;background:none;border:0;padding:0;font-family:var(--font-button);font-size:13px;font-weight:600;color:var(--text)}
-    .mfs-btn i{font-size:15px;color:var(--text-2)}
-    .mfs-view{display:flex;align-items:center;gap:10px}
-    .mfs-view-btn{background:none;border:0;padding:4px;color:var(--text-3);display:flex}
-    .mfs-view-btn.on{color:var(--dark)}
-    .mfs-view-btn i{font-size:18px}
-  }
+  /* ---------- filter/sort bar (same compact UI at every breakpoint) ---------- */
+  /* no opacity here: opacity on an ancestor composites its whole subtree as
+     transparent, including position:fixed descendants (.filter-panel/.filter-overlay)
+     which can't escape it the way they escape overflow/width/height - zero size +
+     overflow:hidden already fully hides .wrap's own (empty) box */
+  .toolbar .wrap{position:absolute;width:0;height:0;padding:0;margin:0;border:0;overflow:hidden;pointer-events:none}
+  .mobile-fs-bar{display:flex;align-items:center;justify-content:space-between;padding:12px var(--pad-x)}
+  .mfs-btn{display:flex;align-items:center;gap:8px;background:none;border:0;padding:0;font-family:var(--font-button);font-size:13px;font-weight:600;color:var(--text)}
+  .mfs-btn i{font-size:15px;color:var(--text-2)}
+  .mfs-view{display:flex;align-items:center;gap:10px}
+  .mfs-view-btn{background:none;border:0;padding:4px;color:var(--text-3);display:flex}
+  .mfs-view-btn.on{color:var(--dark)}
+  .mfs-view-btn i{font-size:18px}
 
   /* ---------- filter drawer (full-screen at every breakpoint) ---------- */
   .filter-overlay{position:fixed;inset:0;background:rgba(22,30,19,.4);z-index:55;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s}
@@ -295,7 +287,9 @@
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 12px}
   @media (max-width:639px){.grid.is-compact{grid-template-columns:repeat(3,1fr);gap:8px 6px}}
   @media (min-width:640px){.grid{grid-template-columns:repeat(3,1fr);gap:22px 18px}}
+  @media (min-width:640px){.grid.is-compact{grid-template-columns:repeat(4,1fr);gap:14px 12px}}
   @media (min-width:980px){.grid{grid-template-columns:repeat(4,1fr)}}
+  @media (min-width:980px){.grid.is-compact{grid-template-columns:repeat(5,1fr)}}
   .card{display:flex;flex-direction:column;position:relative}
   .card.is-filtered-out{display:none}
   .card .wish{position:absolute;top:10px;right:10px;z-index:2;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);border:0;display:flex;align-items:center;justify-content:center;color:var(--text-2);box-shadow:0 2px 8px rgba(0,0,0,.14);transition:color .15s ease-out}
@@ -558,15 +552,6 @@
 
   <div class="wrap">
     <div class="filter-group">
-      <span class="filter-lab"><i class="ti ti-adjustments-horizontal"></i>Category</span>
-      <div class="filters" id="quickCategoryFilters">
-        <button class="chip on" data-category="all">All categories</button>
-        <button class="chip" data-category="nesting-table">Nesting Table</button>
-        <button class="chip" data-category="wall-decor">Wall Décor</button>
-        <button class="chip" data-category="furniture">Furniture</button>
-        <button class="chip" data-category="tableware">Tableware</button>
-        <button class="chip" data-category="table-accents">Table Accents</button>
-      </div>
       <div class="filter-more">
         <button class="filter-toggle chip" id="filterToggleBtn" aria-expanded="false" aria-controls="filterPanel">
           <i class="ti ti-filter-plus"></i>More filters<span class="count">0</span><i class="ti ti-chevron-down chev"></i>
@@ -1045,26 +1030,19 @@
   (function(){
     const grid = document.querySelector('.grid-sec .grid');
     const products = () => [...grid.querySelectorAll('.card[data-material]')];
-    const categoryChips = [...document.querySelectorAll('#quickCategoryFilters .chip')];
+    const categoryChecks = [...document.querySelectorAll('#filterPanel input[name="category"]')];
     const matSwatches = [...document.querySelectorAll('#matSwatches .mat-swatch')];
     const matPreview = document.getElementById('matPreview');
-    let activeCategory = 'all';
 
-    // category quick-chips filter the main grid
+    // category checkboxes in the filter drawer filter the main grid (any checked = OR match)
     function applyCategoryFilter(){
+      const checked = categoryChecks.filter(c=>c.checked).map(c=>c.value);
       products().forEach(card=>{
-        const matches = activeCategory === 'all' || card.dataset.category === activeCategory;
+        const matches = checked.length === 0 || checked.includes(card.dataset.category);
         card.classList.toggle('is-filtered-out', !matches);
       });
     }
-    categoryChips.forEach(chip=>{
-      chip.addEventListener('click', ()=>{
-        activeCategory = chip.dataset.category;
-        categoryChips.forEach(x=>x.classList.remove('on'));
-        chip.classList.add('on');
-        applyCategoryFilter();
-      });
-    });
+    categoryChecks.forEach(cb=>cb.addEventListener('change', applyCategoryFilter));
 
     // material swatches only affect this section's own preview strip
     function buildPreviewCard(realCard){
@@ -1157,6 +1135,7 @@
     document.getElementById('filterClearBtn').addEventListener('click',()=>{
       boxes().forEach(b=>b.checked = false);
       updateCount();
+      document.querySelector('#filterPanel input[name="category"]')?.dispatchEvent(new Event('change', {bubbles:true}));
     });
     document.getElementById('filterApplyBtn').addEventListener('click', close);
   })();
