@@ -240,13 +240,24 @@
      which can't escape it the way they escape overflow/width/height - zero size +
      overflow:hidden already fully hides .wrap's own (empty) box */
   .toolbar .wrap{position:absolute;width:0;height:0;padding:0;margin:0;border:0;overflow:hidden;pointer-events:none}
-  .mobile-fs-bar{display:flex;align-items:center;justify-content:space-between;padding:12px var(--pad-x)}
-  .mfs-btn{display:flex;align-items:center;gap:8px;background:none;border:0;padding:0;font-family:var(--font-button);font-size:13px;font-weight:600;color:var(--text)}
+  .mobile-fs-bar{display:flex;align-items:center;justify-content:space-between;padding:12px var(--pad-x);gap:16px}
+  .mfs-btn{display:flex;align-items:center;gap:8px;background:none;border:0;padding:0;font-family:var(--font-button);font-size:13px;font-weight:600;color:var(--text);flex:0 0 auto}
   .mfs-btn i{font-size:15px;color:var(--text-2)}
+  .mfs-right{display:flex;align-items:center;gap:16px;flex:0 0 auto}
   .mfs-view{display:flex;align-items:center;gap:10px}
   .mfs-view-btn{background:none;border:0;padding:4px;color:var(--text-3);display:flex}
   .mfs-view-btn.on{color:var(--dark)}
   .mfs-view-btn i{font-size:18px}
+
+  /* ---------- desktop quick filter pills (Filter icon -> pills -> view/sort) ---------- */
+  .mfs-pills{display:none}
+  @media (min-width:980px){
+    .mfs-pills{display:flex;align-items:center;gap:8px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+    .mfs-pills::-webkit-scrollbar{display:none}
+    .mfs-pill{flex:0 0 auto;font-family:var(--font-button);font-size:13px;font-weight:500;color:var(--text-2);background:var(--white);border:1px solid var(--border);border-radius:var(--pill);padding:8px 16px;white-space:nowrap;transition:background .15s ease-out,color .15s ease-out,border-color .15s ease-out}
+    .mfs-pill:hover{border-color:var(--text-2);color:var(--text)}
+    .mfs-pill.on{background:var(--dark);border-color:var(--dark);color:#fff}
+  }
 
   /* ---------- filter drawer (full-screen at every breakpoint) ---------- */
   .filter-overlay{position:fixed;inset:0;background:rgba(22,30,19,.4);z-index:55;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s}
@@ -530,6 +541,15 @@
 <div class="toolbar">
   <div class="mobile-fs-bar">
     <button class="mfs-btn" id="mFilterBtn"><span>Filter</span><i class="ti ti-adjustments-horizontal"></i></button>
+    <div class="mfs-pills" id="mfsPills">
+      <button type="button" class="mfs-pill on" data-category="all">All</button>
+      <button type="button" class="mfs-pill" data-category="nesting-table">Nesting Table</button>
+      <button type="button" class="mfs-pill" data-category="wall-decor">Wall Décor</button>
+      <button type="button" class="mfs-pill" data-category="furniture">Furniture</button>
+      <button type="button" class="mfs-pill" data-category="tableware">Tableware</button>
+      <button type="button" class="mfs-pill" data-category="table-accents">Table Accents</button>
+    </div>
+    <div class="mfs-right">
     <div class="mfs-view">
       <button class="mfs-view-btn" id="viewGridBtn" aria-label="Compact grid view"><i class="ti ti-grid-dots"></i></button>
       <button class="mfs-view-btn on" id="viewListBtn" aria-label="Large grid view"><i class="ti ti-square"></i></button>
@@ -547,6 +567,7 @@
         <button type="button" class="sort-opt" data-value="Date, old to new"><span>Date, old to new</span><i class="ti ti-check"></i></button>
         <button type="button" class="sort-opt" data-value="Date, new to old"><span>Date, new to old</span><i class="ti ti-check"></i></button>
       </div>
+    </div>
     </div>
   </div>
 
@@ -1043,6 +1064,22 @@
       });
     }
     categoryChecks.forEach(cb=>cb.addEventListener('change', applyCategoryFilter));
+
+    // desktop quick filter pills: single-select, kept in sync with the drawer's checkboxes
+    const mfsPills = [...document.querySelectorAll('#mfsPills .mfs-pill')];
+    mfsPills.forEach(pill=>{
+      pill.addEventListener('click', ()=>{
+        const cat = pill.dataset.category;
+        mfsPills.forEach(p=>p.classList.toggle('on', p === pill));
+        categoryChecks.forEach(cb=>{ cb.checked = cat !== 'all' && cb.value === cat; });
+        applyCategoryFilter();
+      });
+    });
+    categoryChecks.forEach(cb=>cb.addEventListener('change', ()=>{
+      const checked = categoryChecks.filter(c=>c.checked).map(c=>c.value);
+      const single = checked.length === 1 ? checked[0] : 'all';
+      mfsPills.forEach(p=>p.classList.toggle('on', p.dataset.category === single));
+    }));
 
     // material swatches only affect this section's own preview strip
     function buildPreviewCard(realCard){
