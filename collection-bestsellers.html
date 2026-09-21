@@ -301,7 +301,12 @@
   @media (min-width:640px){.grid.is-compact{grid-template-columns:repeat(4,1fr);gap:14px 12px}}
   @media (min-width:980px){.grid{grid-template-columns:repeat(4,1fr)}}
   @media (min-width:980px){.grid.is-compact{grid-template-columns:repeat(5,1fr)}}
-  .card{display:flex;flex-direction:column;position:relative}
+  /* min-width:0 stops the grid tracks from growing unevenly - .card .name uses
+     display:-webkit-box for line-clamping, which some browsers report as
+     intrinsically as wide as its full unwrapped text for min-content sizing,
+     so a card with a longer product name would otherwise force its whole
+     grid column (and every card in it) wider than the other columns */
+  .card{display:flex;flex-direction:column;position:relative;min-width:0}
   .card.is-filtered-out{display:none}
   .card .wish{position:absolute;top:10px;right:10px;z-index:2;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);border:0;display:flex;align-items:center;justify-content:center;color:var(--text-2);box-shadow:0 2px 8px rgba(0,0,0,.14);transition:color .15s ease-out}
   .card .wish:hover{color:var(--dark)}
