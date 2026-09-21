@@ -296,11 +296,12 @@
   /* ---------- product grid ---------- */
   .grid-sec{padding:26px 0 8px}
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 12px}
-  @media (max-width:639px){.grid.is-compact{grid-template-columns:repeat(3,1fr);gap:8px 6px}}
   @media (min-width:640px){.grid{grid-template-columns:repeat(3,1fr);gap:22px 18px}}
-  @media (min-width:640px){.grid.is-compact{grid-template-columns:repeat(4,1fr);gap:14px 12px}}
   @media (min-width:980px){.grid{grid-template-columns:repeat(4,1fr)}}
-  @media (min-width:980px){.grid.is-compact{grid-template-columns:repeat(5,1fr)}}
+  /* full image view - one big card per row on mobile, two per row from
+     tablet up, using the same .card markup at a larger natural size */
+  .grid.is-full{grid-template-columns:1fr;gap:28px}
+  @media (min-width:640px){.grid.is-full{grid-template-columns:repeat(2,1fr);gap:28px 24px}}
   /* min-width:0 stops the grid tracks from growing unevenly - .card .name uses
      display:-webkit-box for line-clamping, which some browsers report as
      intrinsically as wide as its full unwrapped text for min-content sizing,
@@ -328,15 +329,9 @@
   .creative-proudly-made img{object-position:20% center}
   .card-creative:hover img{transform:scale(1.03)}
 
-  @media (max-width:639px){
-    .grid.is-compact .card .thumb{margin-bottom:8px}
-    .grid.is-compact .card .name{font-size:12px;height:34px;margin-bottom:5px}
-    .grid.is-compact .card .price-row{margin-bottom:8px}
-    .grid.is-compact .card .now{font-size:14px}
-    .grid.is-compact .card .was{font-size:11px}
-    .grid.is-compact .card .add{display:none}
-  }
-
+  /* full image view - larger type to match the bigger cards */
+  .grid.is-full .card .name{font-size:17px;height:auto;-webkit-line-clamp:unset;margin-bottom:10px}
+  .grid.is-full .card .now{font-size:19px}
 
   /* ---------- editorial / story ---------- */
   .story{padding:var(--inner) 0}
@@ -571,8 +566,8 @@
     </div>
     <div class="mfs-right">
     <div class="mfs-view">
-      <button class="mfs-view-btn" id="viewGridBtn" aria-label="Compact grid view"><i class="ti ti-grid-dots"></i></button>
-      <button class="mfs-view-btn on" id="viewListBtn" aria-label="Large grid view"><i class="ti ti-square"></i></button>
+      <button class="mfs-view-btn" id="viewFullBtn" aria-label="Full image view"><i class="ti ti-layout-2"></i></button>
+      <button class="mfs-view-btn on" id="viewListBtn" aria-label="Standard grid view"><i class="ti ti-square"></i></button>
     </div>
     <div class="sort-fab">
       <button class="mfs-btn" id="mSortBtn"><span>Sort</span><i class="ti ti-arrows-sort"></i></button>
@@ -1228,20 +1223,20 @@
   })();
 
   (function(){
-    const gridBtn = document.getElementById('viewGridBtn');
+    const fullBtn = document.getElementById('viewFullBtn');
     const listBtn = document.getElementById('viewListBtn');
     const grid = document.querySelector('.grid-sec .grid');
-    if(!gridBtn || !listBtn || !grid) return;
+    if(!fullBtn || !listBtn || !grid) return;
 
-    gridBtn.addEventListener('click',()=>{
-      grid.classList.add('is-compact');
-      gridBtn.classList.add('on');
+    fullBtn.addEventListener('click',()=>{
+      grid.classList.add('is-full');
+      fullBtn.classList.add('on');
       listBtn.classList.remove('on');
     });
     listBtn.addEventListener('click',()=>{
-      grid.classList.remove('is-compact');
+      grid.classList.remove('is-full');
       listBtn.classList.add('on');
-      gridBtn.classList.remove('on');
+      fullBtn.classList.remove('on');
     });
   })();
 
