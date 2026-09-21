@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bestsellers - Wewood</title>
+<meta name="description" content="Our most-loved nesting tables, side tables, wall clocks and platters, handcrafted in teak, sheesham and acacia wood with hand-poured resin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Urbanist:wght@400;500;600;700&family=Inter:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.47.0/dist/tabler-icons.min.css">
+<style>
+  :root{
+    --bg:#f0f0f0;
+    --bg-secondary:#f9f9f9;
+    --header:#e1e1e1;
+    --white:#fff;
+    --black:#000;
+    --dark:#161e13;
+    --text:#333333;
+    --text-2:#525252;
+    --text-3:#9d9d9d;
+    --border:#cdcdcd;
+    --silver:#c4c4c4;
+    --sale:#cc0000;
+    --green:#198754;
+    --yellow:#f9d35c;
+    --radius:16px;
+    --pill:32px;
+    --gutter:18px;
+    --page-gutter:60px;
+    --gap:20px;
+    --inner:54px;
+    --font-body:'Manrope', sans-serif;
+    --font-heading:'Urbanist', sans-serif;
+    --font-button:'Inter', sans-serif;
+    --w:1280px;
+    --pad-x:var(--gutter);
+  }
+  @media (min-width:640px){ :root{ --pad-x:var(--page-gutter); } }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:var(--font-body);font-size:15px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer}
+  .wrap{max-width:var(--w);margin:0 auto;padding:0 var(--pad-x)}
+  h1,h2,h3{font-family:var(--font-heading);font-weight:400;margin:0;color:var(--dark)}
+  .eyebrow{font-family:var(--font-button);font-size:11.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-3)}
+
+  /* ---------- micro trust strip ---------- */
+  .micro-strip{background:var(--dark);color:#fff;overflow:hidden}
+  .micro-strip .track{display:flex;gap:48px;padding:8px 0;animation:scroll 26s linear infinite;white-space:nowrap;width:max-content}
+  .micro-strip span{font-family:var(--font-button);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#e7e2d8;display:flex;align-items:center;gap:8px}
+  .micro-strip span::before{content:"";width:3px;height:3px;border-radius:99px;background:var(--yellow)}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.micro-strip .track{animation:none}}
+
+  /* ---------- header ---------- */
+  header{
+    background:rgba(225,225,225,.78);
+    -webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);
+    position:sticky;top:0;z-index:50;overflow:visible;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset;
+  }
+  header::after{
+    content:"";position:absolute;left:0;right:0;bottom:-14px;height:14px;pointer-events:none;
+    background:linear-gradient(rgba(20,20,20,.06),transparent);
+  }
+  .header-in{max-width:var(--w);margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:12px}
+  .menu-btn{flex:0 0 auto;display:flex;flex-direction:column;gap:4px;background:none;border:0;padding:6px}
+  .menu-btn span{width:20px;height:2px;background:var(--dark)}
+  .logo{margin:0 auto 0 0;display:flex;align-items:baseline;gap:8px;font-family:var(--font-heading);white-space:nowrap;min-width:0;overflow:hidden}
+  .logo b{font-size:18px;font-weight:700;letter-spacing:.01em;color:var(--dark);white-space:nowrap}
+  .logo em{font-style:normal;font-family:var(--font-button);font-size:9px;letter-spacing:.1em;color:var(--text-2);text-transform:uppercase;white-space:nowrap;display:none}
+  .icon-row{display:flex;align-items:center;gap:14px;flex:0 0 auto}
+  @media (min-width:520px){
+    .header-in{padding:16px 20px;gap:24px}
+    .logo b{font-size:22px;letter-spacing:.02em}
+    .logo em{display:inline;align-self:flex-end;margin-bottom:2px}
+    .icon-row{gap:18px}
+  }
+  .icon-btn{background:none;border:0;color:var(--dark);position:relative;display:flex}
+  .cart-count{position:absolute;top:-7px;right:-8px;background:var(--dark);color:#fff;font-size:10px;font-family:var(--font-button);width:16px;height:16px;border-radius:var(--pill);display:flex;align-items:center;justify-content:center}
+  nav.subnav{
+    position:relative;
+    background:rgba(255,255,255,.72);
+    -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
+    overflow-x:auto;scrollbar-width:none;
+  }
+  nav.subnav::after{
+    content:"";position:absolute;left:0;right:0;bottom:-12px;height:12px;pointer-events:none;
+    background:linear-gradient(rgba(20,20,20,.05),transparent);
+  }
+  nav.subnav::-webkit-scrollbar{display:none}
+  nav.subnav .subnav-in{max-width:var(--w);margin:0 auto;padding:0 var(--pad-x);display:flex;gap:28px;white-space:nowrap}
+  nav.subnav a{font-family:var(--font-button);font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--text-2);padding:13px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+  nav.subnav a.on,nav.subnav a:hover{color:var(--dark);border-bottom-color:var(--dark)}
+
+  /* ---------- breadcrumb ---------- */
+  .crumb{padding:14px var(--pad-x) 0}
+  .crumb .wrap{font-family:var(--font-button);font-size:12px;color:var(--text-3);display:flex;gap:6px;align-items:center}
+  .crumb a:hover{color:var(--dark)}
+  .crumb .sep{color:var(--silver)}
+  .crumb .cur{color:var(--text)}
+
+  /* ---------- hero banner ---------- */
+  .hero-banner{position:relative;overflow:hidden;min-height:340px;display:flex;align-items:flex-end}
+  .hero-banner .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .hero-banner .hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,9,6,.1) 0%,rgba(10,9,6,.18) 45%,rgba(10,9,6,.78) 100%)}
+  .hero-content{position:relative;z-index:1;width:100%;padding:40px var(--pad-x) 32px}
+  .hero-content h1{font-size:clamp(32px,6vw,56px);letter-spacing:-.015em;color:#fff}
+  .hero-content .sub{max-width:60ch;margin:14px 0 0;color:rgba(255,255,255,.88);font-size:14.5px;line-height:1.65}
+  .hero-content .sub b{color:#fff;font-weight:700}
+  @media (min-width:760px){.hero-banner{min-height:440px}.hero-content{padding:56px var(--pad-x) 44px}}
+
+  /* ---------- shop-by-collection rail ---------- */
+  .rail-sec{padding:34px 0 40px}
+  .rail-sec h2{font-size:clamp(22px,3vw,28px);margin:0 0 20px;padding:0 var(--pad-x)}
+  .rail-sec h2 em{font-style:italic;color:var(--text-2)}
+  .rail{display:flex;gap:16px;overflow-x:auto;padding:0 var(--pad-x) 6px;scroll-snap-type:x proximity;scrollbar-width:none}
+  .rail::-webkit-scrollbar{display:none}
+  .rail a{position:relative;flex:0 0 224px;aspect-ratio:3/4;scroll-snap-align:start;border-radius:var(--radius);overflow:hidden;background:var(--bg-secondary);display:block}
+  @media (min-width:640px){.rail a{flex-basis:268px}}
+  .rail a img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .rail a:hover img{transform:scale(1.06)}
+  .rail .pill{position:absolute;left:12px;right:12px;bottom:12px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--white);color:var(--dark);border-radius:16px;padding:9px 8px 9px 14px;font-family:var(--font-button);font-size:13px;font-weight:600;box-shadow:0 8px 22px -10px rgba(0,0,0,.35);transition:background .3s ease,color .3s ease}
+  .rail .arrow{flex:none;width:26px;height:26px;border-radius:99px;background:var(--dark);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px;transition:transform .3s ease}
+  .rail a:hover .arrow{transform:rotate(45deg)}
+
+  /* ---------- usp strip (offer + trust) ---------- */
+  .usp-wrap{padding:18px var(--pad-x) 0}
+  .usp-strip{background:var(--dark);border:0;border-radius:var(--radius);display:flex;flex-direction:column}
+  @media (min-width:940px){.usp-strip{flex-direction:row;align-items:stretch}}
+
+  .usp-offer{padding:18px var(--pad-x);display:flex;flex-direction:column;gap:10px}
+  @media (min-width:940px){.usp-offer{flex:0 0 auto;max-width:360px;justify-content:center}}
+  .usp-offer .lab{font-family:var(--font-button);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow)}
+  .usp-offer .headline{font-size:13.5px;line-height:1.5;color:#fff;margin:0}
+  .usp-offer .headline b{font-weight:700;color:var(--yellow)}
+  .bank-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:2px}
+  .bank-tile{display:flex;align-items:center;justify-content:center;background:var(--white);border:1px solid rgba(255,255,255,.5);border-radius:6px;padding:5px 9px;height:28px}
+  .bank-tile svg,.bank-tile img{height:16px;width:auto;display:block}
+
+  .usp-div{border-top:1px solid rgba(255,255,255,.25)}
+  @media (min-width:940px){.usp-div{border-top:0;border-left:1px solid rgba(255,255,255,.25)}}
+
+  .usp-trust{padding:16px var(--pad-x);display:grid;grid-template-columns:repeat(2,1fr);gap:16px 12px;flex:1}
+  @media (min-width:600px){.usp-trust{grid-template-columns:repeat(3,1fr)}}
+  @media (min-width:940px){.usp-trust{grid-template-columns:repeat(6,1fr);align-items:center;gap:10px}}
+  .trust-item{display:flex;align-items:center;gap:10px}
+  @media (min-width:940px){.trust-item{flex-direction:column;text-align:center;gap:8px}}
+  .trust-item .ic{flex:0 0 auto;width:52px;height:52px;border-radius:var(--pill);background:var(--bg-secondary);color:var(--dark);display:flex;align-items:center;justify-content:center}
+  .trust-item .ic i{font-size:24px;line-height:1}
+  .trust-item span:last-child{font-family:var(--font-button);font-size:12.5px;font-weight:600;color:#fff;line-height:1.35}
+
+  /* ---------- toolbar ---------- */
+  .toolbar{position:relative;z-index:10;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:28px}
+  .toolbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px var(--pad-x);padding:14px var(--pad-x);flex-wrap:wrap}
+  @media (max-width:639px){.toolbar .wrap{flex-direction:column;align-items:stretch}}
+
+  .filter-group{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0}
+  .filter-lab{flex:0 0 auto;display:flex;align-items:center;gap:6px;font-family:var(--font-button);font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--text-3)}
+  .filter-lab i{font-size:14px;line-height:1}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;overflow-x:auto;scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto;font-family:var(--font-button);font-size:12px;font-weight:600;color:var(--text-2);background:var(--white);border:1px solid var(--border);border-radius:var(--pill);padding:8px 14px;display:flex;align-items:center;gap:6px;white-space:nowrap}
+  .chip:hover{border-color:var(--dark);color:var(--dark)}
+  .chip.on{background:var(--dark);border-color:var(--dark);color:#fff}
+  .chip svg{width:10px;height:10px}
+
+  /* more-filters dropdown */
+  .filter-more{position:relative;flex:0 0 auto}
+  .filter-toggle{position:relative}
+  .filter-toggle i:first-child{font-size:13px}
+  .filter-toggle .chev{font-size:11px;transition:transform .2s ease;color:var(--text-3)}
+  .filter-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+  .filter-toggle .count{display:none;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 4px;border-radius:var(--pill);background:var(--dark);color:#fff;font-size:10px;font-weight:700}
+  .filter-toggle.has-active .count{display:inline-flex}
+
+  .filter-panel{position:absolute;top:calc(100% + 10px);left:0;z-index:30;width:min(560px,86vw);background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 16px 40px -12px rgba(22,30,19,.22);padding:18px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s ease,transform .2s ease,visibility .2s}
+  .filter-panel.is-open{opacity:1;visibility:visible;transform:translateY(0)}
+  .filter-panel-grid{display:grid;grid-template-columns:1fr;gap:20px}
+  @media (min-width:480px){.filter-panel-grid{grid-template-columns:1fr 1fr}}
+  .filter-panel-col h4{margin:0 0 10px;font-family:var(--font-button);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3)}
+  .filter-panel-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;max-height:220px;overflow-y:auto}
+  .filter-check{display:flex;align-items:center;gap:9px;padding:6px 4px;border-radius:8px;cursor:pointer;font-family:var(--font-body);font-size:13px;color:var(--text)}
+  .filter-check:hover{background:var(--bg-secondary)}
+  .filter-check input{width:15px;height:15px;accent-color:var(--dark);flex:none}
+  .filter-panel-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+  .filter-clear{background:none;border:0;padding:0;font-family:var(--font-button);font-size:12px;font-weight:600;color:var(--text-3);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+  .filter-clear:hover{color:var(--dark)}
+  .filter-apply{font-family:var(--font-button);font-size:12px;font-weight:600;background:var(--dark);color:#fff;border:0;border-radius:var(--pill);padding:9px 20px;cursor:pointer;transition:background .2s ease}
+  .filter-apply:hover{background:var(--yellow);color:var(--dark)}
+
+  @media (max-width:639px){.toolbar-div{border-top:1px solid var(--border);margin:2px 0 0}}
+  @media (min-width:640px){.toolbar-div{width:1px;align-self:stretch;background:var(--border);flex:0 0 auto}}
+
+  .sort-wrap{flex:0 0 auto;position:relative;display:flex;align-items:center;gap:8px;font-family:var(--font-button);font-size:12px;font-weight:600;color:var(--text-3)}
+  .sort-wrap label{display:flex;align-items:center;gap:5px}
+  .sort-wrap label i{font-size:14px}
+  .select-shell{position:relative;display:flex;align-items:center}
+  .select-shell i{position:absolute;right:12px;font-size:13px;color:var(--text-3);pointer-events:none;transition:transform .2s ease}
+  select#sort{appearance:none;font:inherit;font-weight:600;color:var(--dark);background:var(--white);border:1px solid var(--border);border-radius:var(--pill);padding:8px 32px 8px 14px;transition:border-color .2s ease,box-shadow .2s ease;cursor:pointer}
+  select#sort:hover{border-color:var(--dark)}
+  select#sort:focus-visible{outline:none;border-color:var(--dark);box-shadow:0 0 0 3px rgba(22,30,19,.12)}
+  select#sort:focus-visible + i{transform:rotate(180deg)}
+
+  /* ---------- product grid ---------- */
+  .grid-sec{padding:26px 0 8px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 12px}
+  @media (min-width:640px){.grid{grid-template-columns:repeat(3,1fr);gap:22px 18px}}
+  @media (min-width:980px){.grid{grid-template-columns:repeat(4,1fr)}}
+  .card{background:var(--white);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);display:flex;flex-direction:column;position:relative}
+  .card .badge{position:absolute;top:10px;left:10px;background:var(--sale);color:#fff;font-family:var(--font-button);font-size:10.5px;font-weight:600;padding:4px 9px;border-radius:var(--pill);z-index:2}
+  .card .wish{position:absolute;top:8px;right:8px;z-index:2;background:rgba(255,255,255,.92);width:30px;height:30px;border-radius:var(--pill);border:0;display:flex;align-items:center;justify-content:center;color:var(--text-2)}
+  .card .wish:hover{color:var(--sale)}
+  .card .thumb{aspect-ratio:1/1;background:var(--bg-secondary);overflow:hidden}
+  .card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .card:hover .thumb img{transform:scale(1.045)}
+  .card .info{padding:13px 14px 16px;display:flex;flex-direction:column;gap:7px;flex:1}
+  .card .mat{font-family:var(--font-button);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+  .card .name{font-size:13.5px;font-weight:600;color:var(--text);line-height:1.4;min-height:2.8em}
+  .card .price-row{display:flex;align-items:baseline;gap:8px;margin-top:auto;flex-wrap:wrap}
+  .card .now{font-family:var(--font-heading);font-weight:700;font-size:17px;color:var(--dark)}
+  .card .was{font-size:12px;color:var(--text-3);text-decoration:line-through}
+  .card .save{font-family:var(--font-button);font-size:10.5px;font-weight:600;color:var(--green)}
+  .card .add{margin-top:9px;font-family:var(--font-button);font-size:11.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;background:var(--dark);color:#fff;border:0;border-radius:var(--pill);padding:10px;transition:background .2s,color .2s}
+  .card .add:hover{background:var(--yellow);color:var(--dark)}
+
+  .loadmore{display:flex;justify-content:center;padding:30px 0 46px}
+  .btn-outline{font-family:var(--font-button);font-size:12.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--dark);background:var(--white);border:1px solid var(--dark);border-radius:var(--pill);padding:13px 30px}
+  .btn-outline:hover{background:var(--dark);color:#fff}
+
+  /* ---------- by material ---------- */
+  .material-sec{background:var(--white);border-top:1px solid var(--border);padding:var(--inner) 0}
+  .material-sec h2{font-size:22px;letter-spacing:-.01em;text-align:center;margin-bottom:22px}
+  .mat-grid{display:grid;grid-template-columns:1fr;gap:14px}
+  @media (min-width:700px){.mat-grid{grid-template-columns:repeat(3,1fr)}}
+  .mat-tile{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;background:var(--bg-secondary)}
+  .mat-tile img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .mat-tile:hover img{transform:scale(1.06)}
+  .mat-tile::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60%;background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.55));pointer-events:none}
+  .mat-tile .cap{position:absolute;left:16px;bottom:14px;z-index:1}
+  .mat-tile .cap b{display:block;font-family:var(--font-heading);font-size:18px;color:#fff}
+  .mat-tile .cap span{font-family:var(--font-button);font-size:11px;color:var(--yellow);font-weight:600}
+
+  /* ---------- editorial / story ---------- */
+  .story{padding:var(--inner) 0}
+  .story .grid2{display:grid;grid-template-columns:1fr;gap:30px;align-items:center}
+  @media (min-width:800px){.story .grid2{grid-template-columns:1fr 1.1fr;gap:56px}}
+  .story .ph{aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;background:var(--bg-secondary)}
+  .story .ph img{width:100%;height:100%;object-fit:cover}
+  .story h2{font-size:clamp(24px,3.4vw,32px);line-height:1.2;letter-spacing:-.015em;margin-bottom:16px}
+  .story p{color:var(--text-2);font-size:14.5px;line-height:1.75;max-width:56ch}
+  .story a.read{display:inline-block;margin-top:16px;font-family:var(--font-button);font-size:12.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--dark);border-bottom:2px solid var(--dark);padding-bottom:3px}
+
+  /* ---------- reviews ---------- */
+  .reviews{background:var(--white);border-top:1px solid var(--border);padding:var(--inner) 0}
+  .reviews .head{padding:0 var(--pad-x);margin-bottom:24px}
+  .reviews h2{font-size:clamp(24px,3.4vw,30px);letter-spacing:-.01em;margin:0}
+  .reviews h2 em{font-style:italic;color:var(--text-2)}
+  .rev-summary{margin:0 var(--pad-x) 24px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .rev-summary .score{flex:0 0 auto;display:flex;flex-direction:column;gap:2px}
+  .rev-summary .score .num{display:flex;align-items:flex-end;gap:3px;line-height:1}
+  .rev-summary .score .num strong{font-family:var(--font-heading);font-size:38px;font-weight:400;letter-spacing:-.02em;color:var(--dark)}
+  .rev-summary .score .num span{font-size:16px;color:var(--text-3);padding-bottom:3px}
+  .rev-summary .score .stars{margin-top:3px}
+  .rev-summary .score .count{margin-top:5px;font-family:var(--font-button);font-size:10.5px;color:var(--text-3)}
+  .rev-summary .div{width:1px;align-self:stretch;background:var(--border)}
+  .rev-summary .highlights{flex:1 1 240px;min-width:0;display:flex;flex-wrap:wrap;gap:8px}
+  .rev-summary .highlights span{font-family:var(--font-button);font-size:11.5px;font-weight:600;color:var(--text-2);background:var(--white);border:1px solid var(--border);border-radius:99px;padding:6px 12px}
+  .rev-summary .bars{flex:1 1 260px;min-width:0;display:grid;gap:10px}
+  .rev-summary .bar-row{display:grid;grid-template-columns:112px minmax(0,1fr) 28px;gap:8px;align-items:center}
+  .rev-summary .bar-row span{font-family:var(--font-button);font-size:11px;color:var(--text-2)}
+  .rev-summary .bar-row .track{height:6px;background:var(--border);border-radius:99px;overflow:hidden}
+  .rev-summary .bar-row .fill{display:block;height:100%;background:var(--dark);border-radius:99px}
+  .rev-summary .bar-row b{font-family:var(--font-button);font-size:11px;color:var(--dark);text-align:right}
+  @media (max-width:520px){.rev-summary .div{display:none}}
+  .rev-marquee{overflow:hidden;padding:0 var(--pad-x)}
+  .rev-track{display:flex;gap:14px;width:max-content;animation:revScroll 40s linear infinite}
+  .rev-marquee:hover .rev-track{animation-play-state:paused}
+  @keyframes revScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .rev-track .is-dupe{display:contents}
+  .rev-card{flex:0 0 280px;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;display:flex;flex-direction:column}
+  .stars{color:var(--yellow);font-size:13px;letter-spacing:2px}
+  .rev-card .tag{display:inline-flex;align-self:flex-start;margin-top:10px;padding:5px 9px;border-radius:99px;background:var(--bg-secondary);border:1px solid var(--border);color:var(--dark);font-family:var(--font-button);font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+  .rev-card p{font-size:13px;line-height:1.5;color:var(--text-2);margin:9px 0 0}
+  .rev-card .attrib{margin-top:auto;padding-top:12px;font-size:13px;color:var(--text-3)}
+  .rev-card .attrib b{color:var(--text);font-weight:700}
+  @media (prefers-reduced-motion:reduce){
+    .rev-track{animation:none;flex-wrap:wrap;width:auto}
+    .rev-track .is-dupe{display:none}
+  }
+
+  /* ---------- faq (cards, following the homepage's own FAQ pattern) ---------- */
+  .faq{padding:var(--inner) 0}
+  .faq h2{font-size:clamp(24px,3.4vw,30px);letter-spacing:-.01em;text-align:center;margin-bottom:28px}
+  .faq-list{max-width:880px;margin:0 auto;padding:0 var(--pad-x)}
+  .faq-item{background:var(--white);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
+  .faq-q{width:100%;list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 30px;font:inherit;font-family:var(--font-heading);font-weight:400;font-size:19px;color:var(--text);background:none;border:0;text-align:left;transition:color .2s}
+  @media (max-width:639px){.faq-q{padding:16px 18px;font-size:17px}}
+  .faq-q:hover{color:var(--dark)}
+  .faq-q .plus{flex:none;position:relative;width:16px;height:16px}
+  .faq-q .plus::before,.faq-q .plus::after{content:"";position:absolute;background:var(--text-3);border-radius:1px;transition:transform .3s cubic-bezier(.2,.8,.2,1),background .2s}
+  .faq-q .plus::before{left:0;top:7px;width:16px;height:2px}
+  .faq-q .plus::after{left:7px;top:0;width:2px;height:16px}
+  .faq-q[aria-expanded="true"] .plus::after{transform:rotate(90deg)}
+  .faq-q[aria-expanded="true"] .plus::before,.faq-q[aria-expanded="true"] .plus::after{background:var(--dark)}
+  /* animate open/close by tweening the row track, not display */
+  .faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s cubic-bezier(.2,.8,.2,1)}
+  .faq-a[data-open="true"]{grid-template-rows:1fr}
+  .faq-a-inner{overflow:hidden;min-height:0}
+  .faq-a-inner{padding:0 30px;color:var(--text-2);font-size:15px;line-height:1.6;max-width:72ch;transition:padding .32s cubic-bezier(.2,.8,.2,1)}
+  .faq-a[data-open="true"] .faq-a-inner{padding-bottom:24px}
+  @media (max-width:639px){
+    .faq-a-inner{padding:0 18px;font-size:14px}
+    .faq-a[data-open="true"] .faq-a-inner{padding-bottom:16px}
+  }
+
+  /* ---------- footer ---------- */
+  footer{background:var(--dark);color:#cfd3c9;padding:48px 0 22px}
+  footer .fgrid{display:grid;grid-template-columns:1fr;gap:32px}
+  @media (min-width:760px){footer .fgrid{grid-template-columns:1.4fr repeat(4,1fr)}}
+  footer h4{font-family:var(--font-button);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#8f9787;margin:0 0 14px}
+  footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+  footer a{font-size:13px;color:#dcdfd5}
+  footer a:hover{color:#fff}
+  footer .brand-blurb{font-size:13px;line-height:1.7;color:#b7bcae;max-width:38ch}
+  footer .bottom{margin-top:38px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;gap:8px;font-size:11.5px;color:#8f9787}
+  @media (min-width:760px){footer .bottom{flex-direction:row;justify-content:space-between}}
+
+  .wa-fab{position:fixed;right:18px;bottom:18px;width:52px;height:52px;border-radius:var(--pill);background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(0,0,0,.2);z-index:60;transition:transform 100ms ease-out}
+  .wa-fab:active{transform:scale(.94)}
+
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+  /* ---------- press feedback (respond on pointer-down, not release) ---------- */
+  .chip,.card .add,.btn-outline,.card .wish,.icon-btn,.menu-btn,.rail a .disc{transition:transform 100ms ease-out,background-color .2s,border-color .2s,color .2s}
+  .chip:active,.card .add:active,.btn-outline:active,.card .wish:active,.icon-btn:active,.menu-btn:active{transform:scale(.96)}
+  .rail a:active .disc{transform:scale(.94);border-color:var(--dark)}
+
+  /* ---------- keyboard focus ---------- */
+  a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible,.faq-q:focus-visible{
+    outline:2px solid var(--dark);outline-offset:2px;border-radius:4px;
+  }
+  .rail a:focus-visible .disc{outline:2px solid var(--dark);outline-offset:2px}
+
+  /* ---------- reduced motion ---------- */
+  @media (prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto !important}
+    .card .thumb img,.mat-tile img{transition:none}
+    .card:hover .thumb img,.mat-tile:hover img{transform:none}
+    .faq-a{transition:opacity .15s ease !important;grid-template-rows:unset !important}
+    .faq-a[data-open="true"]{display:block}
+    .faq-a[data-open="false"]{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="micro-strip" aria-hidden="true">
+  <div class="track">
+    <span>Handmade</span><span>20 Years in Timber</span><span>Patented &amp; Exhibited</span><span>Free Shipping</span><span>COD Available</span><span>7-Day Exchange</span>
+    <span>Handmade</span><span>20 Years in Timber</span><span>Patented &amp; Exhibited</span><span>Free Shipping</span><span>COD Available</span><span>7-Day Exchange</span>
+  </div>
+</div>
+
+<header>
+  <div class="header-in">
+    <button class="menu-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a href="#" class="logo"><b>WE WOOD</b><em>Bespoke Designs</em></a>
+    <div class="icon-row">
+      <button class="icon-btn" aria-label="Search"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+      <button class="icon-btn" aria-label="Account"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></button>
+      <button class="icon-btn" aria-label="Cart, 0 items"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h16l-1.5 11a2 2 0 0 1-2 2H7.5a2 2 0 0 1-2-2L4 8Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg><span class="cart-count">0</span></button>
+    </div>
+  </div>
+  <nav class="subnav" aria-label="Shop categories">
+    <div class="subnav-in">
+      <a href="#" class="on">Bestsellers</a>
+      <a href="#">New Arrivals</a>
+      <a href="#">Nesting Table</a>
+      <a href="#">Coffee Table</a>
+      <a href="#">Side Table</a>
+      <a href="#">Wall Clock</a>
+      <a href="#">Tray &amp; Platters</a>
+      <a href="#">Wall Décor</a>
+    </div>
+  </nav>
+</header>
+
+<div class="crumb">
+  <div class="wrap">
+    <a href="#">Home</a><span class="sep">/</span><span class="cur">Bestsellers</span>
+  </div>
+</div>
+
+<section class="hero-banner">
+  <img class="hero-img" src="https://cdn.shopify.com/s/files/1/0904/5832/5311/files/01.jpg?v=1770122706" alt="Wewood teak and resin furniture styled in a living room" loading="eager">
+  <div class="hero-scrim"></div>
+  <div class="wrap hero-content">
+    <h1>Bestsellers</h1>
+    <p class="sub">The pieces our customers keep coming back for: <b>teak, sheesham and acacia wood</b> hand-finished with poured resin, made at our workshop in Kirti Nagar. Every piece here has sold out and been restocked at least once.</p>
+  </div>
+</section>
+
+<section class="rail-sec">
+  <h2>Shop by <em>Collection</em></h2>
+  <div class="rail">
+    <a href="#">
+      <img src="https://cdn.shopify.com/s/files/1/0904/5832/5311/files/Nesting_Table_Teak_Wood_with_Transparent_Resin_Finish.png?v=1738232386" alt="Nesting Table" loading="lazy">
+      <span class="pill"><span>Nesting Table</span><span class="arrow">↗</span></span>
+    </a>
+    <a href="#">
+      <img src="https://cdn.shopify.com/s/files/1/0904/5832/5311/files/COASTER_27.png?v=1751104715" alt="Coffee Table" loading="lazy">
+      <span class="pill"><span>Coffee Table</span><span class="arrow">↗</span></span>
+    </a>
+    <a href="#">
+      <img src="assets/side-table-island.jpg" alt="Side Table" loading="lazy" style="object-position:50% 25%">
+      <span class="pill"><span>Side Table</span><span class="arrow">↗</span></span>
+    </a>
+    <a href="#">
+      <img src="https://cdn.shopify.com/s/files/1/0904/5832/5311/files/12_b4fa523c-dd6e-4e0d-814e-ce537051a556.png?v=1771929283" alt="Wall Clock" loading="lazy">
+      <span class="pill"><span>Wall Clock</span><span class="arrow">↗</span></span>
+    </a>
+    <a href="#">
+      <img src="https://cdn.shopify.com/s/files/1/0904/5832/5311/files/cup_tray.png?v=1780316405" alt="Tray &amp; Platters" loading="lazy">
+      <span class="pill"><span>Tray &amp; Platters</span><span class="arrow">↗</span></span>
+    </a>
+    <a href="#">
+      <img src="assets/cheese-board-platter.jpg" alt="Cheese Board" loading="lazy">
+      <span class="pill"><span>Cheese Board</span><span class="arrow">↗</span></span>
+    </a>
+  </div>
+</section>
+
+<div class="usp-wrap">
+  <div class="usp-strip">
+    <div class="usp-offer">
+      <span class="lab">Pay in easy EMIs</span>
+      <p class="headline">From 15+ banks, including <b>up to ₹4,000 off</b> with HDFC and <b>up to ₹3,500 off</b> with SBI Card.</p>
+      <div class="bank-row">
+        <span class="bank-tile"><img src="assets/logo-hdfc.svg" alt="HDFC Bank" loading="lazy"></span>
+        <span class="bank-tile"><img src="assets/logo-icici.svg" alt="ICICI Bank" loading="lazy"></span>
+        <span class="bank-tile"><img src="assets/logo-axis.svg" alt="Axis Bank" loading="lazy"></span>
+        <span class="bank-tile"><img src="assets/logo-kotak.jpg" alt="Kotak Mahindra Bank" loading="lazy"></span>
+        <span class="bank-tile"><img src="assets/logo-sbi.jpg" alt="SBI Card" loading="lazy"></span>
+      </div>
+    </div>
+    <div class="usp-div"></div>
+    <div class="usp-trust" aria-label="Wewood guarantees">
+      <span class="trust-item"><span class="ic"><i class="ti ti-hammer"></i></span><span>Handmade</span></span>
+      <span class="trust-item"><span class="ic"><i class="ti ti-tree"></i></span><span>20 Years in Timber</span></span>
+      <span class="trust-item"><span class="ic"><i class="ti ti-award"></i></span><span>Patented &amp; Exhibited</span></span>
+      <span class="trust-item"><span class="ic"><i class="ti ti-truck-delivery"></i></span><span>Free Shipping</span></span>
+      <span class="trust-item"><span class="ic"><i class="ti ti-cash"></i></span><span>COD Available</span></span>
+      <span class="trust-item"><span class="ic"><i class="ti ti-refresh"></i></span><span>7-Day Exchange</span></span>
+    </div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="filter-group">
+      <span class="filter-lab"><i class="ti ti-adjustments-horizontal"></i>Material</span>
+      <div class="filters">
+        <button class="chip on">All materials</button>
+        <button class="chip">Teak</button>
+        <button class="chip">Acacia</button>
+        <button class="chip">Sheesham</button>
+        <button class="chip">Under ₹5,000</button>
+      </div>
+      <div class="filter-more">
+        <button class="filter-toggle chip" id="filterToggleBtn" aria-expanded="false" aria-controls="filterPanel">
+          <i class="ti ti-filter-plus"></i>More filters<span class="count">0</span><i class="ti ti-chevron-down chev"></i>
+        </button>
+        <div class="filter-panel" id="filterPanel">
+          <div class="filter-panel-grid">
+            <div class="filter-panel-col">
+              <h4>Category</h4>
+              <ul>
+                <li><label class="filter-check"><input type="checkbox" name="category" value="new-arrivals"><span>New Arrivals</span></label></li>
+                <li><label class="filter-check"><input type="checkbox" name="category" value="tableware"><span>Tableware</span></label></li>
+                <li><label class="filter-check"><input type="checkbox" name="category" value="wall-decor"><span>Wall Décor</span></label></li>
+                <li><label class="filter-check"><input type="checkbox" name="category" value="table-accents"><span>Table Accents</span></label></li>
+                <li><label class="filter-check"><input type="checkbox" name="category" value="nesting-table"><span>Nesting Table</span></label></li>
+                <li><label class="filter-check"><input type="checkbox" name="category" value="furniture"><span>Furniture</span></label></li>
+              </ul>
+            </div>
+            <div class="filter-panel-col">
+              <h4>Tags</h4>
+              <ul>
+                <li><label class="filter-check"><input type="checkbox" name="tag" value="ashtray"><span>Ashtray</span></label></li>
+                <li><label class="filter-check"><input type="checkbox" name="tag" value="cheese-board-platter"><span>Cheese Board Platter</span></label></li>
+                <li><label class="filter-check"><input type="checkbox" name="tag" value="clock"><span>Clock</span></label></li>
+                <li><label class="filter-check"><input type="checkbox" name="tag" value="coffee-table"><span>Coffee Table</span></label></li>
+                <li><label class="filter-check"><input type="checkbox" name="tag" value="lazy-susan-platter"><span>Lazy Susan Platter</span></label></li>
+                <li><label class="filter-check"><input type="checkbox" name="tag" value="side-table"><span>Side Table</span></label></li>
+                <li><label class="filter-check"><input type="checkbox" name="tag" value="tray"><span>Tray</span></label></li>
+                <li><label class="filter-check"><input type="checkbox" name="tag" value="wall-panel"><span>Wall Panel</span></label></li>
+              </ul>
+            </div>
+          </div>
+          <div class="filter-panel-actions">
+            <button type="button" class="filter-clear" id="filterClearBtn">Clear all</button>
+            <button type="button" class="filter-apply" id="filterApplyBtn">Apply filters</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toolbar-div"></div>
+    <div class="sort-wrap">
+      <label for="sort"><i class="ti ti-arrows-sort"></i>Sort by</label>
+      <div class="select-shell">
+        <select id="sort">
+          <option>Best selling</option>
+          <option>Price: low to high</option>
+          <option>Price: high to low</option>
+          <option>Newest</option>
+        </select>
+        <i class="ti ti-chevron-down"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="grid-sec">
+  <div class="wrap">
+    <div class="grid">
+
+      <article class="card">
+        <span class="badge">Save 47%</span>
+        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
+        <a href="#" class="thumb"><img src="assets/nesting-table-set-of-3-teak.jpg" alt="Nesting Table Set of 3, Teak Wood with Transparent Resin Finish" loading="lazy"></a>
+        <div class="info">
+          <span class="mat">Teak wood · resin</span>
+          <a href="#" class="name">Nesting Table Set of 3, Teak Wood with Transparent Resin Finish</a>
+          <div class="price-row">
+            <span class="now">₹13,890</span><span class="was">₹25,980</span>
+          </div>
+          <span class="save">You save ₹12,090</span>
+          <button class="add">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
+        <a href="#" class="thumb"><img src="assets/side-table-set-of-1-teak.jpg" alt="Side Table Set of 1, Teak Wood with Transparent Resin Finish" loading="lazy"></a>
+        <div class="info">
+          <span class="mat">Teak wood · resin</span>
+          <a href="#" class="name">Side Table Set of 1, Teak Wood with Transparent Resin Finish</a>
+          <div class="price-row">
+            <span class="now">₹2,999</span>
+          </div>
+          <button class="add">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge">Save 11%</span>
+        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
+        <a href="#" class="thumb"><img src="assets/elegant-resin-wall-clock.jpg" alt="Elegant Resin Wall Clock, Sheesham Wood and Black Resin" loading="lazy"></a>
+        <div class="info">
+          <span class="mat">Sheesham wood · resin</span>
+          <a href="#" class="name">Elegant Resin Wall Clock, Sheesham Wood and Black Resin</a>
+          <div class="price-row">
+            <span class="now">₹5,900</span><span class="was">₹6,625</span>
+          </div>
+          <span class="save">You save ₹725</span>
+          <button class="add">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge">Save 10%</span>
+        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
+        <a href="#" class="thumb"><img src="assets/c-shaped-table-teak.jpg" alt="C-Shaped Table, Teak Stained Wood Finish" loading="lazy"></a>
+        <div class="info">
+          <span class="mat">Teak wood</span>
+          <a href="#" class="name">C-Shaped Table, Teak Stained Wood Finish, 18&quot;×12&quot;</a>
+          <div class="price-row">
+            <span class="now">₹5,400</span><span class="was">₹6,000</span>
+          </div>
+          <span class="save">You save ₹600</span>
+          <button class="add">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge">Save 11%</span>
+        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
+        <a href="#" class="thumb"><img src="assets/stylish-resin-wall-clock.png" alt="Stylish Resin Wall Clock, Teak Wood and Black Resin Elegance" loading="lazy"></a>
+        <div class="info">
+          <span class="mat">Teak wood · resin</span>
+          <a href="#" class="name">Stylish Resin Wall Clock, Teak Wood and Black Resin</a>
+          <div class="price-row">
+            <span class="now">₹4,900</span><span class="was">₹5,500</span>
+          </div>
+          <span class="save">You save ₹600</span>
+          <button class="add">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
+        <a href="#" class="thumb"><img src="assets/cheese-board-platter.jpg" alt="Cheese Board Cum Platter with Handle, Acacia Wood with Translucent Grey Resin Finish" loading="lazy"></a>
+        <div class="info">
+          <span class="mat">Acacia wood · resin</span>
+          <a href="#" class="name">Cheese Board Cum Platter with Handle, Acacia Wood</a>
+          <div class="price-row">
+            <span class="now">₹1,999</span>
+          </div>
+          <button class="add">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge">Save 25%</span>
+        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
+        <a href="#" class="thumb"><img src="assets/premium-side-table-teak.png" alt="Premium Side Table, Teak Wood with Brown Resin Finish" loading="lazy"></a>
+        <div class="info">
+          <span class="mat">Teak wood · resin</span>
+          <a href="#" class="name">Premium Side Table, Teak Wood with Brown Resin Finish</a>
+          <div class="price-row">
+            <span class="now">₹6,999</span><span class="was">₹9,300</span>
+          </div>
+          <span class="save">You save ₹2,301</span>
+          <button class="add">Add to Cart</button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<div class="loadmore">
+  <button class="btn-outline">View all products</button>
+</div>
+
+<section class="material-sec">
+  <div class="wrap">
+    <h2>Shop by Material</h2>
+    <div class="mat-grid">
+      <a href="#" class="mat-tile">
+        <img src="https://cdn.shopify.com/s/files/1/0904/5832/5311/files/Nesting_Table_Teak_Wood_with_Transparent_Resin_Finish.png?v=1738232386" alt="Teak wood pieces">
+        <div class="cap"><b>Teak Wood</b><span>Our most-worked timber</span></div>
+      </a>
+      <a href="#" class="mat-tile">
+        <img src="https://cdn.shopify.com/s/files/1/0904/5832/5311/files/Nesting_Table__Acacia_Wood_with_Transparent_Resin_Finish.png?v=1738232528" alt="Acacia wood pieces">
+        <div class="cap"><b>Acacia Wood</b><span>Bold, open grain</span></div>
+      </a>
+      <a href="#" class="mat-tile">
+        <img src="https://cdn.shopify.com/s/files/1/0904/5832/5311/files/12_b4fa523c-dd6e-4e0d-814e-ce537051a556.png?v=1771929283" alt="Sheesham wood pieces">
+        <div class="cap"><b>Sheesham Wood</b><span>Dense, rosewood-toned</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="story">
+  <div class="wrap grid2">
+    <div class="ph"><img src="https://cdn.shopify.com/s/files/1/0904/5832/5311/files/01.jpg?v=1770122706" alt="Wewood furniture in a living room"></div>
+    <div>
+      <span class="eyebrow">Our Story</span>
+      <h2 style="margin-top:10px">Twenty years in timber. Four years of Wewood.</h2>
+      <p>Wewood grew out of Starwood Veneers, a Kirti Nagar veneer manufacturer of two decades. Four years ago we started shaping that same wood (teak, sheesham and acacia) into furniture and decor of our own, hand-finished with resin.</p>
+      <a href="#" class="read">Read our story →</a>
+    </div>
+  </div>
+</section>
+
+<section class="reviews">
+  <div class="head wrap">
+    <h2>Loved by the homes <em>that own them</em></h2>
+  </div>
+  <!-- placeholder aggregate rating for client showcase; swap for real review-app data before launch -->
+  <div class="rev-summary wrap">
+    <div class="score">
+      <div class="num"><strong>4.8</strong><span>/5</span></div>
+      <div class="stars">★★★★★</div>
+      <div class="count">128 verified reviews</div>
+    </div>
+    <div class="div"></div>
+    <div class="bars">
+      <div class="bar-row"><span>Build Quality</span><span class="track"><i class="fill" style="width:96%"></i></span><b>4.9</b></div>
+      <div class="bar-row"><span>Finish &amp; Design</span><span class="track"><i class="fill" style="width:94%"></i></span><b>4.7</b></div>
+      <div class="bar-row"><span>Value for Money</span><span class="track"><i class="fill" style="width:92%"></i></span><b>4.6</b></div>
+      <div class="bar-row"><span>Delivery Experience</span><span class="track"><i class="fill" style="width:90%"></i></span><b>4.5</b></div>
+    </div>
+  </div>
+  <div class="rev-marquee">
+    <div class="rev-track">
+      <div class="rev-card">
+        <div class="stars">★★★★★</div>
+        <span class="tag">Nesting Table</span>
+        <p>&ldquo;Absolutely love this nesting table set! Perfect space-saving design, sturdy, and stylish.&rdquo;</p>
+        <div class="attrib"><b>Pooja Bansal</b> · Gurgaon</div>
+      </div>
+      <div class="rev-card">
+        <div class="stars">★★★★★</div>
+        <span class="tag">Nesting Table</span>
+        <p>&ldquo;The teak wood and transparent resin look stunning and add a modern, earthy vibe to my living room.&rdquo;</p>
+        <div class="attrib"><b>Sanya Singh Lohan</b> · Rohtak, Haryana</div>
+      </div>
+      <div class="rev-card">
+        <div class="stars">★★★★★</div>
+        <span class="tag">Furniture</span>
+        <p>&ldquo;Sturdy build ensures durability while the sleek design complements our decor.&rdquo;</p>
+        <div class="attrib"><b>Surbhi Sethi</b> · Navnidh Designs, Delhi</div>
+      </div>
+
+      <div class="is-dupe" aria-hidden="true">
+        <div class="rev-card">
+          <div class="stars">★★★★★</div>
+          <span class="tag">Nesting Table</span>
+          <p>&ldquo;Absolutely love this nesting table set! Perfect space-saving design, sturdy, and stylish.&rdquo;</p>
+          <div class="attrib"><b>Pooja Bansal</b> · Gurgaon</div>
+        </div>
+        <div class="rev-card">
+          <div class="stars">★★★★★</div>
+          <span class="tag">Nesting Table</span>
+          <p>&ldquo;The teak wood and transparent resin look stunning and add a modern, earthy vibe to my living room.&rdquo;</p>
+          <div class="attrib"><b>Sanya Singh Lohan</b> · Rohtak, Haryana</div>
+        </div>
+        <div class="rev-card">
+          <div class="stars">★★★★★</div>
+          <span class="tag">Furniture</span>
+          <p>&ldquo;Sturdy build ensures durability while the sleek design complements our decor.&rdquo;</p>
+          <div class="attrib"><b>Surbhi Sethi</b> · Navnidh Designs, Delhi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <h2>Before you order</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="true" aria-controls="faq-a-1">What does shipping cost?<span class="plus"></span></button>
+        <div class="faq-a" id="faq-a-1" data-open="true"><div class="faq-a-inner">Free above ₹2,499. Below that, standard shipping is ₹99, pan-India.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-2">How long does delivery take?<span class="plus"></span></button>
+        <div class="faq-a" id="faq-a-2" data-open="false"><div class="faq-a-inner">3 to 5 business days in metros, up to 10 for remote pincodes.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-3">What's your return policy?<span class="plus"></span></button>
+        <div class="faq-a" id="faq-a-3" data-open="false"><div class="faq-a-inner">Free exchange within 7 days if a piece arrives damaged or defective. Email support@wewood.co.in with a photo.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-a-4">How do I care for the resin and wood?<span class="plus"></span></button>
+        <div class="faq-a" id="faq-a-4" data-open="false"><div class="faq-a-inner">Wipe with a soft, dry cloth. Avoid direct, prolonged sunlight and standing liquids on the resin surface.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fgrid">
+    <div>
+      <a href="#" class="logo" style="color:#fff;margin-bottom:12px;display:inline-flex"><b style="color:#fff">WE WOOD</b></a>
+      <p class="brand-blurb">Handcrafted wood and resin furniture and decor, made in Delhi and shipped across India.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Best Seller</a></li>
+        <li><a href="#">Nesting Table</a></li>
+        <li><a href="#">Coffee Table</a></li>
+        <li><a href="#">Side Table</a></li>
+        <li><a href="#">Wall Decor</a></li>
+        <li><a href="#">Tray &amp; Platters</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Blogs</a></li>
+        <li><a href="#">Gifting</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Policies</h4>
+      <ul>
+        <li><a href="#">Return &amp; Refund Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms &amp; Condition</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Talk to Us</h4>
+      <ul>
+        <li><a href="tel:+919711630068">+91 97116 30068</a></li>
+        <li><a href="mailto:info@wewood.co.in">info@wewood.co.in</a></li>
+        <li><span style="color:#b7bcae;font-size:13px;line-height:1.5">A-1, First Floor, W.H.S,<br>Timber Block, Kirti Nagar,<br>New Delhi 110015</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap bottom">
+    <span>STARWOOD VENEERS PRIVATE LIMITED · 49 KM Stone, Rohtak Road, Sampla, Haryana 124501</span>
+    <span>Cards, UPI, Wallets, EMI and Cash on Delivery accepted · © Wewood</span>
+  </div>
+</footer>
+
+<a class="wa-fab" href="https://wa.me/919711630068" aria-label="Chat on WhatsApp" target="_blank" rel="noopener">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5C8.3 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2Zm0 18.2c-1.6 0-3.2-.4-4.5-1.2l-.3-.2-3 1 1-2.9-.2-.3C4.2 15.2 3.8 13.6 3.8 12c0-4.5 3.7-8.2 8.2-8.2s8.2 3.7 8.2 8.2-3.7 8.2-8.2 8.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8.9-.2.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.2 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.5 3.9 3.4.5.2 1 .4 1.3.5.5.2 1 .1 1.4.1.4-.1 1.3-.5 1.5-1 .2-.5.2-.9.1-1Z"/></svg>
+</a>
+
+<script>
+  document.querySelectorAll('.filters .chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      document.querySelectorAll('.filters .chip').forEach(x=>x.classList.remove('on'));
+      c.classList.add('on');
+    });
+  });
+  (function(){
+    const btn = document.getElementById('filterToggleBtn');
+    const panel = document.getElementById('filterPanel');
+    const countEl = btn.querySelector('.count');
+    const boxes = () => [...panel.querySelectorAll('input[type="checkbox"]')];
+
+    function close(){
+      panel.classList.remove('is-open');
+      btn.setAttribute('aria-expanded','false');
+    }
+    function open(){
+      panel.classList.add('is-open');
+      btn.setAttribute('aria-expanded','true');
+    }
+    btn.addEventListener('click',(e)=>{
+      e.stopPropagation();
+      panel.classList.contains('is-open') ? close() : open();
+    });
+    document.addEventListener('click',(e)=>{
+      if(!panel.contains(e.target) && e.target !== btn) close();
+    });
+    document.addEventListener('keydown',(e)=>{
+      if(e.key === 'Escape') close();
+    });
+    function updateCount(){
+      const n = boxes().filter(b=>b.checked).length;
+      countEl.textContent = n;
+      btn.classList.toggle('has-active', n > 0);
+    }
+    panel.addEventListener('change', updateCount);
+    document.getElementById('filterClearBtn').addEventListener('click',()=>{
+      boxes().forEach(b=>b.checked = false);
+      updateCount();
+    });
+    document.getElementById('filterApplyBtn').addEventListener('click', close);
+  })();
+  document.querySelectorAll('.wish').forEach(w=>{
+    w.addEventListener('click',(e)=>{
+      e.preventDefault();
+      w.style.color = w.style.color === 'rgb(204, 0, 0)' ? '' : '#cc0000';
+    });
+  });
+  document.querySelectorAll('.faq-q').forEach(q=>{
+    q.addEventListener('click',()=>{
+      const panel = document.getElementById(q.getAttribute('aria-controls'));
+      const willOpen = q.getAttribute('aria-expanded') !== 'true';
+      q.setAttribute('aria-expanded', String(willOpen));
+      panel.setAttribute('data-open', String(willOpen));
+    });
+  });
+</script>
+</body>
+</html>
