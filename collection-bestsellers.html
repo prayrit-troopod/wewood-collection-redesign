@@ -176,7 +176,7 @@
   .mat-preview::-webkit-scrollbar{display:none}
   .mat-preview .card{flex:0 0 152px}
   @media (min-width:640px){.mat-preview .card{flex-basis:190px}}
-  .mat-preview .card .name{font-size:12.5px;min-height:2.5em}
+  .mat-preview .card .name{font-size:13px;height:36px}
   .mat-preview .card .now{font-size:15px}
 
   /* ---------- toolbar ---------- */
@@ -303,23 +303,20 @@
   @media (max-width:639px){.grid.is-compact{grid-template-columns:repeat(3,1fr);gap:8px 6px}}
   @media (min-width:640px){.grid{grid-template-columns:repeat(3,1fr);gap:22px 18px}}
   @media (min-width:980px){.grid{grid-template-columns:repeat(4,1fr)}}
-  .card{background:var(--white);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);display:flex;flex-direction:column;position:relative}
+  .card{display:flex;flex-direction:column;position:relative}
   .card.is-filtered-out{display:none}
-  .card .badge{position:absolute;top:10px;left:10px;background:var(--sale);color:#fff;font-family:var(--font-button);font-size:10.5px;font-weight:600;padding:4px 9px;border-radius:var(--pill);z-index:2}
-  .card .wish{position:absolute;top:8px;right:8px;z-index:2;background:rgba(255,255,255,.92);width:30px;height:30px;border-radius:var(--pill);border:0;display:flex;align-items:center;justify-content:center;color:var(--text-2)}
-  .card .wish:hover{color:var(--sale)}
-  .card .thumb{aspect-ratio:1/1;background:var(--bg-secondary);overflow:hidden}
-  .card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .card .wish{position:absolute;top:10px;right:10px;z-index:2;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);border:0;display:flex;align-items:center;justify-content:center;color:var(--text-2);box-shadow:0 2px 8px rgba(0,0,0,.14);transition:color .15s ease-out}
+  .card .wish:hover{color:var(--dark)}
+  .card .thumb{position:relative;display:block;aspect-ratio:1/1;border-radius:var(--radius);overflow:hidden;background:var(--white);border:1px solid transparent;margin-bottom:14px}
+  .card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease-out}
   .card:hover .thumb img{transform:scale(1.045)}
-  .card .info{padding:13px 14px 16px;display:flex;flex-direction:column;gap:7px;flex:1}
-  .card .mat{font-family:var(--font-button);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
-  .card .name{font-size:13.5px;font-weight:600;color:var(--text);line-height:1.4;min-height:2.8em}
-  .card .price-row{display:flex;align-items:baseline;gap:8px;margin-top:auto;flex-wrap:wrap}
-  .card .now{font-family:var(--font-heading);font-weight:700;font-size:17px;color:var(--dark)}
-  .card .was{font-size:12px;color:var(--text-3);text-decoration:line-through}
-  .card .save{font-family:var(--font-button);font-size:10.5px;font-weight:600;color:var(--green)}
-  .card .add{margin-top:9px;font-family:var(--font-button);font-size:11.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;background:var(--dark);color:#fff;border:0;border-radius:var(--pill);padding:10px;transition:background .2s,color .2s}
-  .card .add:hover{background:var(--yellow);color:var(--dark)}
+  .card .name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:var(--font-body);font-size:15px;font-weight:400;color:var(--text);line-height:1.4;height:42px;margin:0 0 8px}
+  .card .price-row{display:flex;align-items:baseline;gap:10px;margin:0 0 14px;margin-top:auto;flex-wrap:wrap}
+  .card .now{font-weight:700;font-size:17px;color:var(--text)}
+  .card .was{font-size:13px;color:var(--text-3);text-decoration:line-through}
+  .card .save{font-size:12px;color:var(--green);font-weight:700}
+  .card .add{font-family:var(--font-button);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--dark);color:#fff;border:1px solid var(--dark);border-radius:var(--pill);padding:10px 20px;transition:background .16s ease-out,color .16s ease-out,border-color .16s ease-out}
+  .card .add:hover{background:var(--yellow);border-color:var(--yellow);color:var(--dark)}
 
   /* brand creative slotted into the grid at the same size as a product card */
   .card-creative{padding:0}
@@ -328,10 +325,11 @@
   .card-creative:hover img{transform:scale(1.03)}
 
   @media (max-width:639px){
-    .grid.is-compact .card .info{padding:9px 9px 11px;gap:4px}
-    .grid.is-compact .card .name{font-size:11.5px;min-height:2.6em}
+    .grid.is-compact .card .thumb{margin-bottom:8px}
+    .grid.is-compact .card .name{font-size:12px;height:34px;margin-bottom:5px}
+    .grid.is-compact .card .price-row{margin-bottom:8px}
     .grid.is-compact .card .now{font-size:14px}
-    .grid.is-compact .card .was{font-size:10.5px}
+    .grid.is-compact .card .was{font-size:11px}
     .grid.is-compact .card .add{display:none}
   }
 
@@ -669,61 +667,43 @@
     <div class="grid">
 
       <article class="card" data-material="teak" data-category="nesting-table">
-        <span class="badge">Save 47%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/nesting-table-set-of-3-teak.jpg" alt="Nesting Table Set of 3, Teak Wood with Transparent Resin Finish" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Teak wood · resin</span>
-          <a href="#" class="name">Nesting Table Set of 3, Teak Wood with Transparent Resin Finish</a>
-          <div class="price-row">
-            <span class="now">₹13,890</span><span class="was">₹25,980</span>
-          </div>
-          <span class="save">You save ₹12,090</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Nesting Table Set of 3, Teak Wood with Transparent Resin Finish</a>
+        <div class="price-row">
+          <span class="now">₹13,890</span><span class="was">₹25,980</span><span class="save">Save 47%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card" data-material="teak" data-category="furniture">
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/side-table-set-of-1-teak.jpg" alt="Side Table Set of 1, Teak Wood with Transparent Resin Finish" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Teak wood · resin</span>
-          <a href="#" class="name">Side Table Set of 1, Teak Wood with Transparent Resin Finish</a>
-          <div class="price-row">
-            <span class="now">₹2,999</span>
-          </div>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Side Table Set of 1, Teak Wood with Transparent Resin Finish</a>
+        <div class="price-row">
+          <span class="now">₹2,999</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card" data-material="sheesham" data-category="wall-decor">
-        <span class="badge">Save 11%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/elegant-resin-wall-clock.jpg" alt="Elegant Resin Wall Clock, Sheesham Wood and Black Resin" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Sheesham wood · resin</span>
-          <a href="#" class="name">Elegant Resin Wall Clock, Sheesham Wood and Black Resin</a>
-          <div class="price-row">
-            <span class="now">₹5,900</span><span class="was">₹6,625</span>
-          </div>
-          <span class="save">You save ₹725</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Elegant Resin Wall Clock, Sheesham Wood and Black Resin</a>
+        <div class="price-row">
+          <span class="now">₹5,900</span><span class="was">₹6,625</span><span class="save">Save 11%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card" data-material="teak" data-category="table-accents">
-        <span class="badge">Save 10%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/c-shaped-table-teak.jpg" alt="C-Shaped Table, Teak Stained Wood Finish" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Teak wood</span>
-          <a href="#" class="name">C-Shaped Table, Teak Stained Wood Finish, 18&quot;×12&quot;</a>
-          <div class="price-row">
-            <span class="now">₹5,400</span><span class="was">₹6,000</span>
-          </div>
-          <span class="save">You save ₹600</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">C-Shaped Table, Teak Stained Wood Finish, 18&quot;×12&quot;</a>
+        <div class="price-row">
+          <span class="now">₹5,400</span><span class="was">₹6,000</span><span class="save">Save 10%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <div class="grid-usp-break">
@@ -738,46 +718,33 @@
       </div>
 
       <article class="card" data-material="teak" data-category="wall-decor">
-        <span class="badge">Save 11%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/stylish-resin-wall-clock.png" alt="Stylish Resin Wall Clock, Teak Wood and Black Resin Elegance" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Teak wood · resin</span>
-          <a href="#" class="name">Stylish Resin Wall Clock, Teak Wood and Black Resin</a>
-          <div class="price-row">
-            <span class="now">₹4,900</span><span class="was">₹5,500</span>
-          </div>
-          <span class="save">You save ₹600</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Stylish Resin Wall Clock, Teak Wood and Black Resin</a>
+        <div class="price-row">
+          <span class="now">₹4,900</span><span class="was">₹5,500</span><span class="save">Save 11%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card" data-material="acacia" data-category="tableware">
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/cheese-board-platter.jpg" alt="Cheese Board Cum Platter with Handle, Acacia Wood with Translucent Grey Resin Finish" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Acacia wood · resin</span>
-          <a href="#" class="name">Cheese Board Cum Platter with Handle, Acacia Wood</a>
-          <div class="price-row">
-            <span class="now">₹1,999</span>
-          </div>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Cheese Board Cum Platter with Handle, Acacia Wood</a>
+        <div class="price-row">
+          <span class="now">₹1,999</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card" data-material="teak" data-category="furniture">
-        <span class="badge">Save 25%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/premium-side-table-teak.png" alt="Premium Side Table, Teak Wood with Brown Resin Finish" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Teak wood · resin</span>
-          <a href="#" class="name">Premium Side Table, Teak Wood with Brown Resin Finish</a>
-          <div class="price-row">
-            <span class="now">₹6,999</span><span class="was">₹9,300</span>
-          </div>
-          <span class="save">You save ₹2,301</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Premium Side Table, Teak Wood with Brown Resin Finish</a>
+        <div class="price-row">
+          <span class="now">₹6,999</span><span class="was">₹9,300</span><span class="save">Save 25%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card card-creative">
@@ -807,80 +774,55 @@
         <div class="mat-preview" id="matPreview">
           <article class="card">
             <a href="#" class="thumb"><img src="assets/nesting-table-set-of-3-teak.jpg" alt="Nesting Table Set of 3, Teak Wood" loading="lazy"></a>
-            <div class="info">
-              <span class="mat">Teak wood · resin</span>
-              <a href="#" class="name">Nesting Table Set of 3, Teak Wood</a>
-              <div class="price-row"><span class="now">₹13,890</span></div>
-            </div>
+            <a href="#" class="name">Nesting Table Set of 3, Teak Wood</a>
+            <div class="price-row"><span class="now">₹13,890</span></div>
           </article>
           <article class="card">
             <a href="#" class="thumb"><img src="assets/nesting-table-acacia.png" alt="Nesting Table Set of 2, Acacia Wood" loading="lazy"></a>
-            <div class="info">
-              <span class="mat">Acacia wood · resin</span>
-              <a href="#" class="name">Nesting Table Set of 2, Acacia Wood</a>
-              <div class="price-row"><span class="now">₹20,000</span></div>
-            </div>
+            <a href="#" class="name">Nesting Table Set of 2, Acacia Wood</a>
+            <div class="price-row"><span class="now">₹20,000</span></div>
           </article>
           <article class="card">
             <a href="#" class="thumb"><img src="assets/elegant-resin-wall-clock.jpg" alt="Elegant Resin Wall Clock, Sheesham Wood" loading="lazy"></a>
-            <div class="info">
-              <span class="mat">Sheesham wood · resin</span>
-              <a href="#" class="name">Elegant Resin Wall Clock, Sheesham</a>
-              <div class="price-row"><span class="now">₹5,900</span></div>
-            </div>
+            <a href="#" class="name">Elegant Resin Wall Clock, Sheesham</a>
+            <div class="price-row"><span class="now">₹5,900</span></div>
           </article>
           <article class="card">
             <a href="#" class="thumb"><img src="assets/cheese-board-platter.jpg" alt="Cheese Board Cum Platter, Acacia Wood" loading="lazy"></a>
-            <div class="info">
-              <span class="mat">Acacia wood · resin</span>
-              <a href="#" class="name">Cheese Board Cum Platter, Acacia Wood</a>
-              <div class="price-row"><span class="now">₹1,999</span></div>
-            </div>
+            <a href="#" class="name">Cheese Board Cum Platter, Acacia Wood</a>
+            <div class="price-row"><span class="now">₹1,999</span></div>
           </article>
         </div>
       </div>
 
       <article class="card" data-material="teak" data-category="furniture">
-        <span class="badge">Save 20%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/coffee-table-blue-resin.png" alt="Round Coffee Table, Teak Wood with Special Blue Resin Finish" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Teak wood · resin</span>
-          <a href="#" class="name">Round Coffee Table, Teak Wood with Special Blue Resin Finish</a>
-          <div class="price-row">
-            <span class="now">₹14,800</span><span class="was">₹18,500</span>
-          </div>
-          <span class="save">You save ₹3,700</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Round Coffee Table, Teak Wood with Special Blue Resin Finish</a>
+        <div class="price-row">
+          <span class="now">₹14,800</span><span class="was">₹18,500</span><span class="save">Save 20%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card" data-material="acacia" data-category="nesting-table">
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/nesting-table-acacia.png" alt="Nesting Table Set of 2, Acacia Wood with Transparent Resin Finish" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Acacia wood · resin</span>
-          <a href="#" class="name">Nesting Table Set of 2, Acacia Wood with Transparent Resin Finish</a>
-          <div class="price-row">
-            <span class="now">₹20,000</span>
-          </div>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Nesting Table Set of 2, Acacia Wood with Transparent Resin Finish</a>
+        <div class="price-row">
+          <span class="now">₹20,000</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card" data-material="live-edge" data-category="furniture">
-        <span class="badge">Save 39%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/live-edge-blue-epoxy-table.jpg" alt="Modern Live-Edge Wood and Blue Epoxy Resin Table" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Live-edge wood · epoxy</span>
-          <a href="#" class="name">Modern Live-Edge Wood &amp; Blue Epoxy Resin Table</a>
-          <div class="price-row">
-            <span class="now">₹39,499</span><span class="was">₹65,000</span>
-          </div>
-          <span class="save">You save ₹25,501</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Modern Live-Edge Wood &amp; Blue Epoxy Resin Table</a>
+        <div class="price-row">
+          <span class="now">₹39,499</span><span class="was">₹65,000</span><span class="save">Save 39%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card card-creative">
@@ -888,93 +830,63 @@
       </article>
 
       <article class="card" data-material="teak" data-category="nesting-table">
-        <span class="badge">Save 20%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/nesting-table-pearl-green.png" alt="Nesting Table Set of 2, Teak Wood with Pearl Green Resin Finish" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Teak wood · resin</span>
-          <a href="#" class="name">Nesting Table Set of 2, Teak Wood with Pearl Green Resin Finish</a>
-          <div class="price-row">
-            <span class="now">₹12,000</span><span class="was">₹15,000</span>
-          </div>
-          <span class="save">You save ₹3,000</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Nesting Table Set of 2, Teak Wood with Pearl Green Resin Finish</a>
+        <div class="price-row">
+          <span class="now">₹12,000</span><span class="was">₹15,000</span><span class="save">Save 20%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card" data-material="sheesham" data-category="nesting-table">
-        <span class="badge">Save 20%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/nesting-table-sheesham.png" alt="Nesting Table Set of 2, Sheesham Wood with Transparent Resin Finish" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Sheesham wood · resin</span>
-          <a href="#" class="name">Nesting Table Set of 2, Sheesham Wood with Transparent Resin Finish</a>
-          <div class="price-row">
-            <span class="now">₹11,920</span><span class="was">₹14,900</span>
-          </div>
-          <span class="save">You save ₹2,980</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Nesting Table Set of 2, Sheesham Wood with Transparent Resin Finish</a>
+        <div class="price-row">
+          <span class="now">₹11,920</span><span class="was">₹14,900</span><span class="save">Save 20%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card" data-material="teak" data-category="nesting-table">
-        <span class="badge">Save 46%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/nesting-table-tinted-grey.png" alt="Nesting Table Set of 3, Teak Wood with Tinted Grey Resin Finish" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Teak wood · resin</span>
-          <a href="#" class="name">Nesting Table Set of 3, Teak Wood with Tinted Grey Resin Finish</a>
-          <div class="price-row">
-            <span class="now">₹15,600</span><span class="was">₹28,500</span>
-          </div>
-          <span class="save">You save ₹12,900</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Nesting Table Set of 3, Teak Wood with Tinted Grey Resin Finish</a>
+        <div class="price-row">
+          <span class="now">₹15,600</span><span class="was">₹28,500</span><span class="save">Save 46%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card" data-material="oak" data-category="wall-decor">
-        <span class="badge">Save 20%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/wall-clock-pearl-green-oak.png" alt="Pearl Green Resin Wall Clock, Wood Oak Elegance" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Oak wood · resin</span>
-          <a href="#" class="name">Pearl Green Resin Wall Clock, Wood Oak Elegance</a>
-          <div class="price-row">
-            <span class="now">₹3,600</span><span class="was">₹4,500</span>
-          </div>
-          <span class="save">You save ₹900</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Pearl Green Resin Wall Clock, Wood Oak Elegance</a>
+        <div class="price-row">
+          <span class="now">₹3,600</span><span class="was">₹4,500</span><span class="save">Save 20%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card" data-material="acacia" data-category="wall-decor">
-        <span class="badge">Save 16%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/wall-clock-elegant-wooden.png" alt="Elegant Wooden Wall Clock, Natural Acacia Wood" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Acacia wood</span>
-          <a href="#" class="name">Elegant Wooden Wall Clock, Natural Acacia Wood</a>
-          <div class="price-row">
-            <span class="now">₹3,499</span><span class="was">₹4,125</span>
-          </div>
-          <span class="save">You save ₹626</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Elegant Wooden Wall Clock, Natural Acacia Wood</a>
+        <div class="price-row">
+          <span class="now">₹3,499</span><span class="was">₹4,125</span><span class="save">Save 16%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
       <article class="card" data-material="acacia" data-category="wall-decor">
-        <span class="badge">Save 16%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
         <a href="#" class="thumb"><img src="assets/wall-clock-stylish-wooden.png" alt="Stylish Wooden Wall Clock, Acacia Wood" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Acacia wood</span>
-          <a href="#" class="name">Stylish Wooden Wall Clock, Acacia Wood</a>
-          <div class="price-row">
-            <span class="now">₹3,499</span><span class="was">₹4,125</span>
-          </div>
-          <span class="save">You save ₹626</span>
-          <button class="add">Add to Cart</button>
+        <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <a href="#" class="name">Stylish Wooden Wall Clock, Acacia Wood</a>
+        <div class="price-row">
+          <span class="now">₹3,499</span><span class="was">₹4,125</span><span class="save">Save 16%</span>
         </div>
+        <button class="add">Add to Cart</button>
       </article>
 
     </div>
@@ -1164,18 +1076,14 @@
     // material swatches only affect this section's own preview strip
     function buildPreviewCard(realCard){
       const img = realCard.querySelector('.thumb img');
-      const mat = realCard.querySelector('.mat');
       const name = realCard.querySelector('.name');
       const now = realCard.querySelector('.now');
       const art = document.createElement('article');
       art.className = 'card';
       art.innerHTML = `
         <a href="${name.getAttribute('href')}" class="thumb"><img src="${img.getAttribute('src')}" alt="${img.getAttribute('alt')}" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">${mat.textContent}</span>
-          <a href="${name.getAttribute('href')}" class="name">${name.textContent}</a>
-          <div class="price-row"><span class="now">${now.textContent}</span></div>
-        </div>`;
+        <a href="${name.getAttribute('href')}" class="name">${name.textContent}</a>
+        <div class="price-row"><span class="now">${now.textContent}</span></div>`;
       return art;
     }
     function renderPreview(material){
