@@ -322,7 +322,7 @@
   .card .add:hover{background:var(--yellow);color:var(--dark)}
 
   /* brand creative slotted into the grid at the same size as a product card */
-  .card-creative{padding:0;grid-column:-2/-1}
+  .card-creative{padding:0}
   .card-creative a{display:block;width:100%;height:100%}
   .card-creative img{display:block;width:100%;height:100%;aspect-ratio:9/16;object-fit:cover;object-position:left;transition:transform .5s ease}
   .card-creative:hover img{transform:scale(1.03)}
@@ -726,10 +726,6 @@
         </div>
       </article>
 
-      <article class="card card-creative">
-        <a href="#"><img src="assets/brand-creative-proudly-made.jpg" alt="Proudly Made - Wewood craftsmanship" loading="lazy"></a>
-      </article>
-
       <div class="grid-usp-break">
         <div class="usp-trust" aria-label="Wewood guarantees">
           <span class="trust-item"><span class="ic"><i class="ti ti-hammer"></i></span><span>Handmade</span></span>
@@ -784,19 +780,8 @@
         </div>
       </article>
 
-      <article class="card" data-material="teak" data-category="furniture">
-        <span class="badge">Save 20%</span>
-        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
-        <a href="#" class="thumb"><img src="assets/coffee-table-blue-resin.png" alt="Round Coffee Table, Teak Wood with Special Blue Resin Finish" loading="lazy"></a>
-        <div class="info">
-          <span class="mat">Teak wood · resin</span>
-          <a href="#" class="name">Round Coffee Table, Teak Wood with Special Blue Resin Finish</a>
-          <div class="price-row">
-            <span class="now">₹14,800</span><span class="was">₹18,500</span>
-          </div>
-          <span class="save">You save ₹3,700</span>
-          <button class="add">Add to Cart</button>
-        </div>
+      <article class="card card-creative">
+        <a href="#"><img src="assets/brand-creative-proudly-made.jpg" alt="Proudly Made - Wewood craftsmanship" loading="lazy"></a>
       </article>
 
       <div class="mat-shop-break">
@@ -855,8 +840,19 @@
         </div>
       </div>
 
-      <article class="card card-creative">
-        <a href="#"><img src="assets/brand-creative-crafted-beauty.jpg" alt="Crafted for the beauty your home deserves - Wewood" loading="lazy"></a>
+      <article class="card" data-material="teak" data-category="furniture">
+        <span class="badge">Save 20%</span>
+        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
+        <a href="#" class="thumb"><img src="assets/coffee-table-blue-resin.png" alt="Round Coffee Table, Teak Wood with Special Blue Resin Finish" loading="lazy"></a>
+        <div class="info">
+          <span class="mat">Teak wood · resin</span>
+          <a href="#" class="name">Round Coffee Table, Teak Wood with Special Blue Resin Finish</a>
+          <div class="price-row">
+            <span class="now">₹14,800</span><span class="was">₹18,500</span>
+          </div>
+          <span class="save">You save ₹3,700</span>
+          <button class="add">Add to Cart</button>
+        </div>
       </article>
 
       <article class="card" data-material="acacia" data-category="nesting-table">
@@ -885,6 +881,10 @@
           <span class="save">You save ₹25,501</span>
           <button class="add">Add to Cart</button>
         </div>
+      </article>
+
+      <article class="card card-creative">
+        <a href="#"><img src="assets/brand-creative-crafted-beauty.jpg" alt="Crafted for the beauty your home deserves - Wewood" loading="lazy"></a>
       </article>
 
       <article class="card" data-material="teak" data-category="nesting-table">
