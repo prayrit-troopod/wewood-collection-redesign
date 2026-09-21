@@ -151,11 +151,14 @@
   .usp-trust{padding:16px var(--pad-x);display:grid;grid-template-columns:repeat(2,1fr);gap:16px 12px;flex:1}
   @media (min-width:600px){.usp-trust{grid-template-columns:repeat(3,1fr)}}
   @media (min-width:940px){.usp-trust{grid-template-columns:repeat(6,1fr);align-items:center;gap:10px}}
-  .trust-item{display:flex;align-items:center;gap:10px}
+  .trust-item{display:flex;align-items:center;gap:10px;padding:4px;border-radius:12px;transition:background .2s ease}
   @media (min-width:940px){.trust-item{flex-direction:column;text-align:center;gap:8px}}
-  .trust-item .ic{flex:0 0 auto;width:52px;height:52px;border-radius:var(--pill);background:var(--bg-secondary);color:var(--dark);display:flex;align-items:center;justify-content:center}
+  .trust-item .ic{flex:0 0 auto;width:52px;height:52px;border-radius:var(--pill);background:var(--bg-secondary);color:var(--dark);display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .2s ease}
   .trust-item .ic i{font-size:24px;line-height:1}
-  .trust-item span:last-child{font-family:var(--font-button);font-size:12.5px;font-weight:600;color:#fff;line-height:1.35}
+  .trust-item span:last-child{font-family:var(--font-button);font-size:12.5px;font-weight:600;color:#fff;line-height:1.35;transition:color .2s ease}
+  .trust-item:hover{background:rgba(255,255,255,.06)}
+  .trust-item:hover .ic{background:var(--yellow);color:var(--dark);transform:scale(1.08)}
+  .trust-item:hover span:last-child{color:var(--yellow)}
 
   /* ---------- toolbar ---------- */
   .toolbar{position:relative;z-index:10;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:28px}
@@ -231,9 +234,6 @@
   .card .add{margin-top:9px;font-family:var(--font-button);font-size:11.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;background:var(--dark);color:#fff;border:0;border-radius:var(--pill);padding:10px;transition:background .2s,color .2s}
   .card .add:hover{background:var(--yellow);color:var(--dark)}
 
-  .loadmore{display:flex;justify-content:center;padding:30px 0 46px}
-  .btn-outline{font-family:var(--font-button);font-size:12.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--dark);background:var(--white);border:1px solid var(--dark);border-radius:var(--pill);padding:13px 30px}
-  .btn-outline:hover{background:var(--dark);color:#fff}
 
   /* ---------- by material ---------- */
   .material-sec{background:var(--white);border-top:1px solid var(--border);padding:var(--inner) 0}
@@ -339,8 +339,8 @@
   .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 
   /* ---------- press feedback (respond on pointer-down, not release) ---------- */
-  .chip,.card .add,.btn-outline,.card .wish,.icon-btn,.menu-btn,.rail a .disc{transition:transform 100ms ease-out,background-color .2s,border-color .2s,color .2s}
-  .chip:active,.card .add:active,.btn-outline:active,.card .wish:active,.icon-btn:active,.menu-btn:active{transform:scale(.96)}
+  .chip,.card .add,.card .wish,.icon-btn,.menu-btn,.rail a .disc{transition:transform 100ms ease-out,background-color .2s,border-color .2s,color .2s}
+  .chip:active,.card .add:active,.card .wish:active,.icon-btn:active,.menu-btn:active{transform:scale(.96)}
   .rail a:active .disc{transform:scale(.94);border-color:var(--dark)}
 
   /* ---------- keyboard focus ---------- */
@@ -633,13 +633,52 @@
         </div>
       </article>
 
+      <article class="card">
+        <span class="badge">Save 20%</span>
+        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
+        <a href="#" class="thumb"><img src="assets/coffee-table-blue-resin.png" alt="Round Coffee Table, Teak Wood with Special Blue Resin Finish" loading="lazy"></a>
+        <div class="info">
+          <span class="mat">Teak wood · resin</span>
+          <a href="#" class="name">Round Coffee Table, Teak Wood with Special Blue Resin Finish</a>
+          <div class="price-row">
+            <span class="now">₹14,800</span><span class="was">₹18,500</span>
+          </div>
+          <span class="save">You save ₹3,700</span>
+          <button class="add">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
+        <a href="#" class="thumb"><img src="assets/nesting-table-acacia.png" alt="Nesting Table Set of 2, Acacia Wood with Transparent Resin Finish" loading="lazy"></a>
+        <div class="info">
+          <span class="mat">Acacia wood · resin</span>
+          <a href="#" class="name">Nesting Table Set of 2, Acacia Wood with Transparent Resin Finish</a>
+          <div class="price-row">
+            <span class="now">₹20,000</span>
+          </div>
+          <button class="add">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="badge">Save 39%</span>
+        <button class="wish" aria-label="Add to wishlist"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.3 0 3.9 1.3 6 3.5C14.1 5.3 15.7 4 18 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21Z"/></svg></button>
+        <a href="#" class="thumb"><img src="assets/live-edge-blue-epoxy-table.jpg" alt="Modern Live-Edge Wood and Blue Epoxy Resin Table" loading="lazy"></a>
+        <div class="info">
+          <span class="mat">Live-edge wood · epoxy</span>
+          <a href="#" class="name">Modern Live-Edge Wood &amp; Blue Epoxy Resin Table</a>
+          <div class="price-row">
+            <span class="now">₹39,499</span><span class="was">₹65,000</span>
+          </div>
+          <span class="save">You save ₹25,501</span>
+          <button class="add">Add to Cart</button>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
-
-<div class="loadmore">
-  <button class="btn-outline">View all products</button>
-</div>
 
 <section class="material-sec">
   <div class="wrap">
