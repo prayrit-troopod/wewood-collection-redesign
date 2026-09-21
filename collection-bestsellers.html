@@ -162,7 +162,8 @@
   .trust-item:hover span:last-child{color:var(--yellow)}
 
   /* ---------- toolbar ---------- */
-  .toolbar{position:relative;z-index:10;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:28px}
+  .toolbar{position:sticky;top:105px;z-index:20;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:28px}
+  @media (min-width:520px){.toolbar{top:116px}}
   .toolbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px var(--pad-x);padding:14px var(--pad-x);flex-wrap:wrap}
   @media (max-width:639px){.toolbar .wrap{flex-direction:column;align-items:stretch}}
 
