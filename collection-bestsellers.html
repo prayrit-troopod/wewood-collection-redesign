@@ -177,30 +177,40 @@
      separates every row, so to make just this item's own gap 16px without
      touching spacing between product card rows, adjust it with a margin
      instead of overriding the shared grid gap */
-  .grid-usp-break{grid-column:1/-1;background:var(--dark);border-radius:var(--radius);overflow:hidden;margin:2px 0}
+  /* same light hairline-bordered strip as the homepage's credibility ticker
+     (mohsufonit.github.io/wewood_hp/, already approved) - no dark fill, no
+     rounded card, so it reads as a trust strip rather than another button */
+  .grid-usp-break{grid-column:1/-1;background:var(--bg-secondary);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;margin:2px 0}
   @media (min-width:640px){.grid-usp-break{margin:-6px 0}}
   /* infinite marquee, same duplicate-track technique as .micro-strip/.rev-track:
      the track is twice the real content, scrolled exactly half its own width
      so the loop point is seamless */
-  .usp-marquee{overflow:hidden}
-  .usp-track{display:flex;align-items:center;gap:40px;padding:8px 0;width:max-content;animation:uspScroll 24s linear infinite}
+  .usp-marquee{overflow:hidden;padding:16px 0}
+  .usp-track{display:flex;align-items:center;gap:0;width:max-content;animation:uspScroll 24s linear infinite}
   .usp-marquee:hover .usp-track{animation-play-state:paused}
   @keyframes uspScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   .usp-track .is-dupe{display:contents}
-  .trust-item{display:flex;align-items:center;gap:10px;flex:0 0 auto;white-space:nowrap}
-  .trust-item .ic{flex:0 0 auto;width:52px;height:52px;border-radius:var(--pill);background:var(--bg-secondary);color:var(--dark);display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .2s ease}
-  .trust-item .ic i{font-size:24px;line-height:1}
-  .trust-item span:last-child{font-family:var(--font-button);font-size:12.5px;font-weight:600;color:#fff;line-height:1.35;transition:color .2s ease}
-  .trust-item:hover .ic{background:var(--yellow);color:var(--dark);transform:scale(1.08)}
-  .trust-item:hover span:last-child{color:var(--yellow)}
+  /* heading font + hand-drawn line icons (same SVGs as the homepage ticker),
+     not an icon font in a colored circle - a divider line sits at each
+     item's own left edge so no extra markup is needed between items */
+  .trust-item{display:inline-flex;align-items:center;gap:12px;font-family:var(--font-heading);font-size:15px;color:var(--text);letter-spacing:.02em;white-space:nowrap;padding:0 32px;position:relative;flex:0 0 auto}
+  .trust-item svg{flex:0 0 auto;color:var(--text);display:block}
+  .trust-item + .trust-item::before{content:"";position:absolute;left:0;top:-16px;bottom:-16px;width:1px;background:var(--border)}
+  @media (max-width:639px){
+    .usp-marquee{padding:12px 0}
+    .trust-item{font-size:14px;gap:10px;padding:0 17px}
+    /* the homepage swaps to a small dot between items at this width instead
+       of the vertical line - same divider, no extra markup */
+    .trust-item + .trust-item::before{top:50%;bottom:auto;width:4px;height:4px;border-radius:50%;background:var(--text-3);transform:translate(-50%,-50%)}
+  }
   @media (prefers-reduced-motion:reduce){
-    .usp-track{animation:none;flex-wrap:wrap;width:auto;justify-content:center;padding:8px var(--pad-x)}
+    .usp-track{animation:none;flex-wrap:wrap;width:auto;justify-content:center;padding:0 var(--pad-x)}
     .usp-track .is-dupe{display:none}
   }
 
   /* ---------- shop by material (in-grid break) ---------- */
   .mat-shop-break{grid-column:1/-1;background:var(--dark);border-radius:var(--radius);overflow:hidden;padding:28px var(--pad-x) 24px}
-  .mat-shop-break h3{font-family:var(--font-heading);font-weight:400;font-size:23px;color:#fff;margin:0 0 20px;text-align:center}
+  .mat-shop-break h3{font-family:var(--font-heading);font-weight:400;font-size:clamp(23px,2.4vw,28px);color:#fff;margin:0 0 20px;text-align:center}
   .mat-swatches{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-bottom:26px}
   .mat-swatch{background:none;border:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer}
   .mat-swatch .ring{width:58px;height:58px;border-radius:var(--pill);padding:3px;border:2px solid transparent;display:flex;transition:border-color .2s ease}
@@ -209,6 +219,18 @@
   .mat-swatch .lab{font-family:var(--font-button);font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#9aa393;transition:color .2s ease}
   .mat-swatch.on .lab{color:var(--yellow)}
   .mat-swatch:hover .lab{color:#cfd3c9}
+  /* the heading/label text and swatch pickers were sized like a compact
+     mobile widget at every breakpoint - scale them up from here on so they
+     read at the same weight as the rest of the desktop page instead of
+     looking shrunk down next to it */
+  @media (min-width:980px){
+    .mat-shop-break{padding:36px var(--pad-x) 32px}
+    .mat-shop-break h3{margin-bottom:26px}
+    .mat-swatches{gap:36px;margin-bottom:32px}
+    .mat-swatch{gap:12px}
+    .mat-swatch .ring{width:78px;height:78px}
+    .mat-swatch .lab{font-size:13px;letter-spacing:.06em}
+  }
   /* same responsive column pattern as the main product .grid, so these 4
      cards size up together with it instead of staying a fixed-width strip */
   .mat-preview{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 12px}
@@ -902,19 +924,19 @@
       <div class="grid-usp-break">
         <div class="usp-marquee" aria-label="Wewood guarantees">
           <div class="usp-track">
-            <span class="trust-item"><span class="ic"><i class="ti ti-hammer"></i></span><span>Handmade</span></span>
-            <span class="trust-item"><span class="ic"><i class="ti ti-tree"></i></span><span>20 Years in Timber</span></span>
-            <span class="trust-item"><span class="ic"><i class="ti ti-award"></i></span><span>Patented &amp; Exhibited</span></span>
-            <span class="trust-item"><span class="ic"><i class="ti ti-truck-delivery"></i></span><span>Free Shipping</span></span>
-            <span class="trust-item"><span class="ic"><i class="ti ti-cash"></i></span><span>COD Available</span></span>
-            <span class="trust-item"><span class="ic"><i class="ti ti-refresh"></i></span><span>7-Day Exchange</span></span>
+            <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.4 4.5h11.2a1.1 1.1 0 0 1 1.1 1.1v2.8a1.1 1.1 0 0 1-1.1 1.1H4.4z" fill="currentColor" stroke="none"></path><path d="M13 9.5l1.7 10.1"></path></svg><span>Handmade</span></span>
+            <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2v-3.4"></path><path d="M12 16.8H7l3.1-3.9H8L12 6.8l4 6.1h-2.1l3.1 3.9z"></path></svg><span>20 Years in Timber</span></span>
+            <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.4" r="5"></circle><path d="M9 13.7L7.5 20.4 12 17.9l4.5 2.5-1.5-6.7"></path></svg><span>Patented &amp; Exhibited</span></span>
+            <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 6.8h10.4v9.4H2.8z"></path><path d="M13.2 10.2h3.6l3.4 3.4v2.6h-7z"></path><circle cx="6.6" cy="18" r="1.8"></circle><circle cx="16.6" cy="18" r="1.8"></circle></svg><span>Free Shipping</span></span>
+            <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="7.2" width="18.4" height="11.6" rx="1.6"></rect><circle cx="12" cy="13" r="2.6"></circle><path d="M5.6 10.2v0M18.4 15.8v0"></path></svg><span>COD Available</span></span>
+            <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5A8 8 0 0 0 6.6 6.2L4.5 8.3"></path><path d="M4.5 4.3v4h4"></path><path d="M4 12.5a8 8 0 0 0 13.4 5.3l2.1-2.1"></path><path d="M19.5 19.7v-4h-4"></path></svg><span>7-Day Exchange</span></span>
             <div class="is-dupe" aria-hidden="true">
-              <span class="trust-item"><span class="ic"><i class="ti ti-hammer"></i></span><span>Handmade</span></span>
-              <span class="trust-item"><span class="ic"><i class="ti ti-tree"></i></span><span>20 Years in Timber</span></span>
-              <span class="trust-item"><span class="ic"><i class="ti ti-award"></i></span><span>Patented &amp; Exhibited</span></span>
-              <span class="trust-item"><span class="ic"><i class="ti ti-truck-delivery"></i></span><span>Free Shipping</span></span>
-              <span class="trust-item"><span class="ic"><i class="ti ti-cash"></i></span><span>COD Available</span></span>
-              <span class="trust-item"><span class="ic"><i class="ti ti-refresh"></i></span><span>7-Day Exchange</span></span>
+              <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.4 4.5h11.2a1.1 1.1 0 0 1 1.1 1.1v2.8a1.1 1.1 0 0 1-1.1 1.1H4.4z" fill="currentColor" stroke="none"></path><path d="M13 9.5l1.7 10.1"></path></svg><span>Handmade</span></span>
+              <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2v-3.4"></path><path d="M12 16.8H7l3.1-3.9H8L12 6.8l4 6.1h-2.1l3.1 3.9z"></path></svg><span>20 Years in Timber</span></span>
+              <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.4" r="5"></circle><path d="M9 13.7L7.5 20.4 12 17.9l4.5 2.5-1.5-6.7"></path></svg><span>Patented &amp; Exhibited</span></span>
+              <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 6.8h10.4v9.4H2.8z"></path><path d="M13.2 10.2h3.6l3.4 3.4v2.6h-7z"></path><circle cx="6.6" cy="18" r="1.8"></circle><circle cx="16.6" cy="18" r="1.8"></circle></svg><span>Free Shipping</span></span>
+              <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="7.2" width="18.4" height="11.6" rx="1.6"></rect><circle cx="12" cy="13" r="2.6"></circle><path d="M5.6 10.2v0M18.4 15.8v0"></path></svg><span>COD Available</span></span>
+              <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5A8 8 0 0 0 6.6 6.2L4.5 8.3"></path><path d="M4.5 4.3v4h4"></path><path d="M4 12.5a8 8 0 0 0 13.4 5.3l2.1-2.1"></path><path d="M19.5 19.7v-4h-4"></path></svg><span>7-Day Exchange</span></span>
             </div>
           </div>
         </div>
