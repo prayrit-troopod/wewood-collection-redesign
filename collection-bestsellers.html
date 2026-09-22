@@ -39,6 +39,7 @@
   @media (min-width:640px){ :root{ --pad-x:var(--page-gutter); } }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
+  html.scroll-locked,html.scroll-locked body{overflow:hidden}
   body{
     margin:0;background:var(--bg);color:var(--text);
     font-family:var(--font-body);font-size:15px;line-height:1.6;
@@ -59,46 +60,47 @@
   @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @media (prefers-reduced-motion:reduce){.micro-strip .track{animation:none}}
 
-  /* ---------- header ---------- */
-  header{
-    background:rgba(225,225,225,.78);
-    -webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);
-    position:sticky;top:0;z-index:50;overflow:visible;
-    box-shadow:0 1px 0 rgba(255,255,255,.5) inset;
+  /* ---------- header (matches mohsufonit.github.io/wewood_hp/) ---------- */
+  .header-wrap{position:sticky;top:var(--gutter);z-index:50;padding:0 var(--gutter);margin-top:var(--gutter);transition:transform .25s ease-out}
+  .header-wrap.is-hidden{transform:translateY(calc(-100% - var(--gutter) - 12px))}
+  @media (prefers-reduced-motion:reduce){.header-wrap{transition:none}}
+  .header{background:var(--header);border-radius:var(--radius);height:77px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:28px;padding:0 28px}
+  .logo{display:flex;min-width:0}
+  .logo img{height:31px;width:auto;display:block}
+  .nav{display:flex;justify-content:center;gap:22px;font-size:14px;color:var(--dark);white-space:nowrap}
+  .nav a{padding:4px 0;border-bottom:1.5px solid transparent;transition:border-color .16s ease-out}
+  .nav a:hover,.nav a.on{border-color:var(--dark)}
+  .header-right{display:flex;align-items:center;gap:18px}
+  .search{display:flex;align-items:center;gap:10px;background:var(--bg-secondary);border:1px solid transparent;border-radius:var(--pill);height:42px;padding:0 14px 0 16px;width:240px;transition:border-color .16s ease-out,width .2s ease-out}
+  .search:focus-within{border-color:var(--dark);width:280px;box-shadow:0 0 0 2px var(--dark)}
+  .search input{flex:1;border:0;outline:none;background:transparent;font-family:var(--font-body);font-size:14px;color:var(--text);min-width:0}
+  .search input::placeholder{color:var(--text-3)}
+  .search svg{flex:0 0 auto;color:var(--text-2)}
+  .icon-btn{background:none;border:0;padding:0;color:var(--dark);position:relative;display:flex}
+  .icon-btn svg{width:22px;height:22px}
+  .cart-count{position:absolute;top:-7px;right:-9px;min-width:16px;height:16px;padding:0 3px;background:var(--dark);color:#fff;font-size:10px;font-family:var(--font-button);border-radius:var(--pill);display:flex;align-items:center;justify-content:center}
+  .menu-btn{display:none}
+  .mobile-menu{display:none;background:var(--white);border-radius:var(--radius);margin-top:8px;padding:14px 18px 18px;box-shadow:0 12px 32px rgba(0,0,0,.12)}
+  .mobile-menu.open{display:block}
+  .mobile-menu>a{display:block;padding:13px 4px;font-size:16px;border-bottom:1px solid var(--bg)}
+  .mobile-menu>a:last-of-type{border-bottom:0}
+  .mm-search{display:flex;align-items:center;gap:10px;background:var(--bg-secondary);border-radius:var(--pill);height:44px;padding:0 14px 0 16px;margin-bottom:8px;transition:box-shadow .15s ease-out}
+  .mm-search:focus-within{box-shadow:0 0 0 2px var(--dark)}
+  .mm-search input{flex:1;border:0;outline:none;background:transparent;font-family:var(--font-body);font-size:15px;min-width:0}
+  .mm-search svg{color:var(--text-2);flex:0 0 auto}
+  @media (max-width:1250px){
+    .nav{display:none}
+    .header{grid-template-columns:auto 1fr}
+    .header-right{justify-self:end}
+    .menu-btn{display:flex}
   }
-  header::after{
-    content:"";position:absolute;left:0;right:0;bottom:-14px;height:14px;pointer-events:none;
-    background:linear-gradient(rgba(20,20,20,.06),transparent);
+  @media (max-width:640px){
+    .search{display:none}
+    .header-wrap{top:10px;margin-top:10px}
+    .header{height:60px;padding:0 18px;gap:14px}
+    .logo img{height:24px}
+    .header-right{gap:14px}
   }
-  .header-in{max-width:var(--w);margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:12px}
-  .menu-btn{flex:0 0 auto;display:flex;flex-direction:column;gap:4px;background:none;border:0;padding:6px}
-  .menu-btn span{width:20px;height:2px;background:var(--dark)}
-  .logo{margin:0 auto 0 0;display:flex;align-items:baseline;gap:8px;font-family:var(--font-heading);white-space:nowrap;min-width:0;overflow:hidden}
-  .logo b{font-size:18px;font-weight:700;letter-spacing:.01em;color:var(--dark);white-space:nowrap}
-  .logo em{font-style:normal;font-family:var(--font-button);font-size:9px;letter-spacing:.1em;color:var(--text-2);text-transform:uppercase;white-space:nowrap;display:none}
-  .icon-row{display:flex;align-items:center;gap:14px;flex:0 0 auto}
-  @media (min-width:520px){
-    .header-in{padding:16px 20px;gap:24px}
-    .logo b{font-size:22px;letter-spacing:.02em}
-    .logo em{display:inline;align-self:flex-end;margin-bottom:2px}
-    .icon-row{gap:18px}
-  }
-  .icon-btn{background:none;border:0;color:var(--dark);position:relative;display:flex}
-  .cart-count{position:absolute;top:-7px;right:-8px;background:var(--dark);color:#fff;font-size:10px;font-family:var(--font-button);width:16px;height:16px;border-radius:var(--pill);display:flex;align-items:center;justify-content:center}
-  nav.subnav{
-    position:relative;
-    background:rgba(255,255,255,.72);
-    -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
-    overflow-x:auto;scrollbar-width:none;
-  }
-  nav.subnav::after{
-    content:"";position:absolute;left:0;right:0;bottom:-12px;height:12px;pointer-events:none;
-    background:linear-gradient(rgba(20,20,20,.05),transparent);
-  }
-  nav.subnav::-webkit-scrollbar{display:none}
-  nav.subnav .subnav-in{max-width:var(--w);margin:0 auto;padding:0 var(--pad-x);display:flex;gap:28px;white-space:nowrap}
-  nav.subnav a{font-family:var(--font-button);font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--text-2);padding:13px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
-  nav.subnav a.on,nav.subnav a:hover{color:var(--dark);border-bottom-color:var(--dark)}
 
   /* ---------- breadcrumb ---------- */
   .crumb{padding:14px var(--pad-x) 0}
@@ -107,19 +109,39 @@
   .crumb .sep{color:var(--silver)}
   .crumb .cur{color:var(--text)}
 
-  /* ---------- hero banner ---------- */
-  .hero-banner{position:relative;overflow:hidden;min-height:340px;display:flex;align-items:flex-end;margin:var(--gutter) var(--gutter) 0;border-radius:var(--radius)}
+  /* ---------- hero banner (sizing/look matches the approved homepage hero) ---------- */
+  .hero-banner{margin:var(--gutter) var(--gutter) 0;position:relative;height:420px;border-radius:var(--radius);overflow:hidden}
   .hero-banner .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .hero-banner .hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,9,6,.1) 0%,rgba(10,9,6,.18) 45%,rgba(10,9,6,.78) 100%)}
-  .hero-content{position:relative;z-index:1;width:100%;padding:40px var(--pad-x) 32px}
-  .hero-content h1{font-size:clamp(32px,6vw,56px);letter-spacing:-.015em;color:#fff}
-  .hero-content .sub{max-width:60ch;margin:14px 0 0;color:rgba(255,255,255,.88);font-size:14.5px;line-height:1.65}
+  /* the homepage's left-fade scrim assumes a fairly dark source photo - this
+     hero image is a bright, light-toned room (cream carpet, pale sofa), so
+     that alone left white text sitting on light carpet with weak contrast.
+     layering a bottom-anchored fade under it guarantees legible text behind
+     the copy regardless of how bright the underlying photo is, while the
+     left fade is kept as a lighter secondary layer for the same depth look */
+  .hero-banner .hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.1) 35%,rgba(0,0,0,.78) 100%),linear-gradient(90deg,rgba(0,0,0,.3),rgba(0,0,0,0) 55%)}
+  .hero-content{position:absolute;left:var(--inner);right:var(--inner);bottom:64px;z-index:1;max-width:620px}
+  .hero-content h1{font-size:48px;line-height:1.08;letter-spacing:-.015em;color:#fff;margin-bottom:26px}
+  .hero-content .sub{max-width:60ch;margin:0;color:rgba(255,255,255,.88);font-size:14.5px;line-height:1.65}
   .hero-content .sub b{color:#fff;font-weight:700}
-  @media (min-width:760px){.hero-banner{min-height:440px}.hero-content{padding:56px var(--pad-x) 44px}}
+  @media (max-width:760px){
+    .hero-banner{height:520px}
+    .hero-content{left:24px;right:24px;bottom:56px}
+    .hero-content h1{font-size:34px}
+  }
+  @media (max-width:640px){
+    .hero-banner{height:500px;margin-top:12px}
+    .hero-content{left:18px;right:18px;bottom:60px}
+    .hero-content h1{font-size:30px;margin-bottom:20px}
+  }
 
   /* ---------- shop-by-collection rail ---------- */
-  .rail-sec{padding:34px 0 40px}
-  .rail-sec h2{font-size:clamp(22px,3vw,28px);margin:0 0 20px;padding:0 var(--pad-x)}
+  .rail-sec{padding:34px 0}
+  /* the EMI/bank-offer box right after this rail already supplies its own
+     16px top padding, so this section's usual 34px bottom padding would
+     stack on top of that (50px total) instead of the intended 16px -
+     cancel it here, same fix as .usp-wrap + .toolbar below */
+  .rail-sec:has(+ .usp-wrap){padding-bottom:0}
+  .rail-sec h2{font-size:clamp(22px,3vw,28px);margin:0 0 8px;padding:0 var(--pad-x)}
   .rail-sec h2 em{font-style:italic;color:var(--text-2)}
   /* scroll-padding matches the rail's own side padding - without it, proximity
      snapping treats the first card's start edge as the snap target and jumps
@@ -135,7 +157,7 @@
   .rail a:hover .arrow{transform:rotate(45deg)}
 
   /* ---------- usp strip (offer + trust) ---------- */
-  .usp-wrap{padding:18px var(--pad-x) 0}
+  .usp-wrap{padding:16px var(--pad-x)}
   .usp-strip{background:var(--dark);border:0;border-radius:var(--radius);display:flex;flex-direction:column}
   @media (min-width:940px){.usp-strip{flex-direction:row;align-items:stretch}}
 
@@ -151,18 +173,30 @@
   .usp-div{border-top:1px solid rgba(255,255,255,.25)}
   @media (min-width:940px){.usp-div{border-top:0;border-left:1px solid rgba(255,255,255,.25)}}
 
-  .usp-trust{padding:16px var(--pad-x);display:grid;grid-template-columns:repeat(2,1fr);gap:16px 12px;flex:1}
-  @media (min-width:600px){.usp-trust{grid-template-columns:repeat(3,1fr)}}
-  @media (min-width:940px){.usp-trust{grid-template-columns:repeat(6,1fr);align-items:center;gap:10px}}
-  .grid-usp-break{grid-column:1/-1;background:var(--dark);border-radius:var(--radius);overflow:hidden}
-  .grid-usp-break .usp-trust{padding:20px var(--pad-x)}
-  .trust-item{display:flex;align-items:center;gap:10px}
-  @media (min-width:940px){.trust-item{flex-direction:column;text-align:center;gap:8px}}
+  /* the grid's own row-gap (14px mobile, 22px from 640px up) is what actually
+     separates every row, so to make just this item's own gap 16px without
+     touching spacing between product card rows, adjust it with a margin
+     instead of overriding the shared grid gap */
+  .grid-usp-break{grid-column:1/-1;background:var(--dark);border-radius:var(--radius);overflow:hidden;margin:2px 0}
+  @media (min-width:640px){.grid-usp-break{margin:-6px 0}}
+  /* infinite marquee, same duplicate-track technique as .micro-strip/.rev-track:
+     the track is twice the real content, scrolled exactly half its own width
+     so the loop point is seamless */
+  .usp-marquee{overflow:hidden}
+  .usp-track{display:flex;align-items:center;gap:40px;padding:8px 0;width:max-content;animation:uspScroll 24s linear infinite}
+  .usp-marquee:hover .usp-track{animation-play-state:paused}
+  @keyframes uspScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .usp-track .is-dupe{display:contents}
+  .trust-item{display:flex;align-items:center;gap:10px;flex:0 0 auto;white-space:nowrap}
   .trust-item .ic{flex:0 0 auto;width:52px;height:52px;border-radius:var(--pill);background:var(--bg-secondary);color:var(--dark);display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .2s ease}
   .trust-item .ic i{font-size:24px;line-height:1}
   .trust-item span:last-child{font-family:var(--font-button);font-size:12.5px;font-weight:600;color:#fff;line-height:1.35;transition:color .2s ease}
   .trust-item:hover .ic{background:var(--yellow);color:var(--dark);transform:scale(1.08)}
   .trust-item:hover span:last-child{color:var(--yellow)}
+  @media (prefers-reduced-motion:reduce){
+    .usp-track{animation:none;flex-wrap:wrap;width:auto;justify-content:center;padding:8px var(--pad-x)}
+    .usp-track .is-dupe{display:none}
+  }
 
   /* ---------- shop by material (in-grid break) ---------- */
   .mat-shop-break{grid-column:1/-1;background:var(--dark);border-radius:var(--radius);overflow:hidden;padding:28px var(--pad-x) 24px}
@@ -175,16 +209,43 @@
   .mat-swatch .lab{font-family:var(--font-button);font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#9aa393;transition:color .2s ease}
   .mat-swatch.on .lab{color:var(--yellow)}
   .mat-swatch:hover .lab{color:#cfd3c9}
-  .mat-preview{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;margin:0 calc(var(--pad-x) * -1);padding-left:var(--pad-x);padding-right:var(--pad-x)}
-  .mat-preview::-webkit-scrollbar{display:none}
-  .mat-preview .card{flex:0 0 152px}
-  @media (min-width:640px){.mat-preview .card{flex-basis:190px}}
+  /* same responsive column pattern as the main product .grid, so these 4
+     cards size up together with it instead of staying a fixed-width strip */
+  .mat-preview{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 12px}
+  @media (min-width:640px){.mat-preview{grid-template-columns:repeat(3,1fr);gap:22px 18px}}
+  @media (min-width:980px){.mat-preview{grid-template-columns:repeat(4,1fr)}}
   .mat-preview .card .name{font-size:13px;height:36px;color:#fff}
   .mat-preview .card .now{font-size:15px;color:#fff}
+  /* rating text and the Add to Cart button are styled for a white card on
+     the light grid above - this panel's background is --dark, so the muted
+     gray rating text and the dark-on-dark button need the same light-on-dark
+     treatment already used for .name/.now just above (usp-pill material/
+     ship badges are solid-filled and already read fine on either background) */
+  .mat-preview .card .rating-num{color:#fff}
+  .mat-preview .card .rating-count{color:#cfd3c9}
+  .mat-preview .card .add{background:#fff;color:var(--dark);border-color:#fff}
 
   /* ---------- toolbar ---------- */
-  .toolbar{position:sticky;top:105px;z-index:20;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:28px}
-  @media (min-width:520px){.toolbar{top:116px}}
+  /* top matches the sticky header-wrap's own stuck height (60px header +
+     10px gutter below 641px, 77px header + 18px gutter from 641px up) so
+     the toolbar sits flush under it with no gap or overlap */
+  .toolbar{position:sticky;top:70px;z-index:20;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:34px;transition:top .25s ease-out}
+  /* the EMI/bank-offer box right above already supplies its own 16px
+     bottom padding, so the toolbar's usual 34px section gap would stack on
+     top of that (50px total) instead of the intended 16px - cancel it here */
+  .usp-wrap + .toolbar{margin-top:0}
+  @media (min-width:641px){.toolbar{top:95px}}
+  /* header-wrap slides itself off-screen with a transform (not display:none),
+     so it keeps reserving its stuck height above the toolbar - without this,
+     the toolbar stays pinned at the header's height even once the header is
+     gone, leaving a gap that scrolling grid content shows through, making the
+     toolbar look like a disconnected floating strip. Once the header is
+     hidden, drop the toolbar flush to the viewport edge (top:0) - unlike the
+     header-wrap pill, the toolbar is an edge-to-edge bar with no gutter of
+     its own to preserve - in sync with the .is-hidden toggle in the script
+     below. */
+  .toolbar.header-hidden{top:0}
+  @media (prefers-reduced-motion:reduce){.toolbar{transition:none}}
   /* while the mobile drawer is open, its ancestor .toolbar needs to outrank the
      sticky header (z-index:50) - a descendant's own z-index can't do that on its
      own, since .filter-panel/.filter-overlay are still scored within .toolbar's
@@ -255,11 +316,17 @@
   /* ---------- desktop quick filter pills (Filter icon -> pills -> view/sort) ---------- */
   .mfs-pills{display:none}
   @media (min-width:980px){
-    .mfs-pills{display:flex;align-items:center;gap:8px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+    .mfs-pills{display:flex;align-items:center;gap:10px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none;padding:2px}
     .mfs-pills::-webkit-scrollbar{display:none}
-    .mfs-pill{flex:0 0 auto;font-family:var(--font-button);font-size:13px;font-weight:500;color:var(--text-2);background:var(--white);border:1px solid var(--border);border-radius:var(--pill);padding:8px 16px;white-space:nowrap;transition:background .15s ease-out,color .15s ease-out,border-color .15s ease-out}
-    .mfs-pill:hover{border-color:var(--text-2);color:var(--text)}
-    .mfs-pill.on{background:var(--dark);border-color:var(--dark);color:#fff}
+    /* squared-off "10px" corner instead of the site's usual full-pill radius -
+       gives these their own identity as filter chips rather than looking like
+       more .chip/.add buttons; the yellow dot on .on reuses the page's one
+       accent color (already reserved for attention/active states elsewhere)
+       instead of inventing a second one */
+    .mfs-pill{position:relative;flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;font-family:var(--font-button);font-size:12.5px;font-weight:600;letter-spacing:.01em;color:var(--text-2);background:var(--white);border:1px solid var(--border);border-radius:10px;padding:9px 16px;white-space:nowrap;box-shadow:0 1px 2px rgba(22,30,19,.05);transition:background .18s ease-out,color .18s ease-out,border-color .18s ease-out,box-shadow .18s ease-out,transform .18s ease-out}
+    .mfs-pill:hover{border-color:var(--text-2);color:var(--text);box-shadow:0 6px 14px -6px rgba(22,30,19,.2);transform:translateY(-1px)}
+    .mfs-pill.on{background:var(--dark);border-color:var(--dark);color:#fff;box-shadow:0 8px 18px -8px rgba(22,30,19,.5)}
+    .mfs-pill.on::before{content:"";width:5px;height:5px;border-radius:99px;background:var(--yellow);flex:none}
   }
 
   /* ---------- filter drawer (full-screen at every breakpoint) ---------- */
@@ -297,7 +364,13 @@
   select#sort:focus-visible + i{transform:rotate(180deg)}
 
   /* ---------- product grid ---------- */
-  .grid-sec{padding:26px 0 8px}
+  .grid-sec{padding:34px 0}
+  /* the generic .wrap caps at var(--w)/1280px and centers, so above that
+     width it sits narrower and more inset than the toolbar above it (which
+     has no max-width, just the pad-x inset) - drop the cap here so the grid
+     matches the toolbar's own left/right padding and its 4 columns get the
+     extra width instead of empty margin on wide screens */
+  .grid-sec .wrap{max-width:none}
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 12px}
   @media (min-width:640px){.grid{grid-template-columns:repeat(3,1fr);gap:22px 18px}}
   @media (min-width:980px){.grid{grid-template-columns:repeat(4,1fr)}}
@@ -311,24 +384,59 @@
      so a card with a longer product name would otherwise force its whole
      grid column (and every card in it) wider than the other columns */
   .card{display:flex;flex-direction:column;position:relative;min-width:0}
-  .card.is-filtered-out{display:none}
+  .card.is-filtered-out,.grid-usp-break.is-filtered-out,.mat-shop-break.is-filtered-out{display:none}
   .card .wish{position:absolute;top:10px;right:10px;z-index:2;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);border:0;display:flex;align-items:center;justify-content:center;color:var(--text-2);box-shadow:0 2px 8px rgba(0,0,0,.14);transition:color .15s ease-out}
   .card .wish:hover{color:var(--dark)}
+  .card .quick-look-btn{position:absolute;top:52px;right:10px;z-index:2;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);border:0;display:flex;align-items:center;justify-content:center;color:var(--text-2);box-shadow:0 2px 8px rgba(0,0,0,.14);transition:color .15s ease-out}
+  .card .quick-look-btn i{font-size:17px}
+  .card .quick-look-btn:hover{color:var(--dark)}
   .card .thumb{position:relative;display:block;aspect-ratio:1/1;border-radius:var(--radius);overflow:hidden;background:var(--white);border:1px solid transparent;margin-bottom:14px}
-  .card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease-out}
+  .card .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease-out,opacity .25s ease-out}
   .card:hover .thumb img{transform:scale(1.045)}
+  /* second catalogue photo, stacked on top and hidden until hover - reveals
+     an alternate angle of the same product instead of just zooming the same shot */
+  .card .thumb .thumb-alt{opacity:0}
+  .card:hover .thumb .thumb-alt{opacity:1}
   .card .name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:var(--font-body);font-size:15px;font-weight:400;color:var(--text);line-height:1.4;height:42px;margin:0 0 8px}
-  .card .price-row{display:flex;align-items:baseline;gap:10px;margin:0 0 14px;margin-top:auto;flex-wrap:wrap}
-  .card .now{font-weight:700;font-size:17px;color:var(--text)}
-  .card .was{font-size:13px;color:var(--text-3);text-decoration:line-through}
-  .card .save{font-size:12px;color:var(--green);font-weight:700}
-  .card .add{font-family:var(--font-button);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--dark);color:#fff;border:1px solid var(--dark);border-radius:var(--pill);padding:10px 20px;transition:background .16s ease-out,color .16s ease-out,border-color .16s ease-out}
-  .card .add:hover{background:var(--yellow);border-color:var(--yellow);color:var(--dark)}
+  .card .rating{display:flex;align-items:center;gap:6px;margin:0}
+  .card .rating .stars{font-size:11px;letter-spacing:.16em}
+  .card .rating .rating-num{font-family:var(--font-button);font-size:11.5px;font-weight:600;color:var(--text-2)}
+  .card .rating .rating-count{font-family:var(--font-button);font-size:11px;color:var(--text-3)}
+  /* product material + the one brand-wide delivery promise (already stated
+     in the FAQ). Below 640px (the 2-up grid, where the pair can't fit on
+     one line) it loops as a marquee so both still show without wrapping;
+     from 640px up (3/4-up grid, plenty of room) it's just a static one-row
+     pair like before - same duplicate-track technique as .usp-track/
+     .rev-track above, colored with the two brand tones (--dark, --green)
+     instead of a neutral tag so they read as call-outs, not a passive label */
+  .card .usp-row{overflow:hidden;margin:0}
+  .card .usp-track{display:flex;align-items:center;gap:6px;width:max-content;animation:cardUspScroll 8s linear infinite}
+  .card:hover .usp-track{animation-play-state:paused}
+  @keyframes cardUspScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .card .usp-track .is-dupe{display:contents}
+  .card .usp-pill{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-button);font-size:10.5px;font-weight:700;letter-spacing:.02em;border-radius:99px;padding:4px 10px;white-space:nowrap}
+  .card .usp-pill i{font-size:11px}
+  .card .usp-pill-material{background:var(--dark);color:#fff}
+  .card .usp-pill-ship{background:var(--green);color:#fff}
+  @media (min-width:640px),(prefers-reduced-motion:reduce){
+    .card .usp-row{overflow:visible}
+    .card .usp-track{animation:none;width:auto;flex-wrap:wrap}
+    .card .usp-track .is-dupe{display:none}
+  }
+  .card .price-row,.ql-body .price-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .card .price-row{margin:0 0 14px;margin-top:auto}
+  .card .now,.ql-body .now{font-weight:700;font-size:17px;color:var(--text)}
+  .card .was,.ql-body .was{font-size:13px;color:var(--text-3);text-decoration:line-through}
+  /* a filled badge reads as more of a "highlight" than plain colored text -
+     matches the pill language already used for .chip/.rev-card .tag */
+  .card .save,.ql-body .save{display:inline-block;background:rgba(25,135,84,.12);color:var(--green);font-weight:700;font-size:11.5px;line-height:1.4;padding:3px 9px;border-radius:99px}
+  .card .add,.ql-actions .add{font-family:var(--font-button);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--dark);color:#fff;border:1px solid var(--dark);border-radius:var(--pill);padding:10px 20px;transition:background .16s ease-out,color .16s ease-out,border-color .16s ease-out}
+  .card .add:hover,.ql-actions .add:hover{background:var(--yellow);border-color:var(--yellow);color:var(--dark)}
 
   /* brand creative slotted into the grid at the same size as a product card */
   .card-creative{padding:0}
   .card-creative a{display:block;width:100%;height:100%}
-  .card-creative img{display:block;width:100%;height:100%;aspect-ratio:4/5;object-fit:cover;object-position:left;transition:transform .5s ease}
+  .card-creative img{display:block;width:100%;height:100%;aspect-ratio:4/5;object-fit:cover;object-position:left;border-radius:var(--radius);transition:transform .5s ease}
   .creative-proudly-made img{object-position:20% center}
   .card-creative:hover img{transform:scale(1.03)}
 
@@ -336,8 +444,46 @@
   .grid.is-full .card .name{font-size:17px;height:auto;-webkit-line-clamp:unset;margin-bottom:10px}
   .grid.is-full .card .now{font-size:19px}
 
+  /* ---------- quick look modal ---------- */
+  /* single centered column - big image on top, details below, same
+     image-then-details stacking as a .card, just scaled up and padded like
+     the site's other white rounded panels (.rev-card, .faq-item) */
+  .ql-overlay{position:fixed;inset:0;background:rgba(22,30,19,.45);z-index:70;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s}
+  .ql-overlay.is-open{opacity:1;visibility:visible}
+  .ql-modal{position:fixed;left:50%;top:50%;z-index:71;width:min(500px,92vw);max-height:88vh;overflow-y:auto;background:var(--white);border-radius:var(--radius);box-shadow:0 20px 50px -12px rgba(22,30,19,.35);transform:translate(-50%,-50%) scale(.96);opacity:0;visibility:hidden;transition:opacity .22s ease,transform .22s ease,visibility .22s;padding:22px}
+  @media (min-width:640px){.ql-modal{width:min(560px,92vw);padding:28px}}
+  .ql-modal.is-open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+  .ql-close{position:absolute;top:14px;right:14px;z-index:3;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);border:0;display:flex;align-items:center;justify-content:center;color:var(--text-2);box-shadow:0 2px 8px rgba(0,0,0,.14);transition:color .15s ease-out}
+  .ql-close:hover{color:var(--dark)}
+  .ql-media{position:relative;width:100%;aspect-ratio:1/1;border-radius:var(--radius);overflow:hidden;background:var(--bg-secondary);margin-bottom:18px}
+  .ql-media img{width:100%;height:100%;object-fit:cover;display:block}
+  /* prev/next cycle through the rest of the catalogue without closing the modal */
+  .ql-nav{position:absolute;top:50%;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);border:0;display:flex;align-items:center;justify-content:center;color:var(--dark);box-shadow:0 2px 8px rgba(0,0,0,.18);transform:translateY(-50%);transition:background .15s ease-out}
+  .ql-nav:hover{background:#fff}
+  .ql-nav i{font-size:19px}
+  .ql-prev{left:12px}
+  .ql-next{right:12px}
+  .ql-body{display:flex;flex-direction:column;gap:14px;min-width:0}
+  /* .card .name is body font at 400/15px - quick look just scales that up,
+     it shouldn't switch to the heading font used for section titles */
+  .ql-name{font-family:var(--font-body);font-weight:600;font-size:19px;line-height:1.35;color:var(--text);margin:0}
+  .ql-body .price-row{margin:0}
+  .ql-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+  .ql-actions .add{margin:0}
+  /* secondary pairing to .add's primary solid pill - yellow stays a hover-only
+     accent everywhere on this page (never a resting fill), so Checkout starts
+     as an outline and picks up the same yellow flash .add uses on hover */
+  .ql-checkout{font-family:var(--font-button);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--white);color:var(--dark);border:1px solid var(--dark);border-radius:var(--pill);padding:10px 20px;transition:background .16s ease-out,color .16s ease-out,border-color .16s ease-out}
+  .ql-checkout:hover{background:var(--yellow);border-color:var(--yellow);color:var(--dark)}
+  .ql-view-link{font-family:var(--font-button);font-size:12.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--dark);border-bottom:2px solid var(--dark);padding-bottom:3px;align-self:flex-start}
+  @media (prefers-reduced-motion:reduce){.ql-overlay,.ql-modal{transition:none}}
+
   /* ---------- editorial / story ---------- */
-  .story{padding:var(--inner) 0}
+  .story{padding:34px 0}
+  /* same fix as .grid-sec .wrap above - the generic .wrap caps at var(--w)/1280px
+     and centers, leaving this section narrower and more inset than the product
+     grid immediately above it once the viewport exceeds that width */
+  .story .wrap{max-width:none}
   .story .grid2{display:grid;grid-template-columns:1fr;gap:30px;align-items:center}
   @media (min-width:800px){.story .grid2{grid-template-columns:1fr 1.1fr;gap:56px}}
   .story .ph{aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;background:var(--bg-secondary)}
@@ -347,8 +493,8 @@
   .story a.read{display:inline-block;margin-top:16px;font-family:var(--font-button);font-size:12.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--dark);border-bottom:2px solid var(--dark);padding-bottom:3px}
 
   /* ---------- reviews ---------- */
-  .reviews{background:var(--white);border-top:1px solid var(--border);padding:var(--inner) 0}
-  .reviews .head{padding:0 var(--pad-x);margin-bottom:24px}
+  .reviews{background:var(--white);border-top:1px solid var(--border);padding:34px 0}
+  .reviews .head{padding:0 var(--pad-x);margin-bottom:8px}
   .reviews h2{font-size:clamp(28px,3.2vw,34px);letter-spacing:-.01em;margin:0}
   .reviews h2 em{font-style:italic;color:var(--text-2)}
   /* the visible card should line up with where the heading TEXT sits (inset
@@ -358,7 +504,7 @@
   /* nowrap on purpose - score/divider/bars stay side by side at every width,
      matching the reference; .bars shrinks via min-width:0 instead of the
      row wrapping the bars underneath the score column */
-  .rev-summary{width:calc(100% - var(--pad-x) * 2);max-width:calc(var(--w) - var(--pad-x) * 2);margin:0 auto 24px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;align-items:center;gap:16px;flex-wrap:nowrap}
+  .rev-summary{width:calc(100% - var(--pad-x) * 2);max-width:calc(var(--w) - var(--pad-x) * 2);margin:0 auto 8px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;align-items:center;gap:16px;flex-wrap:nowrap}
   @media (min-width:980px){.rev-summary{padding:24px 30px;gap:28px}}
   .rev-summary .score{flex:0 0 auto;display:flex;flex-direction:column;gap:2px}
   .rev-summary .score .num{display:flex;align-items:flex-end;gap:3px;line-height:1}
@@ -379,11 +525,9 @@
   /* no padding here - the marquee bleeds to the full section edges so cards
      scroll off past the viewport on both sides, matching the reference's
      edge-to-edge infinite conveyor look instead of a padded, boxed-in strip */
-  .rev-marquee{overflow:hidden;margin-top:20px}
-  @media (min-width:980px){.rev-marquee{margin-top:22px}}
+  .rev-marquee{overflow:hidden;margin-top:8px}
   .rev-track{display:flex;gap:10px;width:max-content;animation:revScroll 40s linear infinite}
   @media (min-width:980px){.rev-track{gap:14px}}
-  .rev-marquee:hover .rev-track{animation-play-state:paused}
   @keyframes revScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   .rev-track .is-dupe{display:contents}
   .rev-card{flex:0 0 268px;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px;display:flex;flex-direction:column}
@@ -399,8 +543,8 @@
   }
 
   /* ---------- faq (cards, following the homepage's own FAQ pattern) ---------- */
-  .faq{padding:var(--inner) 0}
-  .faq h2{font-size:clamp(24px,3.4vw,30px);letter-spacing:-.01em;text-align:center;margin-bottom:28px}
+  .faq{padding:34px 0}
+  .faq h2{font-size:clamp(24px,3.4vw,30px);letter-spacing:-.01em;text-align:center;margin-bottom:8px}
   .faq-list{max-width:880px;margin:0 auto;padding:0 var(--pad-x)}
   .faq-item{background:var(--white);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
   .faq-q{width:100%;list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 30px;font:inherit;font-family:var(--font-heading);font-weight:400;font-size:19px;color:var(--text);background:none;border:0;text-align:left;transition:color .2s}
@@ -424,7 +568,7 @@
   }
 
   /* ---------- footer ---------- */
-  footer{background:var(--dark);color:#cfd3c9;padding:48px 0 22px}
+  footer{background:var(--dark);color:#cfd3c9;padding:34px 0}
   footer .fgrid{display:grid;grid-template-columns:1fr;gap:32px}
   @media (min-width:760px){footer .fgrid{grid-template-columns:1.4fr repeat(4,1fr)}}
   footer h4{font-family:var(--font-button);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#8f9787;margin:0 0 14px}
@@ -441,8 +585,10 @@
   .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 
   /* ---------- press feedback (respond on pointer-down, not release) ---------- */
-  .chip,.card .add,.card .wish,.icon-btn,.menu-btn,.rail a .disc{transition:transform 100ms ease-out,background-color .2s,border-color .2s,color .2s}
-  .chip:active,.card .add:active,.card .wish:active,.icon-btn:active,.menu-btn:active{transform:scale(.96)}
+  .chip,.card .add,.card .wish,.card .quick-look-btn,.icon-btn,.menu-btn,.rail a .disc,.ql-close,.ql-nav,.ql-checkout,.ql-actions .add{transition:transform 100ms ease-out,background-color .2s,border-color .2s,color .2s}
+  .chip:active,.card .add:active,.card .wish:active,.card .quick-look-btn:active,.icon-btn:active,.menu-btn:active,.ql-close:active,.ql-checkout:active,.ql-actions .add:active{transform:scale(.96)}
+  .ql-nav:active{transform:translateY(-50%) scale(.9)}
+  .mfs-pill:active{transform:translateY(-1px) scale(.96)}
   .rail a:active .disc{transform:scale(.94);border-color:var(--dark)}
 
   /* ---------- keyboard focus ---------- */
@@ -456,6 +602,7 @@
     *{scroll-behavior:auto !important}
     .card .thumb img{transition:none}
     .card:hover .thumb img{transform:none}
+    .card:hover .thumb .thumb-alt{opacity:0}
     .faq-a{transition:opacity .15s ease !important;grid-template-rows:unset !important}
     .faq-a[data-open="true"]{display:block}
     .faq-a[data-open="false"]{display:none}
@@ -471,18 +618,10 @@
   </div>
 </div>
 
-<header>
-  <div class="header-in">
-    <button class="menu-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
-    <a href="#" class="logo"><b>WE WOOD</b><em>Bespoke Designs</em></a>
-    <div class="icon-row">
-      <button class="icon-btn" aria-label="Search"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
-      <button class="icon-btn" aria-label="Account"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></button>
-      <button class="icon-btn" aria-label="Cart, 0 items"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h16l-1.5 11a2 2 0 0 1-2 2H7.5a2 2 0 0 1-2-2L4 8Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg><span class="cart-count">0</span></button>
-    </div>
-  </div>
-  <nav class="subnav" aria-label="Shop categories">
-    <div class="subnav-in">
+<div class="header-wrap">
+  <header class="header">
+    <a href="#" class="logo"><img src="assets/logo-wewood.png" alt="WeWood, Bespoke Designs"></a>
+    <nav class="nav" aria-label="Shop categories">
       <a href="#" class="on">Bestsellers</a>
       <a href="#">New Arrivals</a>
       <a href="#">Nesting Table</a>
@@ -491,9 +630,32 @@
       <a href="#">Wall Clock</a>
       <a href="#">Tray &amp; Platters</a>
       <a href="#">Wall Décor</a>
+    </nav>
+    <div class="header-right">
+      <form class="search" role="search" onsubmit="return false;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7.5"/><path d="M21 21l-4.5-4.5"/></svg>
+        <input type="search" placeholder="Search nesting tables, clocks, trays" aria-label="Search products">
+      </form>
+      <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a href="#" class="icon-btn" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="10" r="3.2"/><path d="M5.5 18.5c1.6-2.4 3.9-3.5 6.5-3.5s4.9 1.1 6.5 3.5"/></svg></a>
+      <a href="#" class="icon-btn" aria-label="Cart, 0 items"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span class="cart-count">0</span></a>
     </div>
+  </header>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile menu">
+    <form class="mm-search" role="search" onsubmit="return false;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7.5"/><path d="M21 21l-4.5-4.5"/></svg>
+      <input type="search" placeholder="Search nesting tables, clocks, trays" aria-label="Search products">
+    </form>
+    <a href="#">Bestsellers</a>
+    <a href="#">New Arrivals</a>
+    <a href="#">Nesting Table</a>
+    <a href="#">Coffee Table</a>
+    <a href="#">Side Table</a>
+    <a href="#">Wall Clock</a>
+    <a href="#">Tray &amp; Platters</a>
+    <a href="#">Wall Décor</a>
   </nav>
-</header>
+</div>
 
 <div class="crumb">
   <div class="wrap">
@@ -504,7 +666,7 @@
 <section class="hero-banner">
   <img class="hero-img" src="https://cdn.shopify.com/s/files/1/0904/5832/5311/files/01.jpg?v=1770122706" alt="Wewood teak and resin furniture styled in a living room" loading="eager">
   <div class="hero-scrim"></div>
-  <div class="wrap hero-content">
+  <div class="hero-content">
     <h1>Bestsellers</h1>
     <p class="sub">The pieces our customers keep coming back for: <b>teak, sheesham and acacia wood</b> hand-finished with poured resin, made at our workshop in Kirti Nagar. Every piece here has sold out and been restocked at least once.</p>
   </div>
@@ -681,12 +843,17 @@
 
 <section class="grid-sec">
   <div class="wrap">
+    <!-- placeholder per-product ratings for client showcase, same as the
+         reviews aggregate below; swap for real review-app data before launch -->
     <div class="grid">
 
       <article class="card" data-material="teak" data-category="nesting-table">
-        <a href="#" class="thumb"><img src="assets/nesting-table-set-of-3-teak.jpg" alt="Nesting Table Set of 3, Teak Wood with Transparent Resin Finish" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/nesting-table-set-of-3-teak.jpg" alt="Nesting Table Set of 3, Teak Wood with Transparent Resin Finish" loading="lazy"><img class="thumb-alt" src="assets/nesting-table-set-of-3-teak-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Nesting Table Set of 3, Teak Wood with Transparent Resin Finish</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(86)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹13,890</span><span class="was">₹25,980</span><span class="save">Save 47%</span>
         </div>
@@ -696,7 +863,10 @@
       <article class="card" data-material="teak" data-category="furniture">
         <a href="#" class="thumb"><img src="assets/side-table-set-of-1-teak.jpg" alt="Side Table Set of 1, Teak Wood with Transparent Resin Finish" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Side Table Set of 1, Teak Wood with Transparent Resin Finish</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.6</span><span class="rating-count">(34)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹2,999</span>
         </div>
@@ -706,7 +876,10 @@
       <article class="card" data-material="sheesham" data-category="wall-decor">
         <a href="#" class="thumb"><img src="assets/elegant-resin-wall-clock.jpg" alt="Elegant Resin Wall Clock, Sheesham Wood and Black Resin" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Elegant Resin Wall Clock, Sheesham Wood and Black Resin</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(58)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Sheesham Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Sheesham Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹5,900</span><span class="was">₹6,625</span><span class="save">Save 11%</span>
         </div>
@@ -714,9 +887,12 @@
       </article>
 
       <article class="card" data-material="teak" data-category="table-accents">
-        <a href="#" class="thumb"><img src="assets/c-shaped-table-teak.jpg" alt="C-Shaped Table, Teak Stained Wood Finish" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/c-shaped-table-teak.jpg" alt="C-Shaped Table, Teak Stained Wood Finish" loading="lazy"><img class="thumb-alt" src="assets/c-shaped-table-teak-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">C-Shaped Table, Teak Stained Wood Finish, 18&quot;×12&quot;</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(41)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹5,400</span><span class="was">₹6,000</span><span class="save">Save 10%</span>
         </div>
@@ -724,20 +900,33 @@
       </article>
 
       <div class="grid-usp-break">
-        <div class="usp-trust" aria-label="Wewood guarantees">
-          <span class="trust-item"><span class="ic"><i class="ti ti-hammer"></i></span><span>Handmade</span></span>
-          <span class="trust-item"><span class="ic"><i class="ti ti-tree"></i></span><span>20 Years in Timber</span></span>
-          <span class="trust-item"><span class="ic"><i class="ti ti-award"></i></span><span>Patented &amp; Exhibited</span></span>
-          <span class="trust-item"><span class="ic"><i class="ti ti-truck-delivery"></i></span><span>Free Shipping</span></span>
-          <span class="trust-item"><span class="ic"><i class="ti ti-cash"></i></span><span>COD Available</span></span>
-          <span class="trust-item"><span class="ic"><i class="ti ti-refresh"></i></span><span>7-Day Exchange</span></span>
+        <div class="usp-marquee" aria-label="Wewood guarantees">
+          <div class="usp-track">
+            <span class="trust-item"><span class="ic"><i class="ti ti-hammer"></i></span><span>Handmade</span></span>
+            <span class="trust-item"><span class="ic"><i class="ti ti-tree"></i></span><span>20 Years in Timber</span></span>
+            <span class="trust-item"><span class="ic"><i class="ti ti-award"></i></span><span>Patented &amp; Exhibited</span></span>
+            <span class="trust-item"><span class="ic"><i class="ti ti-truck-delivery"></i></span><span>Free Shipping</span></span>
+            <span class="trust-item"><span class="ic"><i class="ti ti-cash"></i></span><span>COD Available</span></span>
+            <span class="trust-item"><span class="ic"><i class="ti ti-refresh"></i></span><span>7-Day Exchange</span></span>
+            <div class="is-dupe" aria-hidden="true">
+              <span class="trust-item"><span class="ic"><i class="ti ti-hammer"></i></span><span>Handmade</span></span>
+              <span class="trust-item"><span class="ic"><i class="ti ti-tree"></i></span><span>20 Years in Timber</span></span>
+              <span class="trust-item"><span class="ic"><i class="ti ti-award"></i></span><span>Patented &amp; Exhibited</span></span>
+              <span class="trust-item"><span class="ic"><i class="ti ti-truck-delivery"></i></span><span>Free Shipping</span></span>
+              <span class="trust-item"><span class="ic"><i class="ti ti-cash"></i></span><span>COD Available</span></span>
+              <span class="trust-item"><span class="ic"><i class="ti ti-refresh"></i></span><span>7-Day Exchange</span></span>
+            </div>
+          </div>
         </div>
       </div>
 
       <article class="card" data-material="teak" data-category="wall-decor">
-        <a href="#" class="thumb"><img src="assets/stylish-resin-wall-clock.png" alt="Stylish Resin Wall Clock, Teak Wood and Black Resin Elegance" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/stylish-resin-wall-clock.png" alt="Stylish Resin Wall Clock, Teak Wood and Black Resin Elegance" loading="lazy"><img class="thumb-alt" src="assets/stylish-resin-wall-clock-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Stylish Resin Wall Clock, Teak Wood and Black Resin</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.6</span><span class="rating-count">(27)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹4,900</span><span class="was">₹5,500</span><span class="save">Save 11%</span>
         </div>
@@ -745,9 +934,12 @@
       </article>
 
       <article class="card" data-material="acacia" data-category="tableware">
-        <a href="#" class="thumb"><img src="assets/cheese-board-platter.jpg" alt="Cheese Board Cum Platter with Handle, Acacia Wood with Translucent Grey Resin Finish" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/cheese-board-platter.jpg" alt="Cheese Board Cum Platter with Handle, Acacia Wood with Translucent Grey Resin Finish" loading="lazy"><img class="thumb-alt" src="assets/cheese-board-platter-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Cheese Board Cum Platter with Handle, Acacia Wood</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(63)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹1,999</span>
         </div>
@@ -755,9 +947,12 @@
       </article>
 
       <article class="card" data-material="teak" data-category="furniture">
-        <a href="#" class="thumb"><img src="assets/premium-side-table-teak.png" alt="Premium Side Table, Teak Wood with Brown Resin Finish" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/premium-side-table-teak.png" alt="Premium Side Table, Teak Wood with Brown Resin Finish" loading="lazy"><img class="thumb-alt" src="assets/premium-side-table-teak-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Premium Side Table, Teak Wood with Brown Resin Finish</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(39)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹6,999</span><span class="was">₹9,300</span><span class="save">Save 25%</span>
         </div>
@@ -788,6 +983,10 @@
             <span class="lab">Sheesham</span>
           </button>
         </div>
+        <!-- JS below (renderPreview/buildPreviewCard) rebuilds this from the
+             matching real .card in the grid on load and on every swatch click,
+             so it always carries that card's own rating/usp/add-to-cart markup -
+             these 4 are just the pre-JS/no-JS fallback for the "All" swatch -->
         <div class="mat-preview" id="matPreview">
           <article class="card">
             <a href="#" class="thumb"><img src="assets/nesting-table-set-of-3-teak.jpg" alt="Nesting Table Set of 3, Teak Wood" loading="lazy"></a>
@@ -807,15 +1006,20 @@
           <article class="card">
             <a href="#" class="thumb"><img src="assets/cheese-board-platter.jpg" alt="Cheese Board Cum Platter, Acacia Wood" loading="lazy"></a>
             <a href="#" class="name">Cheese Board Cum Platter, Acacia Wood</a>
+            <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
             <div class="price-row"><span class="now">₹1,999</span></div>
+            <button class="add">Add to Cart</button>
           </article>
         </div>
       </div>
 
       <article class="card" data-material="teak" data-category="furniture">
-        <a href="#" class="thumb"><img src="assets/coffee-table-blue-resin.png" alt="Round Coffee Table, Teak Wood with Special Blue Resin Finish" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/coffee-table-blue-resin.png" alt="Round Coffee Table, Teak Wood with Special Blue Resin Finish" loading="lazy"><img class="thumb-alt" src="assets/coffee-table-blue-resin-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Round Coffee Table, Teak Wood with Special Blue Resin Finish</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(52)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹14,800</span><span class="was">₹18,500</span><span class="save">Save 20%</span>
         </div>
@@ -823,9 +1027,12 @@
       </article>
 
       <article class="card" data-material="acacia" data-category="nesting-table">
-        <a href="#" class="thumb"><img src="assets/nesting-table-acacia.png" alt="Nesting Table Set of 2, Acacia Wood with Transparent Resin Finish" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/nesting-table-acacia.png" alt="Nesting Table Set of 2, Acacia Wood with Transparent Resin Finish" loading="lazy"><img class="thumb-alt" src="assets/nesting-table-acacia-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Nesting Table Set of 2, Acacia Wood with Transparent Resin Finish</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(71)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹20,000</span>
         </div>
@@ -833,9 +1040,12 @@
       </article>
 
       <article class="card" data-material="live-edge" data-category="furniture">
-        <a href="#" class="thumb"><img src="assets/live-edge-blue-epoxy-table.jpg" alt="Modern Live-Edge Wood and Blue Epoxy Resin Table" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/live-edge-blue-epoxy-table.jpg" alt="Modern Live-Edge Wood and Blue Epoxy Resin Table" loading="lazy"><img class="thumb-alt" src="assets/live-edge-blue-epoxy-table-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Modern Live-Edge Wood &amp; Blue Epoxy Resin Table</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">5.0</span><span class="rating-count">(18)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Live Edge Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Live Edge Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹39,499</span><span class="was">₹65,000</span><span class="save">Save 39%</span>
         </div>
@@ -847,9 +1057,12 @@
       </article>
 
       <article class="card" data-material="teak" data-category="nesting-table">
-        <a href="#" class="thumb"><img src="assets/nesting-table-pearl-green.png" alt="Nesting Table Set of 2, Teak Wood with Pearl Green Resin Finish" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/nesting-table-pearl-green.png" alt="Nesting Table Set of 2, Teak Wood with Pearl Green Resin Finish" loading="lazy"><img class="thumb-alt" src="assets/nesting-table-pearl-green-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Nesting Table Set of 2, Teak Wood with Pearl Green Resin Finish</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(44)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹12,000</span><span class="was">₹15,000</span><span class="save">Save 20%</span>
         </div>
@@ -857,9 +1070,12 @@
       </article>
 
       <article class="card" data-material="sheesham" data-category="nesting-table">
-        <a href="#" class="thumb"><img src="assets/nesting-table-sheesham.png" alt="Nesting Table Set of 2, Sheesham Wood with Transparent Resin Finish" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/nesting-table-sheesham.png" alt="Nesting Table Set of 2, Sheesham Wood with Transparent Resin Finish" loading="lazy"><img class="thumb-alt" src="assets/nesting-table-sheesham-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Nesting Table Set of 2, Sheesham Wood with Transparent Resin Finish</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(67)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Sheesham Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Sheesham Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹11,920</span><span class="was">₹14,900</span><span class="save">Save 20%</span>
         </div>
@@ -867,9 +1083,12 @@
       </article>
 
       <article class="card" data-material="teak" data-category="nesting-table">
-        <a href="#" class="thumb"><img src="assets/nesting-table-tinted-grey.png" alt="Nesting Table Set of 3, Teak Wood with Tinted Grey Resin Finish" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/nesting-table-tinted-grey.png" alt="Nesting Table Set of 3, Teak Wood with Tinted Grey Resin Finish" loading="lazy"><img class="thumb-alt" src="assets/nesting-table-tinted-grey-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Nesting Table Set of 3, Teak Wood with Tinted Grey Resin Finish</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(35)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹15,600</span><span class="was">₹28,500</span><span class="save">Save 46%</span>
         </div>
@@ -877,9 +1096,12 @@
       </article>
 
       <article class="card" data-material="oak" data-category="wall-decor">
-        <a href="#" class="thumb"><img src="assets/wall-clock-pearl-green-oak.png" alt="Pearl Green Resin Wall Clock, Wood Oak Elegance" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/wall-clock-pearl-green-oak.png" alt="Pearl Green Resin Wall Clock, Wood Oak Elegance" loading="lazy"><img class="thumb-alt" src="assets/wall-clock-pearl-green-oak-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Pearl Green Resin Wall Clock, Wood Oak Elegance</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.6</span><span class="rating-count">(29)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Oak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Oak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹3,600</span><span class="was">₹4,500</span><span class="save">Save 20%</span>
         </div>
@@ -887,9 +1109,12 @@
       </article>
 
       <article class="card" data-material="acacia" data-category="wall-decor">
-        <a href="#" class="thumb"><img src="assets/wall-clock-elegant-wooden.png" alt="Elegant Wooden Wall Clock, Natural Acacia Wood" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/wall-clock-elegant-wooden.png" alt="Elegant Wooden Wall Clock, Natural Acacia Wood" loading="lazy"><img class="thumb-alt" src="assets/wall-clock-elegant-wooden-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Elegant Wooden Wall Clock, Natural Acacia Wood</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(46)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹3,499</span><span class="was">₹4,125</span><span class="save">Save 16%</span>
         </div>
@@ -897,9 +1122,12 @@
       </article>
 
       <article class="card" data-material="acacia" data-category="wall-decor">
-        <a href="#" class="thumb"><img src="assets/wall-clock-stylish-wooden.png" alt="Stylish Wooden Wall Clock, Acacia Wood" loading="lazy"></a>
+        <a href="#" class="thumb"><img src="assets/wall-clock-stylish-wooden.png" alt="Stylish Wooden Wall Clock, Acacia Wood" loading="lazy"><img class="thumb-alt" src="assets/wall-clock-stylish-wooden-alt.jpg" alt="" aria-hidden="true" loading="lazy"></a>
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
+        <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Stylish Wooden Wall Clock, Acacia Wood</a>
+        <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(53)</span></div>
+        <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
           <span class="now">₹3,499</span><span class="was">₹4,125</span><span class="save">Save 16%</span>
         </div>
@@ -1061,14 +1289,98 @@
   </div>
 </footer>
 
+<div class="ql-overlay" id="qlOverlay"></div>
+<div class="ql-modal" id="qlModal" role="dialog" aria-modal="true" aria-labelledby="qlModalTitle">
+  <button type="button" class="ql-close" id="qlCloseBtn" aria-label="Close quick look"><i class="ti ti-x"></i></button>
+  <div class="ql-media">
+    <img id="qlImg" src="" alt="">
+    <button type="button" class="ql-nav ql-prev" id="qlPrevBtn" aria-label="Previous product"><i class="ti ti-chevron-left"></i></button>
+    <button type="button" class="ql-nav ql-next" id="qlNextBtn" aria-label="Next product"><i class="ti ti-chevron-right"></i></button>
+  </div>
+  <div class="ql-body">
+    <h3 class="ql-name" id="qlModalTitle"></h3>
+    <div class="price-row" id="qlPriceRow"></div>
+    <div class="ql-actions">
+      <button type="button" class="add">Add to Cart</button>
+      <button type="button" class="ql-checkout">Checkout</button>
+    </div>
+    <a href="#" class="ql-view-link" id="qlViewLink">View full details →</a>
+  </div>
+</div>
+
 <a class="wa-fab" href="https://wa.me/919711630068" aria-label="Chat on WhatsApp" target="_blank" rel="noopener">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5C8.3 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2Zm0 18.2c-1.6 0-3.2-.4-4.5-1.2l-.3-.2-3 1 1-2.9-.2-.3C4.2 15.2 3.8 13.6 3.8 12c0-4.5 3.7-8.2 8.2-8.2s8.2 3.7 8.2 8.2-3.7 8.2-8.2 8.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8.9-.2.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.2 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.5 3.9 3.4.5.2 1 .4 1.3.5.5.2 1 .1 1.4.1.4-.1 1.3-.5 1.5-1 .2-.5.2-.9.1-1Z"/></svg>
 </a>
 
 <script>
+  // shared scroll lock for any open drawer/modal (filter panel, quick look).
+  // overflow:hidden on the root element freezes scrolling without touching
+  // scrollY at all - unlike the old position:fixed/negative-margin trick,
+  // there's no scroll position for the browser to reset, so no synthetic
+  // 'scroll' event fires and nothing can visually jump when a lock engages.
+  // Reference-counted so two lockers (e.g. a stray click closing the filter
+  // drawer while quick look is open) can't unlock each other's lock.
+  let scrollLockCount = 0;
+  function lockPageScroll(){
+    scrollLockCount++;
+    document.documentElement.classList.add('scroll-locked');
+  }
+  function unlockPageScroll(){
+    scrollLockCount = Math.max(0, scrollLockCount - 1);
+    if(scrollLockCount === 0) document.documentElement.classList.remove('scroll-locked');
+  }
+
+  (function(){
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if(menuBtn && mobileMenu){
+      menuBtn.addEventListener('click',()=>{
+        const open = mobileMenu.classList.toggle('open');
+        menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      mobileMenu.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click',()=>{
+          mobileMenu.classList.remove('open');
+          menuBtn.setAttribute('aria-expanded','false');
+        });
+      });
+    }
+
+    // header: hide on scroll down, reveal on scroll up; stays visible near
+    // the top and while the mobile menu is open
+    const headerWrap = document.querySelector('.header-wrap');
+    const toolbarEl = document.querySelector('.toolbar');
+    if(headerWrap){
+      let lastScrollY = window.scrollY;
+      let ticking = false;
+      function syncHeaderVisibility(){
+        // don't react to scroll while a drawer/modal has the page locked
+        if(document.documentElement.classList.contains('scroll-locked')){ ticking = false; return; }
+        const y = window.scrollY;
+        const menuOpen = mobileMenu && mobileMenu.classList.contains('open');
+        if(!menuOpen){
+          if(y < 80) headerWrap.classList.remove('is-hidden');
+          else if(y > lastScrollY + 4) headerWrap.classList.add('is-hidden');
+          else if(y < lastScrollY - 4) headerWrap.classList.remove('is-hidden');
+        }
+        // the sticky toolbar's own top offset assumes the header is still
+        // occupying its stuck height above it - once the header slides off
+        // via transform, pull the toolbar up to sit flush instead of leaving
+        // a gap the grid scrolls through behind it
+        if(toolbarEl) toolbarEl.classList.toggle('header-hidden', headerWrap.classList.contains('is-hidden'));
+        lastScrollY = y;
+        ticking = false;
+      }
+      window.addEventListener('scroll',()=>{
+        if(!ticking){ window.requestAnimationFrame(syncHeaderVisibility); ticking = true; }
+      }, {passive:true});
+    }
+  })();
+
   (function(){
     const grid = document.querySelector('.grid-sec .grid');
     const products = () => [...grid.querySelectorAll('.card[data-material]')];
+    const editorialBreaks = () => [...grid.querySelectorAll('.grid-usp-break, .mat-shop-break, .card-creative')];
     const categoryChecks = [...document.querySelectorAll('#filterPanel input[name="category"]')];
     const matSwatches = [...document.querySelectorAll('#matSwatches .mat-swatch')];
     const matPreview = document.getElementById('matPreview');
@@ -1076,10 +1388,19 @@
     // category checkboxes in the filter drawer filter the main grid (any checked = OR match)
     function applyCategoryFilter(){
       const checked = categoryChecks.filter(c=>c.checked).map(c=>c.value);
+      const filterActive = checked.length > 0;
       products().forEach(card=>{
         const matches = checked.length === 0 || checked.includes(card.dataset.category);
         card.classList.toggle('is-filtered-out', !matches);
       });
+      // the trust-badge strip, shop-by-material panel, and brand tiles are
+      // full-width "editorial" grid items with no data-material, so the filter
+      // never touches them - left visible, a grid-column:1/-1 item always
+      // starts a fresh row regardless of how much of the previous row is
+      // filled, which forces empty gaps and stray-looking rows once filtering
+      // thins out the surrounding products. Hide them while any filter is
+      // active; the full editorial layout is only meant for the "All" view.
+      editorialBreaks().forEach(el => el.classList.toggle('is-filtered-out', filterActive));
     }
     categoryChecks.forEach(cb=>cb.addEventListener('change', applyCategoryFilter));
 
@@ -1102,14 +1423,20 @@
     // material swatches only affect this section's own preview strip
     function buildPreviewCard(realCard){
       const img = realCard.querySelector('.thumb img');
+      const altImg = realCard.querySelector('.thumb .thumb-alt');
       const name = realCard.querySelector('.name');
+      const rating = realCard.querySelector('.rating');
+      const uspRow = realCard.querySelector('.usp-row');
       const now = realCard.querySelector('.now');
       const art = document.createElement('article');
       art.className = 'card';
       art.innerHTML = `
-        <a href="${name.getAttribute('href')}" class="thumb"><img src="${img.getAttribute('src')}" alt="${img.getAttribute('alt')}" loading="lazy"></a>
+        <a href="${name.getAttribute('href')}" class="thumb"><img src="${img.getAttribute('src')}" alt="${img.getAttribute('alt')}" loading="lazy">${altImg ? `<img class="thumb-alt" src="${altImg.getAttribute('src')}" alt="" aria-hidden="true" loading="lazy">` : ''}</a>
         <a href="${name.getAttribute('href')}" class="name">${name.textContent}</a>
-        <div class="price-row"><span class="now">${now.textContent}</span></div>`;
+        ${rating.outerHTML}
+        ${uspRow.outerHTML}
+        <div class="price-row"><span class="now">${now.textContent}</span></div>
+        <button class="add">Add to Cart</button>`;
       return art;
     }
     function renderPreview(material){
@@ -1136,26 +1463,14 @@
     const toolbar = document.querySelector('.toolbar');
     const countEl = btn.querySelector('.count');
     const boxes = () => [...panel.querySelectorAll('input[type="checkbox"]')];
-    let lockedScrollY = 0;
+    let isOpen = false;
 
-    function lockScroll(){
-      lockedScrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${lockedScrollY}px`;
-      document.body.style.width = '100%';
-    }
-    function unlockScroll(){
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      window.scrollTo(0, lockedScrollY);
-    }
     function close(){
       panel.classList.remove('is-open');
       overlay.classList.remove('is-open');
       toolbar.classList.remove('drawer-open');
       btn.setAttribute('aria-expanded','false');
-      if(document.body.style.position === 'fixed') unlockScroll();
+      if(isOpen){ isOpen = false; unlockPageScroll(); }
     }
     function open(){
       panel.scrollTop = 0;
@@ -1163,7 +1478,8 @@
       overlay.classList.add('is-open');
       btn.setAttribute('aria-expanded','true');
       toolbar.classList.add('drawer-open');
-      lockScroll();
+      isOpen = true;
+      lockPageScroll();
     }
     btn.addEventListener('click',(e)=>{
       e.stopPropagation();
@@ -1299,6 +1615,79 @@
       panel.setAttribute('data-open', String(willOpen));
     });
   });
+
+  (function(){
+    const overlay = document.getElementById('qlOverlay');
+    const modal = document.getElementById('qlModal');
+    const closeBtn = document.getElementById('qlCloseBtn');
+    const prevBtn = document.getElementById('qlPrevBtn');
+    const nextBtn = document.getElementById('qlNextBtn');
+    const imgEl = document.getElementById('qlImg');
+    const nameEl = document.getElementById('qlModalTitle');
+    const priceEl = document.getElementById('qlPriceRow');
+    const viewLink = document.getElementById('qlViewLink');
+    if(!overlay || !modal) return;
+
+    // every product card with a quick-look trigger, in on-page order, so
+    // prev/next can step through the rest of the catalogue without closing
+    const productCards = [...document.querySelectorAll('.card .quick-look-btn')].map(btn => btn.closest('.card'));
+    let currentIndex = -1;
+    let isOpen = false;
+    let lastTrigger = null;
+
+    function close(){
+      modal.classList.remove('is-open');
+      overlay.classList.remove('is-open');
+      if(isOpen){ isOpen = false; unlockPageScroll(); }
+      if(lastTrigger) lastTrigger.focus();
+    }
+    function renderCurrent(){
+      const card = productCards[currentIndex];
+      if(!card) return;
+      const thumbImg = card.querySelector('.thumb img');
+      const nameA = card.querySelector('.name');
+      const priceRow = card.querySelector('.price-row');
+      if(!thumbImg || !nameA || !priceRow) return;
+      imgEl.src = thumbImg.getAttribute('src');
+      imgEl.alt = thumbImg.getAttribute('alt') || '';
+      nameEl.textContent = nameA.textContent;
+      viewLink.setAttribute('href', nameA.getAttribute('href') || '#');
+      priceEl.innerHTML = priceRow.innerHTML;
+    }
+    function showRelative(delta){
+      if(productCards.length === 0) return;
+      currentIndex = (currentIndex + delta + productCards.length) % productCards.length;
+      renderCurrent();
+    }
+    function openFromCard(card, trigger){
+      const idx = productCards.indexOf(card);
+      if(idx === -1) return;
+      currentIndex = idx;
+      lastTrigger = trigger;
+      renderCurrent();
+      overlay.classList.add('is-open');
+      modal.classList.add('is-open');
+      isOpen = true;
+      lockPageScroll();
+    }
+    document.querySelectorAll('.card .quick-look-btn').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const card = btn.closest('.card');
+        if(card) openFromCard(card, btn);
+      });
+    });
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', close);
+    if(prevBtn) prevBtn.addEventListener('click', ()=> showRelative(-1));
+    if(nextBtn) nextBtn.addEventListener('click', ()=> showRelative(1));
+    document.addEventListener('keydown', (e)=>{
+      if(!modal.classList.contains('is-open')) return;
+      if(e.key === 'Escape') close();
+      else if(e.key === 'ArrowLeft') showRelative(-1);
+      else if(e.key === 'ArrowRight') showRelative(1);
+    });
+  })();
 </script>
 </body>
 </html>
