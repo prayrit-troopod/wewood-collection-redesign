@@ -188,13 +188,18 @@
      padding, so the marquee content still gets breathing room from the edge */
   .grid-usp-break{grid-column:1/-1;background:var(--bg-secondary);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;margin:2px calc(-1 * var(--pad-x))}
   @media (min-width:640px){.grid-usp-break{margin:-6px calc(-1 * var(--pad-x))}}
-  /* infinite marquee, same duplicate-track technique as .micro-strip/.rev-track:
-     the track is twice the real content, scrolled exactly half its own width
-     so the loop point is seamless */
+  /* infinite marquee, same duplicate-track technique as .micro-strip/.rev-track,
+     but tripled (real content + two dupe copies) instead of doubled: this strip
+     bleeds edge-to-edge across the full viewport, and the 6 real items are only
+     ~1200px wide - on any screen wider than that, a single extra copy isn't wide
+     enough to fully cover the viewport at every point in the scroll, so the
+     content visibly ran out mid-loop instead of looping continuously. Three
+     copies (scrolled by a third of the full track's width) keeps at least two
+     copies' worth of content in view at all times on any realistic screen. */
   .usp-marquee{overflow:hidden;padding:16px 0}
   .usp-track{display:flex;align-items:center;gap:0;width:max-content;animation:uspScroll 24s linear infinite}
   .usp-marquee:hover .usp-track{animation-play-state:paused}
-  @keyframes uspScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes uspScroll{from{transform:translateX(0)}to{transform:translateX(-33.3334%)}}
   .usp-track .is-dupe{display:contents}
   /* heading font + hand-drawn line icons (same SVGs as the homepage ticker),
      not an icon font in a colored circle - a divider line sits at each
@@ -1007,6 +1012,12 @@
             <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="7.2" width="18.4" height="11.6" rx="1.6"></rect><circle cx="12" cy="13" r="2.6"></circle><path d="M5.6 10.2v0M18.4 15.8v0"></path></svg><span>COD Available</span></span>
             <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5A8 8 0 0 0 6.6 6.2L4.5 8.3"></path><path d="M4.5 4.3v4h4"></path><path d="M4 12.5a8 8 0 0 0 13.4 5.3l2.1-2.1"></path><path d="M19.5 19.7v-4h-4"></path></svg><span>7-Day Exchange</span></span>
             <div class="is-dupe" aria-hidden="true">
+              <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.4 4.5h11.2a1.1 1.1 0 0 1 1.1 1.1v2.8a1.1 1.1 0 0 1-1.1 1.1H4.4z" fill="currentColor" stroke="none"></path><path d="M13 9.5l1.7 10.1"></path></svg><span>Handmade</span></span>
+              <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2v-3.4"></path><path d="M12 16.8H7l3.1-3.9H8L12 6.8l4 6.1h-2.1l3.1 3.9z"></path></svg><span>20 Years in Timber</span></span>
+              <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.4" r="5"></circle><path d="M9 13.7L7.5 20.4 12 17.9l4.5 2.5-1.5-6.7"></path></svg><span>Patented &amp; Exhibited</span></span>
+              <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 6.8h10.4v9.4H2.8z"></path><path d="M13.2 10.2h3.6l3.4 3.4v2.6h-7z"></path><circle cx="6.6" cy="18" r="1.8"></circle><circle cx="16.6" cy="18" r="1.8"></circle></svg><span>Free Shipping</span></span>
+              <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="7.2" width="18.4" height="11.6" rx="1.6"></rect><circle cx="12" cy="13" r="2.6"></circle><path d="M5.6 10.2v0M18.4 15.8v0"></path></svg><span>COD Available</span></span>
+              <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5A8 8 0 0 0 6.6 6.2L4.5 8.3"></path><path d="M4.5 4.3v4h4"></path><path d="M4 12.5a8 8 0 0 0 13.4 5.3l2.1-2.1"></path><path d="M19.5 19.7v-4h-4"></path></svg><span>7-Day Exchange</span></span>
               <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.4 4.5h11.2a1.1 1.1 0 0 1 1.1 1.1v2.8a1.1 1.1 0 0 1-1.1 1.1H4.4z" fill="currentColor" stroke="none"></path><path d="M13 9.5l1.7 10.1"></path></svg><span>Handmade</span></span>
               <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2v-3.4"></path><path d="M12 16.8H7l3.1-3.9H8L12 6.8l4 6.1h-2.1l3.1 3.9z"></path></svg><span>20 Years in Timber</span></span>
               <span class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.4" r="5"></circle><path d="M9 13.7L7.5 20.4 12 17.9l4.5 2.5-1.5-6.7"></path></svg><span>Patented &amp; Exhibited</span></span>
