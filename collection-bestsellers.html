@@ -249,13 +249,14 @@
   @media (min-width:980px){.mat-preview{grid-template-columns:repeat(4,1fr)}}
   .mat-preview .card .name{font-size:13px;height:36px;color:#fff}
   .mat-preview .card .now{font-size:15px;color:#fff}
-  /* rating text and the Add to Cart button are styled for a white card on
-     the light grid above - this panel's background is --dark, so the muted
-     gray rating text and the dark-on-dark button need the same light-on-dark
-     treatment already used for .name/.now just above (usp-pill material/
-     ship badges are solid-filled and already read fine on either background) */
+  /* rating text, the usp pills, and the Add to Cart button are styled for
+     a white card on the light grid above - this panel's background is
+     --dark, so the muted gray rating text, the now-hollow dark-outlined
+     pills, and the dark-on-dark button all need the same light-on-dark
+     treatment already used for .name/.now just above */
   .mat-preview .card .rating-num{color:#fff}
   .mat-preview .card .rating-count{color:#cfd3c9}
+  .mat-preview .card .usp-pill{border-color:#fff;color:#fff}
   .mat-preview .card .add{background:#fff;color:var(--dark);border-color:#fff}
 
   /* ---------- toolbar ---------- */
@@ -439,32 +440,55 @@
   .card .rating .rating-num,.ql-body .rating .rating-num{font-family:var(--font-button);font-size:11.5px;font-weight:600;color:var(--text-2)}
   .card .rating .rating-count,.ql-body .rating .rating-count{font-family:var(--font-button);font-size:11px;color:var(--text-3)}
   /* product material + the one brand-wide delivery promise (already stated
-     in the FAQ). Below 640px (the 2-up grid, where the pair can't fit on
-     one line) it loops as a marquee so both still show without wrapping;
-     from 640px up (3/4-up grid, plenty of room) it's just a static one-row
-     pair like before - same duplicate-track technique as .usp-track/
-     .rev-track above, colored with the two brand tones (--dark, --green)
-     instead of a neutral tag so they read as call-outs, not a passive label */
-  .card .usp-row,.ql-body .usp-row{overflow:hidden;margin:0}
-  .card .usp-track,.ql-body .usp-track{display:flex;align-items:center;gap:6px;width:max-content;animation:cardUspScroll 8s linear infinite}
+     in the FAQ) - a plain static row by default at every size, same as
+     .rev-track above's duplicate-track technique but only ever switched on
+     when needed. Today that's always just the 2 pills, which already fit
+     one row; if a card ever carries a 4th pill, that's too many to fit
+     without wrapping onto a second line on the narrow 2-up mobile grid, so
+     it loops as an infinite marquee there instead so it still reads as one
+     row rather than wrapping. Desktop/tablet never marquees - there's
+     always room to just wrap instead. */
+  .card .usp-row,.ql-body .usp-row{overflow:visible;margin:0}
+  /* animation:none is explicit, not just omitted - .usp-track is also the
+     class name the grey trust-badge marquee uses (an unscoped selector, so
+     it matches these card-nested tracks too); without an explicit override
+     here its animation would leak through onto every product card */
+  .card .usp-track,.ql-body .usp-track{display:flex;align-items:center;gap:6px;width:auto;flex-wrap:nowrap;animation:none}
   .card:hover .usp-track,.ql-body:hover .usp-track{animation-play-state:paused}
   @keyframes cardUspScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  .card .usp-track .is-dupe,.ql-body .usp-track .is-dupe{display:contents}
-  .card .usp-pill,.ql-body .usp-pill{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-button);font-size:10.5px;font-weight:700;letter-spacing:.02em;border-radius:99px;padding:4px 10px;white-space:nowrap}
+  .card .usp-track .is-dupe,.ql-body .usp-track .is-dupe{display:none}
+  .card .usp-pill,.ql-body .usp-pill{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-button);font-size:10.5px;font-weight:700;letter-spacing:.02em;border-radius:99px;padding:3px 9px;white-space:nowrap;background:none;border:1px solid var(--dark);color:var(--dark)}
   .card .usp-pill i,.ql-body .usp-pill i{font-size:11px}
-  .card .usp-pill-material,.ql-body .usp-pill-material{background:var(--dark);color:#fff}
-  .card .usp-pill-ship,.ql-body .usp-pill-ship{background:var(--green);color:#fff}
-  @media (min-width:640px),(prefers-reduced-motion:reduce){
-    .card .usp-row,.ql-body .usp-row{overflow:visible}
-    .card .usp-track,.ql-body .usp-track{animation:none;width:auto;flex-wrap:wrap}
-    .card .usp-track .is-dupe,.ql-body .usp-track .is-dupe{display:none}
+  @media (min-width:640px){
+    .card .usp-track,.ql-body .usp-track{flex-wrap:wrap}
+  }
+  @media (max-width:639px){
+    /* shrunk so the usual material + shipping pair fits the ~160px 2-up
+       card width in one row without a marquee. Material names still vary
+       in length (Teak Wood vs Sheesham Wood vs Live Edge Wood) - rather
+       than shrinking text to the point of illegibility to cover the
+       longest name, let just that one pill truncate with an ellipsis on
+       the rare card where it doesn't fit, while "Free Shipping" (flex:none)
+       always stays fully readable since it's the one claim every card makes */
+    .card .usp-track{gap:4px}
+    .card .usp-pill{font-size:9px;gap:3px;padding:2px 6px}
+    .card .usp-pill i{font-size:9px}
+    .card .usp-pill-material{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+    .card .usp-pill-ship{flex:none}
+    .card .usp-row:has(.usp-pill:nth-child(4)),.ql-body .usp-row:has(.usp-pill:nth-child(4)){overflow:hidden}
+    .card .usp-track:has(> .usp-pill:nth-child(4)),.ql-body .usp-track:has(> .usp-pill:nth-child(4)){width:max-content;animation:cardUspScroll 8s linear infinite}
+    .card .usp-track:has(> .usp-pill:nth-child(4)) .is-dupe,.ql-body .usp-track:has(> .usp-pill:nth-child(4)) .is-dupe{display:contents}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .card .usp-track,.ql-body .usp-track{animation:none !important;width:auto !important}
+    .card .usp-track .is-dupe,.ql-body .usp-track .is-dupe{display:none !important}
   }
   /* the modal is never as narrow as a 2-up mobile card, so the marquee loop
      (and the duplicate copy that makes it seamless) is never needed here -
      always show the pills as a plain static row, even below 640px */
-  .ql-body .usp-row{overflow:visible}
-  .ql-body .usp-track{animation:none;width:auto;flex-wrap:wrap}
-  .ql-body .usp-track .is-dupe{display:none}
+  .ql-body .usp-row{overflow:visible !important}
+  .ql-body .usp-track{animation:none !important;width:auto !important;flex-wrap:wrap}
+  .ql-body .usp-track .is-dupe{display:none !important}
   /* the modal got noticeably bigger on desktop - scale the rating and pill
      text up with it so they don't stay sized for a small card thumbnail */
   @media (min-width:760px){
