@@ -180,8 +180,14 @@
   /* same light hairline-bordered strip as the homepage's credibility ticker
      (mohsufonit.github.io/wewood_hp/, already approved) - no dark fill, no
      rounded card, so it reads as a trust strip rather than another button */
-  .grid-usp-break{grid-column:1/-1;background:var(--bg-secondary);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;margin:2px 0}
-  @media (min-width:640px){.grid-usp-break{margin:-6px 0}}
+  /* bleed to the true viewport edge like the homepage ticker does (it cancels
+     .page's own gutter the same way) - .grid sits inside .wrap, which keeps
+     its pad-x side padding even though grid-sec removed its max-width, so a
+     negative horizontal margin equal to that padding is what actually
+     reaches edge to edge; each .trust-item already carries its own left/right
+     padding, so the marquee content still gets breathing room from the edge */
+  .grid-usp-break{grid-column:1/-1;background:var(--bg-secondary);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;margin:2px calc(-1 * var(--pad-x))}
+  @media (min-width:640px){.grid-usp-break{margin:-6px calc(-1 * var(--pad-x))}}
   /* infinite marquee, same duplicate-track technique as .micro-strip/.rev-track:
      the track is twice the real content, scrolled exactly half its own width
      so the loop point is seamless */
@@ -395,7 +401,10 @@
   .grid-sec .wrap{max-width:none}
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 12px}
   @media (min-width:640px){.grid{grid-template-columns:repeat(3,1fr);gap:22px 18px}}
-  @media (min-width:980px){.grid{grid-template-columns:repeat(4,1fr)}}
+  /* cards got bigger at this breakpoint but the gap never followed, so a
+     22px row-gap next to a much taller card thumbnail reads as cramped -
+     scale the gap up with the card size instead of leaving it fixed */
+  @media (min-width:980px){.grid{grid-template-columns:repeat(4,1fr);gap:36px 28px}}
   /* full image view - one big card per row on mobile, two per row from
      tablet up, using the same .card markup at a larger natural size */
   .grid.is-full{grid-template-columns:1fr;gap:28px}
@@ -420,10 +429,10 @@
   .card .thumb .thumb-alt{opacity:0}
   .card:hover .thumb .thumb-alt{opacity:1}
   .card .name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:var(--font-body);font-size:15px;font-weight:400;color:var(--text);line-height:1.4;height:42px;margin:0 0 8px}
-  .card .rating{display:flex;align-items:center;gap:6px;margin:0}
-  .card .rating .stars{font-size:11px;letter-spacing:.16em}
-  .card .rating .rating-num{font-family:var(--font-button);font-size:11.5px;font-weight:600;color:var(--text-2)}
-  .card .rating .rating-count{font-family:var(--font-button);font-size:11px;color:var(--text-3)}
+  .card .rating,.ql-body .rating{display:flex;align-items:center;gap:6px;margin:0}
+  .card .rating .stars,.ql-body .rating .stars{font-size:11px;letter-spacing:.16em}
+  .card .rating .rating-num,.ql-body .rating .rating-num{font-family:var(--font-button);font-size:11.5px;font-weight:600;color:var(--text-2)}
+  .card .rating .rating-count,.ql-body .rating .rating-count{font-family:var(--font-button);font-size:11px;color:var(--text-3)}
   /* product material + the one brand-wide delivery promise (already stated
      in the FAQ). Below 640px (the 2-up grid, where the pair can't fit on
      one line) it loops as a marquee so both still show without wrapping;
@@ -431,19 +440,35 @@
      pair like before - same duplicate-track technique as .usp-track/
      .rev-track above, colored with the two brand tones (--dark, --green)
      instead of a neutral tag so they read as call-outs, not a passive label */
-  .card .usp-row{overflow:hidden;margin:0}
-  .card .usp-track{display:flex;align-items:center;gap:6px;width:max-content;animation:cardUspScroll 8s linear infinite}
-  .card:hover .usp-track{animation-play-state:paused}
+  .card .usp-row,.ql-body .usp-row{overflow:hidden;margin:0}
+  .card .usp-track,.ql-body .usp-track{display:flex;align-items:center;gap:6px;width:max-content;animation:cardUspScroll 8s linear infinite}
+  .card:hover .usp-track,.ql-body:hover .usp-track{animation-play-state:paused}
   @keyframes cardUspScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  .card .usp-track .is-dupe{display:contents}
-  .card .usp-pill{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-button);font-size:10.5px;font-weight:700;letter-spacing:.02em;border-radius:99px;padding:4px 10px;white-space:nowrap}
-  .card .usp-pill i{font-size:11px}
-  .card .usp-pill-material{background:var(--dark);color:#fff}
-  .card .usp-pill-ship{background:var(--green);color:#fff}
+  .card .usp-track .is-dupe,.ql-body .usp-track .is-dupe{display:contents}
+  .card .usp-pill,.ql-body .usp-pill{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-button);font-size:10.5px;font-weight:700;letter-spacing:.02em;border-radius:99px;padding:4px 10px;white-space:nowrap}
+  .card .usp-pill i,.ql-body .usp-pill i{font-size:11px}
+  .card .usp-pill-material,.ql-body .usp-pill-material{background:var(--dark);color:#fff}
+  .card .usp-pill-ship,.ql-body .usp-pill-ship{background:var(--green);color:#fff}
   @media (min-width:640px),(prefers-reduced-motion:reduce){
-    .card .usp-row{overflow:visible}
-    .card .usp-track{animation:none;width:auto;flex-wrap:wrap}
-    .card .usp-track .is-dupe{display:none}
+    .card .usp-row,.ql-body .usp-row{overflow:visible}
+    .card .usp-track,.ql-body .usp-track{animation:none;width:auto;flex-wrap:wrap}
+    .card .usp-track .is-dupe,.ql-body .usp-track .is-dupe{display:none}
+  }
+  /* the modal is never as narrow as a 2-up mobile card, so the marquee loop
+     (and the duplicate copy that makes it seamless) is never needed here -
+     always show the pills as a plain static row, even below 640px */
+  .ql-body .usp-row{overflow:visible}
+  .ql-body .usp-track{animation:none;width:auto;flex-wrap:wrap}
+  .ql-body .usp-track .is-dupe{display:none}
+  /* the modal got noticeably bigger on desktop - scale the rating and pill
+     text up with it so they don't stay sized for a small card thumbnail */
+  @media (min-width:760px){
+    .ql-body .rating{gap:8px}
+    .ql-body .rating .stars{font-size:14px}
+    .ql-body .rating .rating-num{font-size:14px}
+    .ql-body .rating .rating-count{font-size:13px}
+    .ql-body .usp-pill{font-size:12.5px;padding:6px 14px}
+    .ql-body .usp-pill i{font-size:13px}
   }
   .card .price-row,.ql-body .price-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
   .card .price-row{margin:0 0 14px;margin-top:auto}
@@ -467,38 +492,82 @@
   .grid.is-full .card .now{font-size:19px}
 
   /* ---------- quick look modal ---------- */
-  /* single centered column - big image on top, details below, same
-     image-then-details stacking as a .card, just scaled up and padded like
-     the site's other white rounded panels (.rev-card, .faq-item) */
+  /* stacked (image over details) on a narrow viewport where there isn't
+     room for two columns; from 760px up, .ql-media and .ql-body (the two
+     direct children of .ql-modal, right after the absolutely-positioned
+     close button) fall into a 2-col grid automatically - same content,
+     no markup change, just more of the modal's own width put to use
+     instead of one long centered scroll. The modal itself carries no
+     padding - .ql-media sits flush against its edges (full-bleed, no
+     gutter, on both breakpoints) and only .ql-body has its own inset, so
+     the photo reads as edge-to-edge while the text still gets breathing
+     room. Corner radius lives on .ql-media itself (only the corners it
+     actually shares with the modal's own rounded corners), not on the
+     modal via overflow:hidden, so the modal can still scroll if a very
+     long name ever needs more vertical space than max-height allows. */
   .ql-overlay{position:fixed;inset:0;background:rgba(22,30,19,.45);z-index:70;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s}
   .ql-overlay.is-open{opacity:1;visibility:visible}
-  .ql-modal{position:fixed;left:50%;top:50%;z-index:71;width:min(500px,92vw);max-height:88vh;overflow-y:auto;background:var(--white);border-radius:var(--radius);box-shadow:0 20px 50px -12px rgba(22,30,19,.35);transform:translate(-50%,-50%) scale(.96);opacity:0;visibility:hidden;transition:opacity .22s ease,transform .22s ease,visibility .22s;padding:22px}
-  @media (min-width:640px){.ql-modal{width:min(560px,92vw);padding:28px}}
+  .ql-modal{position:fixed;left:50%;top:50%;z-index:71;width:min(500px,92vw);max-height:88vh;overflow-y:auto;background:var(--white);border-radius:var(--radius);box-shadow:0 20px 50px -12px rgba(22,30,19,.35);transform:translate(-50%,-50%) scale(.96);opacity:0;visibility:hidden;transition:opacity .22s ease,transform .22s ease,visibility .22s}
+  @media (min-width:640px){.ql-modal{width:min(560px,92vw)}}
+  @media (min-width:760px){.ql-modal{width:min(960px,92vw);max-height:90vh;display:grid;grid-template-columns:1fr 1fr}}
   .ql-modal.is-open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
   .ql-close{position:absolute;top:14px;right:14px;z-index:3;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);border:0;display:flex;align-items:center;justify-content:center;color:var(--text-2);box-shadow:0 2px 8px rgba(0,0,0,.14);transition:color .15s ease-out}
   .ql-close:hover{color:var(--dark)}
-  .ql-media{position:relative;width:100%;aspect-ratio:1/1;border-radius:var(--radius);overflow:hidden;background:var(--bg-secondary);margin-bottom:18px}
-  .ql-media img{width:100%;height:100%;object-fit:cover;display:block}
-  /* prev/next cycle through the rest of the catalogue without closing the modal */
+  .ql-media{position:relative;width:100%;aspect-ratio:1/1;border-radius:var(--radius) var(--radius) 0 0;overflow:hidden;background:var(--bg-secondary)}
+  @media (min-width:760px){.ql-media{aspect-ratio:auto;height:100%;border-radius:var(--radius) 0 0 var(--radius)}}
+  .ql-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease,opacity .16s ease}
+  .ql-media:hover img{transform:scale(1.04)}
+  /* prev/next cycle through this product's own catalogue photos (main shot
+     + hover-alt angle), not to a different product - hidden entirely via
+     JS when a product only has the one photo */
   .ql-nav{position:absolute;top:50%;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);border:0;display:flex;align-items:center;justify-content:center;color:var(--dark);box-shadow:0 2px 8px rgba(0,0,0,.18);transform:translateY(-50%);transition:background .15s ease-out}
   .ql-nav:hover{background:#fff}
   .ql-nav i{font-size:19px}
   .ql-prev{left:12px}
   .ql-next{right:12px}
-  .ql-body{display:flex;flex-direction:column;gap:14px;min-width:0}
+  .ql-body{display:flex;flex-direction:column;gap:12px;min-width:0;padding:22px}
+  @media (min-width:640px){.ql-body{padding:28px}}
+  @media (min-width:760px){.ql-body{padding:40px;gap:14px}}
   /* .card .name is body font at 400/15px - quick look just scales that up,
      it shouldn't switch to the heading font used for section titles */
   .ql-name{font-family:var(--font-body);font-weight:600;font-size:19px;line-height:1.35;color:var(--text);margin:0}
-  .ql-body .price-row{margin:0}
-  .ql-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+  /* size-specific tracking, not one fixed value - tighten as the text
+     scales up, same as any large display text */
+  @media (min-width:760px){.ql-name{font-size:28px;line-height:1.25;letter-spacing:-.012em}}
+  .ql-body .price-row{margin:4px 0 0}
+  .ql-body .now{font-size:19px}
+  @media (min-width:760px){.ql-body .now{font-size:24px;letter-spacing:-.01em}}
+  .ql-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  @media (min-width:760px){
+    .ql-actions{gap:14px;margin-top:14px}
+    .ql-actions .add,.ql-checkout{padding:14px 28px;font-size:14px}
+  }
   .ql-actions .add{margin:0}
   /* secondary pairing to .add's primary solid pill - yellow stays a hover-only
      accent everywhere on this page (never a resting fill), so Checkout starts
      as an outline and picks up the same yellow flash .add uses on hover */
   .ql-checkout{font-family:var(--font-button);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--white);color:var(--dark);border:1px solid var(--dark);border-radius:var(--pill);padding:10px 20px;transition:background .16s ease-out,color .16s ease-out,border-color .16s ease-out}
   .ql-checkout:hover{background:var(--yellow);border-color:var(--yellow);color:var(--dark)}
-  .ql-view-link{font-family:var(--font-button);font-size:12.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--dark);border-bottom:2px solid var(--dark);padding-bottom:3px;align-self:flex-start}
-  @media (prefers-reduced-motion:reduce){.ql-overlay,.ql-modal{transition:none}}
+  /* "View full details" no longer navigates anywhere - it expands this
+     product's own description inline, same plus-to-cross icon and
+     grid-rows collapse technique as .faq-q/.faq-a further down the page */
+  .ql-desc-toggle{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;background:none;border:0;border-top:1px solid var(--border);margin-top:4px;padding:14px 0 0;font:inherit;font-family:var(--font-button);font-size:12.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--dark);cursor:pointer;text-align:left}
+  .ql-desc-toggle:hover{color:var(--text-2)}
+  .ql-desc-toggle .plus{flex:none;position:relative;width:12px;height:12px}
+  .ql-desc-toggle .plus::before,.ql-desc-toggle .plus::after{content:"";position:absolute;background:var(--dark);border-radius:1px;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+  .ql-desc-toggle .plus::before{left:0;top:5px;width:12px;height:2px}
+  .ql-desc-toggle .plus::after{left:5px;top:0;width:2px;height:12px}
+  .ql-desc-toggle[aria-expanded="true"] .plus::after{transform:rotate(90deg)}
+  .ql-desc{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s cubic-bezier(.2,.8,.2,1)}
+  .ql-desc[data-open="true"]{grid-template-rows:1fr}
+  .ql-desc-inner{overflow:hidden;min-height:0}
+  .ql-desc-inner p{margin:0;padding-top:14px;font-family:var(--font-body);font-size:14px;line-height:1.6;color:var(--text-2)}
+  @media (prefers-reduced-motion:reduce){
+    .ql-overlay,.ql-modal,.ql-media img{transition:none}
+    .ql-desc{transition:opacity .15s ease !important;grid-template-rows:unset !important}
+    .ql-desc[data-open="true"]{display:block}
+    .ql-desc[data-open="false"]{display:none}
+  }
 
   /* ---------- editorial / story ---------- */
   .story{padding:34px 0}
@@ -607,8 +676,8 @@
   .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 
   /* ---------- press feedback (respond on pointer-down, not release) ---------- */
-  .chip,.card .add,.card .wish,.card .quick-look-btn,.icon-btn,.menu-btn,.rail a .disc,.ql-close,.ql-nav,.ql-checkout,.ql-actions .add{transition:transform 100ms ease-out,background-color .2s,border-color .2s,color .2s}
-  .chip:active,.card .add:active,.card .wish:active,.card .quick-look-btn:active,.icon-btn:active,.menu-btn:active,.ql-close:active,.ql-checkout:active,.ql-actions .add:active{transform:scale(.96)}
+  .chip,.card .add,.card .wish,.card .quick-look-btn,.icon-btn,.menu-btn,.rail a .disc,.ql-close,.ql-nav,.ql-checkout,.ql-actions .add,.ql-desc-toggle{transition:transform 100ms ease-out,background-color .2s,border-color .2s,color .2s}
+  .chip:active,.card .add:active,.card .wish:active,.card .quick-look-btn:active,.icon-btn:active,.menu-btn:active,.ql-close:active,.ql-checkout:active,.ql-actions .add:active,.ql-desc-toggle:active{transform:scale(.96)}
   .ql-nav:active{transform:translateY(-50%) scale(.9)}
   .mfs-pill:active{transform:translateY(-1px) scale(.96)}
   .rail a:active .disc{transform:scale(.94);border-color:var(--dark)}
@@ -867,6 +936,9 @@
   <div class="wrap">
     <!-- placeholder per-product ratings for client showcase, same as the
          reviews aggregate below; swap for real review-app data before launch -->
+    <!-- placeholder per-product descriptions (each card's hidden .card-desc,
+         read into the quick look modal's "view full details" panel) for
+         client showcase - swap for real product-page copy before launch -->
     <div class="grid">
 
       <article class="card" data-material="teak" data-category="nesting-table">
@@ -874,6 +946,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Nesting Table Set of 3, Teak Wood with Transparent Resin Finish</a>
+        <p class="card-desc" hidden>A set of three nesting tables in solid teak wood, hand-finished with poured resin and shaped to tuck neatly one under the next when they're not in use. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(86)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -887,6 +960,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Side Table Set of 1, Teak Wood with Transparent Resin Finish</a>
+        <p class="card-desc" hidden>A solid teak wood side table with a poured resin finish over its natural grain, sized to sit beside a sofa or bed. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.6</span><span class="rating-count">(34)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -900,6 +974,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Elegant Resin Wall Clock, Sheesham Wood and Black Resin</a>
+        <p class="card-desc" hidden>A working wall clock set into solid sheesham wood with a poured black resin finish, doubling as a wall art piece. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(58)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Sheesham Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Sheesham Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -913,6 +988,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">C-Shaped Table, Teak Stained Wood Finish, 18&quot;×12&quot;</a>
+        <p class="card-desc" hidden>A slim C-shaped table in stained teak wood, sized to slide under a sofa arm or bed for a laptop or evening tray. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(41)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -947,6 +1023,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Stylish Resin Wall Clock, Teak Wood and Black Resin</a>
+        <p class="card-desc" hidden>A working wall clock in solid teak wood with a poured black resin finish, doubling as a wall art piece. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.6</span><span class="rating-count">(27)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -960,6 +1037,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Cheese Board Cum Platter with Handle, Acacia Wood</a>
+        <p class="card-desc" hidden>A solid acacia wood serving platter with an integrated handle and a poured resin inlay, finished food-safe for everyday serving. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(63)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -973,6 +1051,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Premium Side Table, Teak Wood with Brown Resin Finish</a>
+        <p class="card-desc" hidden>A solid teak wood side table finished with poured brown resin over its natural grain. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(39)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -1040,6 +1119,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Round Coffee Table, Teak Wood with Special Blue Resin Finish</a>
+        <p class="card-desc" hidden>A round coffee table in solid teak wood, hand-finished with poured blue resin over its natural grain. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(52)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -1053,6 +1133,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Nesting Table Set of 2, Acacia Wood with Transparent Resin Finish</a>
+        <p class="card-desc" hidden>A set of two nesting tables in solid acacia wood, hand-finished with poured resin and shaped to tuck neatly together when they're not in use. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(71)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -1066,6 +1147,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Modern Live-Edge Wood &amp; Blue Epoxy Resin Table</a>
+        <p class="card-desc" hidden>A live-edge wood table finished with poured blue epoxy resin along its natural edge, so no two pieces are exactly alike. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">5.0</span><span class="rating-count">(18)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Live Edge Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Live Edge Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -1083,6 +1165,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Nesting Table Set of 2, Teak Wood with Pearl Green Resin Finish</a>
+        <p class="card-desc" hidden>A set of two nesting tables in solid teak wood, hand-finished with poured pearl green resin and shaped to tuck neatly together when they're not in use. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(44)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -1096,6 +1179,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Nesting Table Set of 2, Sheesham Wood with Transparent Resin Finish</a>
+        <p class="card-desc" hidden>A set of two nesting tables in solid sheesham wood, hand-finished with poured resin and shaped to tuck neatly together when they're not in use. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(67)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Sheesham Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Sheesham Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -1109,6 +1193,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Nesting Table Set of 3, Teak Wood with Tinted Grey Resin Finish</a>
+        <p class="card-desc" hidden>A set of three nesting tables in solid teak wood, hand-finished with poured tinted grey resin and shaped to tuck neatly one under the next when they're not in use. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(35)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Teak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -1122,6 +1207,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Pearl Green Resin Wall Clock, Wood Oak Elegance</a>
+        <p class="card-desc" hidden>A working wall clock in solid oak wood with a poured pearl green resin finish, doubling as a wall art piece. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.6</span><span class="rating-count">(29)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Oak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Oak Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -1135,6 +1221,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Elegant Wooden Wall Clock, Natural Acacia Wood</a>
+        <p class="card-desc" hidden>A working wall clock in solid acacia wood, left in its natural finish to show the grain. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(46)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -1148,6 +1235,7 @@
         <button class="wish" aria-label="Add to wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20.5s-7-4.35-9.5-8.8C.8 8.4 2.3 4.9 5.8 4.3a4.9 4.9 0 0 1 6.2 2 4.9 4.9 0 0 1 6.2-2c3.5.6 5 4.1 3.3 7.4-2.5 4.45-9.5 8.8-9.5 8.8z"/></svg></button>
         <button class="quick-look-btn" aria-label="Quick look"><i class="ti ti-eye"></i></button>
         <a href="#" class="name">Stylish Wooden Wall Clock, Acacia Wood</a>
+        <p class="card-desc" hidden>A working wall clock in solid acacia wood, left in its natural finish to show the grain. Made at our workshop in Kirti Nagar.</p>
         <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(53)</span></div>
         <div class="usp-row"><div class="usp-track"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span><div class="is-dupe" aria-hidden="true"><span class="usp-pill usp-pill-material">Acacia Wood</span><span class="usp-pill usp-pill-ship"><i class="ti ti-truck-delivery"></i>Free Shipping</span></div></div></div>
         <div class="price-row">
@@ -1316,17 +1404,20 @@
   <button type="button" class="ql-close" id="qlCloseBtn" aria-label="Close quick look"><i class="ti ti-x"></i></button>
   <div class="ql-media">
     <img id="qlImg" src="" alt="">
-    <button type="button" class="ql-nav ql-prev" id="qlPrevBtn" aria-label="Previous product"><i class="ti ti-chevron-left"></i></button>
-    <button type="button" class="ql-nav ql-next" id="qlNextBtn" aria-label="Next product"><i class="ti ti-chevron-right"></i></button>
+    <button type="button" class="ql-nav ql-prev" id="qlPrevBtn" aria-label="Previous image"><i class="ti ti-chevron-left"></i></button>
+    <button type="button" class="ql-nav ql-next" id="qlNextBtn" aria-label="Next image"><i class="ti ti-chevron-right"></i></button>
   </div>
   <div class="ql-body">
     <h3 class="ql-name" id="qlModalTitle"></h3>
+    <div class="rating" id="qlRating"></div>
+    <div class="usp-row" id="qlUsp"></div>
     <div class="price-row" id="qlPriceRow"></div>
     <div class="ql-actions">
       <button type="button" class="add">Add to Cart</button>
       <button type="button" class="ql-checkout">Checkout</button>
     </div>
-    <a href="#" class="ql-view-link" id="qlViewLink">View full details →</a>
+    <button type="button" class="ql-desc-toggle" id="qlDescToggle" aria-expanded="false" aria-controls="qlDescPanel">View full details<span class="plus"></span></button>
+    <div class="ql-desc" id="qlDescPanel" data-open="false"><div class="ql-desc-inner"><p id="qlDescText"></p></div></div>
   </div>
 </div>
 
@@ -1646,47 +1737,88 @@
     const nextBtn = document.getElementById('qlNextBtn');
     const imgEl = document.getElementById('qlImg');
     const nameEl = document.getElementById('qlModalTitle');
+    const ratingEl = document.getElementById('qlRating');
+    const uspEl = document.getElementById('qlUsp');
     const priceEl = document.getElementById('qlPriceRow');
-    const viewLink = document.getElementById('qlViewLink');
+    const descToggle = document.getElementById('qlDescToggle');
+    const descPanel = document.getElementById('qlDescPanel');
+    const descText = document.getElementById('qlDescText');
+    const mediaEl = document.querySelector('.ql-media');
     if(!overlay || !modal) return;
 
-    // every product card with a quick-look trigger, in on-page order, so
-    // prev/next can step through the rest of the catalogue without closing
-    const productCards = [...document.querySelectorAll('.card .quick-look-btn')].map(btn => btn.closest('.card'));
-    let currentIndex = -1;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // prev/next flip between this one product's own catalogue photos (the
+    // main shot and, where one exists, its hover-alt angle) - not between
+    // different products, so there's no cross-product index to track
+    let images = [];
+    let imageIndex = 0;
     let isOpen = false;
     let lastTrigger = null;
+    let swapTimer = null;
 
     function close(){
       modal.classList.remove('is-open');
       overlay.classList.remove('is-open');
+      modal.style.transformOrigin = '';
       if(isOpen){ isOpen = false; unlockPageScroll(); }
       if(lastTrigger) lastTrigger.focus();
     }
-    function renderCurrent(){
-      const card = productCards[currentIndex];
-      if(!card) return;
-      const thumbImg = card.querySelector('.thumb img');
-      const nameA = card.querySelector('.name');
-      const priceRow = card.querySelector('.price-row');
-      if(!thumbImg || !nameA || !priceRow) return;
-      imgEl.src = thumbImg.getAttribute('src');
-      imgEl.alt = thumbImg.getAttribute('alt') || '';
-      nameEl.textContent = nameA.textContent;
-      viewLink.setAttribute('href', nameA.getAttribute('href') || '#');
-      priceEl.innerHTML = priceRow.innerHTML;
+    // instant=true for the first photo on open (no fade-in flash); every
+    // later call (prev/next) crossfades so the swap isn't a hard cut
+    function renderImage(instant){
+      if(!images.length) return;
+      if(swapTimer){ clearTimeout(swapTimer); swapTimer = null; }
+      if(instant || prefersReducedMotion){
+        imgEl.src = images[imageIndex];
+        imgEl.alt = nameEl.textContent || '';
+        imgEl.style.opacity = '1';
+        return;
+      }
+      imgEl.style.opacity = '0';
+      swapTimer = window.setTimeout(()=>{
+        imgEl.src = images[imageIndex];
+        imgEl.alt = nameEl.textContent || '';
+        imgEl.style.opacity = '1';
+        swapTimer = null;
+      }, 160);
     }
     function showRelative(delta){
-      if(productCards.length === 0) return;
-      currentIndex = (currentIndex + delta + productCards.length) % productCards.length;
-      renderCurrent();
+      if(images.length < 2) return;
+      imageIndex = (imageIndex + delta + images.length) % images.length;
+      renderImage();
     }
     function openFromCard(card, trigger){
-      const idx = productCards.indexOf(card);
-      if(idx === -1) return;
-      currentIndex = idx;
+      const thumbImg = card.querySelector('.thumb img');
+      const thumbAlt = card.querySelector('.thumb .thumb-alt');
+      const nameA = card.querySelector('.name');
+      const priceRow = card.querySelector('.price-row');
+      const rating = card.querySelector('.rating');
+      const uspRow = card.querySelector('.usp-row');
+      const descP = card.querySelector('.card-desc');
+      if(!thumbImg || !nameA || !priceRow) return;
       lastTrigger = trigger;
-      renderCurrent();
+      images = [thumbImg.getAttribute('src'), thumbAlt ? thumbAlt.getAttribute('src') : null].filter(Boolean);
+      imageIndex = 0;
+      nameEl.textContent = nameA.textContent;
+      priceEl.innerHTML = priceRow.innerHTML;
+      ratingEl.innerHTML = rating ? rating.innerHTML : '';
+      uspEl.innerHTML = uspRow ? uspRow.innerHTML : '';
+      descText.textContent = descP ? descP.textContent : '';
+      descToggle.setAttribute('aria-expanded', 'false');
+      descPanel.setAttribute('data-open', 'false');
+      renderImage(true);
+      const hasMultiple = images.length > 1;
+      if(prevBtn) prevBtn.style.display = hasMultiple ? '' : 'none';
+      if(nextBtn) nextBtn.style.display = hasMultiple ? '' : 'none';
+      // scale up from wherever the trigger sits instead of always from dead
+      // center - transform-origin doesn't affect the translate(-50%,-50%)
+      // that centers the modal, it only re-anchors the scale
+      if(trigger){
+        const tRect = trigger.getBoundingClientRect();
+        const mRect = modal.getBoundingClientRect();
+        modal.style.transformOrigin = (tRect.left + tRect.width / 2 - mRect.left) + 'px ' + (tRect.top + tRect.height / 2 - mRect.top) + 'px';
+      }
       overlay.classList.add('is-open');
       modal.classList.add('is-open');
       isOpen = true;
@@ -1701,6 +1833,11 @@
     });
     closeBtn.addEventListener('click', close);
     overlay.addEventListener('click', close);
+    descToggle.addEventListener('click', ()=>{
+      const willOpen = descToggle.getAttribute('aria-expanded') !== 'true';
+      descToggle.setAttribute('aria-expanded', String(willOpen));
+      descPanel.setAttribute('data-open', String(willOpen));
+    });
     if(prevBtn) prevBtn.addEventListener('click', ()=> showRelative(-1));
     if(nextBtn) nextBtn.addEventListener('click', ()=> showRelative(1));
     document.addEventListener('keydown', (e)=>{
@@ -1709,6 +1846,39 @@
       else if(e.key === 'ArrowLeft') showRelative(-1);
       else if(e.key === 'ArrowRight') showRelative(1);
     });
+
+    // swipe the photo left/right on touch (and mouse-drag) - tracks the
+    // pointer 1:1 while dragging instead of only reacting once the gesture
+    // ends, with a small movement threshold before it commits to a swipe
+    // over a tap on the image itself
+    if(mediaEl){
+      let dragging = false, dragMoved = false, dragStartX = 0, dragDX = 0;
+      mediaEl.addEventListener('pointerdown', (e)=>{
+        if(images.length < 2) return;
+        dragging = true; dragMoved = false; dragDX = 0;
+        dragStartX = e.clientX;
+        mediaEl.setPointerCapture(e.pointerId);
+      });
+      mediaEl.addEventListener('pointermove', (e)=>{
+        if(!dragging) return;
+        dragDX = e.clientX - dragStartX;
+        if(!dragMoved && Math.abs(dragDX) > 10) dragMoved = true;
+        if(dragMoved){
+          imgEl.style.transition = 'none';
+          imgEl.style.transform = 'translateX(' + dragDX + 'px)';
+        }
+      });
+      function endDrag(){
+        if(!dragging) return;
+        dragging = false;
+        imgEl.style.transition = '';
+        imgEl.style.transform = '';
+        if(dragMoved && Math.abs(dragDX) > 40) showRelative(dragDX < 0 ? 1 : -1);
+        dragMoved = false;
+      }
+      mediaEl.addEventListener('pointerup', endDrag);
+      mediaEl.addEventListener('pointercancel', endDrag);
+    }
   })();
 </script>
 </body>
